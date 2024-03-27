@@ -8,6 +8,7 @@ import {
   crearProyectoRequest,
   getProyectoRequest,
   getProyectosRequest,
+  deleteProyectoRequest,
 } from "../api/proyectos";
 
 const InsoelContext = createContext();
@@ -28,6 +29,27 @@ export function InsoelProvider({ children }) {
     "bg-opacity-75 bg-gradient-to-b from-secondary bottom-96"
   );
 
+  //-----------Funcion para formatear la fecha de ISO -------
+  const fechaFormateada = (fechaISO) =>{
+    // Convertir la cadena de fecha a objeto Date
+    const fecha = new Date(fechaISO);
+
+    // Obtener el día
+    const dia = fecha.getDate();
+
+    // Obtener el mes
+    const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+    const mes = meses[fecha.getMonth()];
+
+    // Obtener el año
+    const año = fecha.getFullYear();
+
+    // Formatear la fecha en el formato deseado
+    const fechaFormateada = `${dia} de ${mes} del ${año}`;
+
+    return fechaFormateada
+  }
+
   //----------------Proyectos--------------
   const [proyectos, setProyectos] = useState([]);
   const [proyecto, setProyecto] = useState([]);
@@ -45,10 +67,20 @@ export function InsoelProvider({ children }) {
     const res = await crearProyectoRequest(proyecto);
     console.log(res);
   };
-  const obtenerProyectos = async () => {
+  const deleteProyecto = async (id) =>{
+    try {
+      const res = await  deleteProyectoRequest(id)
+      if (res.status === 204) {
+      setProyectos(proyecto.filter((proyecto) => proyecto._id !== id))}
+          
+  } catch (error) {
+      console.log(error);
+  }
+  }
+  const getProyectos = async () => {
     const proyectos = await getProyectosRequest();
     setProyectos(proyectos.data);
-  };
+  }; 
   const getProyecto = async (id) => {
     //console.log(id)
     try {
@@ -72,9 +104,11 @@ export function InsoelProvider({ children }) {
         setProyectColor,
         opacidadColor,
         setOpacidadColor,
+        fechaFormateada,
         createSolicitud,// Proyectos
         crearProyecto,
-        obtenerProyectos,
+        deleteProyecto,
+        getProyectos,
         getProyecto,
         proyectos,
         proyecto,

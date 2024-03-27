@@ -7,7 +7,7 @@ import Carga from "../img/Proyectos/Banco_Uat/001.gif";
 import Bio from "../img/Proyectos/Bio_Reactor/001.mp4";
 
 function ProyectoPage() {
-  const { getProyecto, proyecto } = useInsoel();
+  const { getProyecto, proyecto, fechaFormateada } = useInsoel();
   const { setLogoColor, setTxtColor, setOpacidadColor } = useInsoel();
   const videoRef = useRef(null);
   const { id } = useParams();
@@ -29,7 +29,7 @@ function ProyectoPage() {
   }, []);
 
   useEffect(() => {
-    document.title = proyecto ? `BIORREACTOR | ${proyecto.titulo}` : "INSOEL";
+    document.title = proyecto ? `${proyecto.titulo} | INSOEL ` : "INSOEL";
     return () => {
       document.title = "INSOEL";
     };
@@ -40,25 +40,7 @@ function ProyectoPage() {
     setVideoLoaded(true);
   };
 
-  const fechaFormateada = (fechaISO) =>{
-    // Convertir la cadena de fecha a objeto Date
-    const fecha = new Date(fechaISO);
-
-    // Obtener el día
-    const dia = fecha.getDate();
-
-    // Obtener el mes
-    const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
-    const mes = meses[fecha.getMonth()];
-
-    // Obtener el año
-    const año = fecha.getFullYear();
-
-    // Formatear la fecha en el formato deseado
-    const fechaFormateada = `${dia} de ${mes} del ${año}`;
-
-    return fechaFormateada
-  }
+  
 
   return (
     <>
@@ -80,7 +62,7 @@ function ProyectoPage() {
               ref={videoRef}
               autoPlay
               onLoadedData={handleLoadedData}
-              src={Bio}
+              src={`http://localhost:3000/uploads/${proyecto?.video?.nuevoNombre}`}
               className={`block h-5/6 w-full object-fill max-h-[80%] md:max-h-full shadow-md mt-24 ${
                 videoLoaded ? "block" : "hidden"
               }`}
