@@ -4,29 +4,30 @@ import LogoAmarilloBlanco from "../img/Logos/AmarilloBlanco.png";
 import { useForm } from "react-hook-form";
 import { useInsoel } from "../Context/InsoelContext";
 
-function FormProyectos() {
+function FormProyectos({reloadProyectos}) {
   const [contenido, setContenido] = useState("");
   const { register, handleSubmit, setValue } = useForm();
-  const {crearProyecto} = useInsoel()
-  
+  const { crearProyecto } = useInsoel();
 
   const handleChange = (event) => {
     // Reemplazar saltos de línea con \n
-    setContenido(event.target.value); 
+    setContenido(event.target.value);
   };
-  const onSubmit = handleSubmit(async(data)=>{
+  const onSubmit = handleSubmit(async (data) => {
     const formData = new FormData();
-    formData.append('titulo', data.titulo)
-    formData.append('fecha', data.fecha)
-    formData.append('contenido', data.contenido)
-    formData.append('frase', data.frase)
-    formData.append('imagen1', data.imagen1[0]);
-    formData.append('imagen2', data.imagen2[0]);
-    formData.append('imagen3', data.imagen3[0]);
-    formData.append('video', data.video[0]);
-    //console.log(formData)
-    await crearProyecto(formData)
-  })
+    formData.append("titulo", data.titulo);
+    formData.append("fecha", data.fecha);
+    formData.append("contenido", data.contenido);
+    formData.append("area", data.area)
+    formData.append("frase", data.frase);
+    formData.append("imagen1", data.imagen1[0]);
+    formData.append("imagen2", data.imagen2[0]);
+    formData.append("imagen3", data.imagen3[0]);
+    formData.append("video", data.video[0]);
+    //console.log(data.area)
+    await crearProyecto(formData);
+    reloadProyectos()
+  });
 
   /** 
   const handleSubmit = (event) => {
@@ -39,49 +40,50 @@ function FormProyectos() {
   };
   */
 
-  return ( 
+  return (
     <div className="flex ">
       <div className=" ml-10 mr-10">
-      <div className="text-left mt-4 mb-2">
-            <h1 className="font-bold text-2xl text-secondary">Nuevo Proyecto </h1>
-          </div>
+        <div className="text-left mt-4 mb-2">
+          <h1 className="font-bold text-2xl text-secondary">Nuevo Proyecto </h1>
+        </div>
         <div className=" ">
-          
-          <form onSubmit={handleSubmit}>
-            
-              <div className="grid grid-cols-2 gap-4">
+          <form onSubmit={onSubmit}>
+            <div className="grid grid-cols-2 gap-4">
               <div className="mb-4 ">
-              <label for="titulo" className="block text-lg font-bold ">
-                Titulo
-              </label>
-              <input
-                type="text"
-                id="titulo"
-                name="titulo"
-                className="mt-1 p-2 w-full border rounded-md"
-                placeholder="Titulo del Proyecto"
-              />
+                <label for="titulo" className="block text-lg font-bold ">
+                  Titulo
+                </label>
+                <input
+                  type="text"
+                  {...register("titulo")}
+                  id="titulo"
+                  name="titulo"
+                  className="mt-1 p-2 w-full border rounded-md"
+                  placeholder="Titulo del Proyecto"
+                />
               </div>
               <div className="mb-4">
-              <label for="frase" className="block text-lg font-semibold ">
-                Frase
-              </label>
-              <input
-                type="text"
-                id="frase"
-                name="frase"
-                className="mt-1 p-2 w-full border rounded-md"
-                placeholder="Frase inspiradora"
-              />
+                <label for="frase" className="block text-lg font-semibold ">
+                  Frase
+                </label>
+                <input
+                  type="text"
+                  {...register("frase")}
+                  id="frase"
+                  name="frase"
+                  className="mt-1 p-2 w-full border rounded-md"
+                  placeholder="Frase inspiradora"
+                />
+              </div>
             </div>
-            </div>
-            <div class="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-3 gap-4">
               <div className="mb-4">
                 <label for="video" className="block text-lg font-semibold">
                   Video
                 </label>
                 <input
                   type="file"
+                  {...register("video")}
                   id="video"
                   name="video"
                   accept="video/*"
@@ -95,6 +97,7 @@ function FormProyectos() {
                 </label>
                 <input
                   type="date"
+                  {...register("fecha")}
                   id="fecha"
                   name="fecha"
                   className="mt-1 p-2 w-full border rounded-md"
@@ -102,17 +105,24 @@ function FormProyectos() {
                 />
               </div>
               <div className="mb-4">
-              <label for="fecha" className="block text-lg font-semibold ">
+                <label for="fecha" className="block text-lg font-semibold ">
                   Seleccionar
                 </label>
-                <select className=" mt-1 p-2 w-full border rounded-md">
+                <select
+                  id="area"
+                  name="area"
+                  className=" mt-1 p-2 w-full border rounded-md"
+                  {...register("area")}
+                >
                   <option value="" disabled selected>
                     Area / Campo
                   </option>
-                  <option value="opcion1">Desarrollo Tecnológico</option>
-                  <option value="opcion2">Soluciones de Integracion</option>
-                  <option value="opcion3">Infraestructura TI</option>
-                  <option value="opcion4">AdquiSición de Equipos y Herramientas</option>
+                  <option value= "Desarrollo Tecnológico">Desarrollo Tecnológico</option>
+                  <option value="Soluciones de Integracion">Soluciones de Integracion</option>
+                  <option value="Infraestructura TI">Infraestructura TI</option>
+                  <option value="Adquisición de Equipos y Herramientas">
+                    Adquisición de Equipos y Herramientas
+                  </option>
                 </select>
               </div>
             </div>
@@ -122,6 +132,7 @@ function FormProyectos() {
               </label>
               <textarea
                 id="contenido"
+                {...register("contenido")}
                 name="contenido"
                 value={contenido}
                 onChange={handleChange}
@@ -129,13 +140,14 @@ function FormProyectos() {
                 placeholder="Informacion del Proyecto "
               ></textarea>
             </div>
-            <div class="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-3 gap-4">
               <div className="mb-4">
                 <label for="imagen1" className="block text-lg font-semibold ">
                   Imagen 1
                 </label>
                 <input
                   type="file"
+                  {...register("imagen1")}
                   id="imagen1"
                   name="imagen1"
                   //accept: que tipo de archivo acepta en este caso imagen y el /* es que acepta jpg,, png, etc
@@ -149,6 +161,7 @@ function FormProyectos() {
                 </label>
                 <input
                   type="file"
+                  {...register("imagen2")}
                   id="imagen2"
                   name="imagen2"
                   accept="image/*"
@@ -161,6 +174,7 @@ function FormProyectos() {
                 </label>
                 <input
                   type="file"
+                  {...register("imagen3")}
                   id="imagen3"
                   name="imagen3"
                   accept="image/*"

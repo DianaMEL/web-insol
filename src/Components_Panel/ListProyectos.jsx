@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import Proyectos from './Proyectos'
 import Paginador from './Paginador';
 
-function ListProyectos({proyectos}) {
+function ListProyectos({ proyectos, reloadProyectos }) {
   // Verificamos si el arreglo de datos está vacío o es nulo
   if (!proyectos.length) return <h1>No hay datos disponibles</h1>;
 
@@ -28,7 +28,7 @@ function ListProyectos({proyectos}) {
           {" "}
           <div className="">
             {paginatedData.map((proyecto) => (
-              <Proyectos key={proyecto.id} proyecto={proyecto} />
+              <Proyectos key={proyecto._id} proyecto={proyecto}  reloadProyectos={reloadProyectos} />
             ))}
           </div> 
            {/* Contenedor para el paginador con estilos para posicionarlo */}
