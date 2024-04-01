@@ -9,6 +9,13 @@ import {
   getProyectoRequest,
   getProyectosRequest,
 } from "../api/proyectos";
+import {
+  createCarruselRequest,
+  deleteCarruselRequest,
+  getCarruselesRequest,
+  getCarruselPorTituloRequest,
+  getCarruselRequest,
+} from "../api/carruseles"
 
 const InsoelContext = createContext();
 
@@ -31,6 +38,9 @@ export function InsoelProvider({ children }) {
   //----------------Proyectos--------------
   const [proyectos, setProyectos] = useState([]);
   const [proyecto, setProyecto] = useState([]);
+
+  const [carruseles, setcarruseles] = useState([]);
+  const [carrusel, setCarrusel] = useState([]);
 
 
   // Funciones para la seccion de contactarnos
@@ -60,6 +70,46 @@ export function InsoelProvider({ children }) {
     }
   };
 
+  /** ------------------carrusel----------------------- */
+  const createCarrusel = async (carrusel) => {
+    const res = await createCarruselRequest(carrusel);
+    console.log(res);
+  };
+  const obtenerCarruseles = async () => {
+    const carruseles = await getCarruselesRequest();
+    setcarruseles(carruseles.data);
+  };
+  const getCarrusel = async (id) => {
+    console.log(id)
+    try {
+      const carrusel = await getCarruselRequest(id);
+      setCarrusel(carrusel.data)
+      return carrusel.data
+    } catch (error) {
+      console.error(error)
+    }
+  };
+  const eliminarCarrusel = async (id) => {
+    console.log(id)
+    try {
+      const carrusel = await deleteCarruselRequest(id);
+      setCarrusel(carrusel.data)
+      return carrusel.data
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  const getCarruselPorTitulo = async (titulo) => {
+    try {
+      const carruseles = await getCarruselPorTituloRequest(titulo);
+      const carruselFiltrado = carruseles.data.filter(carrusel => carrusel.titulo === titulo);
+      return carruselFiltrado;
+    } catch (error) {
+      console.error("Error al obtener el carrusel por título:", error);
+      throw error; // Puedes manejar el error según tus necesidades
+    }
+  };
+
   return (
     <InsoelContext.Provider
       value={{
@@ -71,6 +121,13 @@ export function InsoelProvider({ children }) {
         setProyectColor,
         opacidadColor,
         setOpacidadColor,
+        createCarrusel, //carruseles
+        obtenerCarruseles,
+        eliminarCarrusel,
+        getCarruselPorTitulo,
+        getCarrusel,
+        carruseles,
+        carrusel,
         createSolicitud,// Proyectos
         crearProyecto,
         obtenerProyectos,

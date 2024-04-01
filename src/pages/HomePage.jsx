@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Carrusel from "../Components/Carrusel";
 import Nosotros from "../Components/Nosotros";
 import Formulario from "../Components/Formulario";
@@ -7,23 +7,46 @@ import { Link } from "react-router-dom";
 import Map from "../Components/Map";
 import MapaPage from "./MapaPage";
 import { useInsoel } from "../Context/InsoelContext";
+import { getCarruselesRequest } from '../api/carruseles';
 
 function HomePage() {
+
+  
+  const [carruseles, setCarruseles] = useState([]);
   const {setLogoColor, setTxtColor, setProyectColor, setOpacidadColor} = useInsoel();
-  setLogoColor('amarilloBlanco')
-  setTxtColor('white')
-  setProyectColor('bg-tertiary')
-  setOpacidadColor('bg-opacity-75 bg-gradient-to-b from-secondary bottom-96')
+
   useEffect(() => {
+    
+    const obtenerCarruseles = async () => {
+      try {
+        const carruseles = await getCarruselesRequest();
+        setCarruseles(carruseles.data);
+      } catch (error) {
+        console.error('Error al obtener carruseles', error);
+      }
+    };
+
+    obtenerCarruseles();
+  }, []);
+
+  useEffect(() => {
+    // Llamadas asincrónicas para establecer los colores
+    setLogoColor('amarilloBlanco');
+    setTxtColor('white');
+    setProyectColor('bg-tertiary');
+    setOpacidadColor('bg-opacity-75 bg-gradient-to-b from-secondary bottom-96');
+
+    // Establece el título de la página
     document.title = "Nosotros | INSOEL";
     return () => {
       document.title = "INSOEL";
     };
-  }, []);
-  return (
+  }, []); // Este efecto se ejecuta solo una vez al montar el componente
+
+  return ( 
     <div className="flex flex-col h-screen  ">
       <div className="flex-grow" id="inicioSeccion">
-        <Carrusel />
+      <Carrusel carruseles={carruseles} tituloCarrusel="Originales" />
       </div>
       <div className="flex-grow bg-gradient-to-b from-tertiary via-tertiary to-black ">
         <h1 className="text-2xl justify-center text-center text-white mt-5 font-bold">

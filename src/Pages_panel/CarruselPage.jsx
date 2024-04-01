@@ -1,33 +1,32 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 
 import Automa from "../img/Noticias/automatizacion.jpg";
 import FormCarrusel from '../Components_Panel/FormCarrusel';
 import ListCarrusel from '../Components_Panel/ListCarrusel';
+import { getCarruselesRequest } from '../api/carruseles';
 
 function CarruselPage() {
-    const carruseles = [
-        {
-          id: 1,
-          titulo: "Automatización y Control",
-          img1: Automa,
-          img2: Automa,
-          img3: Automa,
-          img4: Automa
-        },
-        {
-            id: 1,
-            titulo: "Automatización y Control",
-            img1: Automa,
-            img2: Automa,
-            img3: Automa,
-            img4: Automa
-          },
-      ];
+
+  const [carruseles, setCarruseles] = useState([]);
+ 
       const [mostrarFormulario, setMostrarFormulario] = useState(false);
+      useEffect(() => {
+        obtenerCarruseles();
+      }, []);
+    
+      const obtenerCarruseles = async () => {
+        try {
+          const carruseles = await getCarruselesRequest();
+          setCarruseles(carruseles.data);
+        } catch (error) {
+          console.error('Error al obtener carruseles', error);
+        }
+      };
 
       const handleClickNuevoProyecto = () => {
         setMostrarFormulario(true);
       };
+
     return (
         <div className="container mx-auto px-4 py-8 ">
       <div className="flex justify-between items-center ">

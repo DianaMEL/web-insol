@@ -1,7 +1,22 @@
 import React from 'react'
 import LogoAmarilloBlanco from "../img/Logos/AmarilloBlanco.png";
+import { useForm } from "react-hook-form";
+import { useInsoel } from '../Context/InsoelContext';
 
 function FormCarrusel() {
+  const { register, handleSubmit } = useForm();
+  const { createCarrusel } = useInsoel();
+
+  const onSubmit = handleSubmit(async(data)=>{
+    const formData = new FormData();
+    formData.append('titulo', data.titulo)
+    formData.append('img1', data.img1[0]);
+    formData.append('img2', data.img2[0]);
+    formData.append('img3', data.img3[0]);
+    formData.append('img4', data.img4[0]);
+    //console.log(formData)
+    await createCarrusel(formData)
+  })
 
   return (
     <div className='flex  mb-2'>
@@ -10,40 +25,43 @@ function FormCarrusel() {
             <h1 className="font-bold text-2xl text-secondary">Nuevas Imagenes para el Carrusel </h1>
           </div>
       <div className="my-12 ">
-        <form>
+        <form onSubmit={onSubmit} encType="multipart/form-data">
           <div className="mb-4">
             <label for="titulo" className="block text-lg sm:text-base md:text-lg lg:text-xl font-semibold">
               Titulo
             </label>
             <input
               type="text"
+              {...register("titulo")}
               id="titulo"
               name="titulo"
               className="mt-1 p-2 w-full border rounded-md"
-              placeholder="Titulo del Proyecto"
+              placeholder="Titulo "
             />
           </div>
           <div class="grid grid-cols-2 gap-4">
             <div className="mb-4">
-            <label for="imagen1" className="block text-lg font-semibold ">
+            <label for="img1" className="block text-lg font-semibold ">
                 Imagen 1
               </label>
               <input
                 type="file"
-                id="imagen1"
-                name="imagen1"
+                {...register("img1")}
+                id="img1"
+                name="img1"
                 accept="image/*"
                 className="mt-1 p-2 w-full border rounded-md"
               />
             </div>
             <div className="mb-4">
-            <label for="imagen2" className="block text-lg font-semibold ">
+            <label for="img2" className="block text-lg font-semibold ">
                 Imagen 2
               </label>
               <input
                 type="file"
-                id="imagen2"
-                name="imagen2"
+                {...register("img2")}
+                id="img2"
+                name="img2"
                 accept="image/*"
                 className="mt-1 p-2 w-full border rounded-md"
               />
@@ -51,26 +69,28 @@ function FormCarrusel() {
           </div>
           <div class="grid grid-cols-2 gap-4">
             <div className="mb-4">
-              <label for="imagen3" className="block text-lg font-semibold ">
+              <label for="img3" className="block text-lg font-semibold ">
                 Imagen 3
               </label>
               <input
                 type="file"
-                id="imagen3"
-                name="imagen3"
+                {...register("img3")}
+                id="img3"
+                name="img3"
                 //accept: que tipo de archivo acepta en este caso imagen y el /* es que acepta jpg,, png, etc
                 accept="image/*"
                 className="mt-1 p-2 w-full border rounded-md"
               />
             </div>
             <div className="mb-4">
-              <label for="imagen4" className="block text-lg font-semibold ">
+              <label for="img4" className="block text-lg font-semibold ">
                 Imagen 4
               </label>
               <input
                 type="file"
-                id="imagen4"
-                name="imagen4"
+                {...register("img4")}
+                id="img4"
+                name="img4"
                 accept="image/*"
                 className="mt-1 p-2 w-full border rounded-md"
               />

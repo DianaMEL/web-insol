@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import Carrusel from './Carrusel'
 import Paginador from './Paginador';
+import HomePage from '../pages/HomePage';
 
 function ListCarrusel({carruseles}) { 
   // Verificamos si el arreglo de datos está vacío o es nulo
@@ -22,12 +23,13 @@ function ListCarrusel({carruseles}) {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+  
     return (
         <div>
           {" "}
           <div className="grid gap-4 grid-cols-1">
             {paginatedData.map((carrusel) => (
-              <Carrusel key={carrusel.id} carrusel={carrusel} />
+              <Carrusel key={carrusel.id} carrusel={carrusel}  />
             ))}
           </div> 
           <div style={{ position: 'fixed', bottom: '20px', right: '20px' }}>

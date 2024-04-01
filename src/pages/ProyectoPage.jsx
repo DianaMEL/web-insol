@@ -85,7 +85,7 @@ function ProyectoPage() {
           </h1>
           <h2 className="text-xl text-secondary">{proyecto?.fecha}</h2>
           <div className="text-justify ">{proyecto?.contenido}</div>
-
+ 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {proyecto?.imagenes?.map((imagen, index) => (
               <div key={index} className="relative group">

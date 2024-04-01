@@ -243,7 +243,7 @@ function FormProyectos() {
               <input
                 type="file"
                 {...register("imagen1")}
-                id="imagen1"
+                id="imagen1" 
                 name="imagen1"
                 //accept: que tipo de archivo acepta en este caso imagen y el /* es que acepta jpg,, png, etc
                 accept="image/*"
