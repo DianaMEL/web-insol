@@ -18,7 +18,13 @@ function Carrusel({ carruseles, tituloCarrusel }) {
    //console.log('titulo:', carruselSeleccionado);
    // Verificar si se encontró el carrusel
    if (!carruselSeleccionado) {
-     return <div>No se encontró el carrusel con el título especificado</div>;
+     return 
+     //<div>No se encontró el carrusel con el título especificado</div>
+     <div>
+        {imagePaths.map((imagePath, index) => (
+          <img key={index} src={imagePath} alt={`Imagen ${index + 1}`} />
+        ))}
+      </div>;
    }
  
    const imagenesDelCarrusel = carruselSeleccionado.imagenes;

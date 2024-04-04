@@ -10,7 +10,7 @@ function SubMenu({ submenu }) {
   const handleEditar = () => {
     setEditando(true);
   };
-
+ 
   const handleGuardar = () => {
     // Aquí deberías implementar la lógica para guardar los cambios
     setEditando(false);

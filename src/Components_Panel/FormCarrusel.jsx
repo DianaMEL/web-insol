@@ -93,7 +93,7 @@ function FormCarrusel() {
                 name="img4"
                 accept="image/*"
                 className="mt-1 p-2 w-full border rounded-md"
-              />
+              /> 
             </div>
           </div>
           <div className="mb-12">

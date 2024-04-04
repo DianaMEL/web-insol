@@ -13,10 +13,15 @@ import {
 import {
   createCarruselRequest,
   deleteCarruselRequest,
+  editCarruselRequest,
   getCarruselesRequest,
   getCarruselPorTituloRequest,
   getCarruselRequest,
 } from "../api/carruseles"
+import { 
+  crearUbicacionRequest, 
+  getUbicacionesRequest 
+} from "../api/ubicaciones";
 
 const InsoelContext = createContext();
 
@@ -61,9 +66,6 @@ export function InsoelProvider({ children }) {
   const [proyectos, setProyectos] = useState([]);
   const [proyecto, setProyecto] = useState([]);
 
-  const [carruseles, setcarruseles] = useState([]);
-  const [carrusel, setCarrusel] = useState([]);
-
 
   // Funciones para la seccion de contactarnos
 
@@ -104,6 +106,9 @@ export function InsoelProvider({ children }) {
   };
 
   /** ------------------carrusel----------------------- */
+  const [carruseles, setcarruseles] = useState([]);
+  const [carrusel, setCarrusel] = useState([]);
+
   const createCarrusel = async (carrusel) => {
     const res = await createCarruselRequest(carrusel);
     console.log(res);
@@ -132,6 +137,15 @@ export function InsoelProvider({ children }) {
       console.error(error)
     }
   }
+
+  const editarCarrusel = async (id, carrusel) => {
+    try {
+      await editCarruselRequest(id, carrusel);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const getCarruselPorTitulo = async (titulo) => {
     try {
       const carruseles = await getCarruselPorTituloRequest(titulo);
@@ -141,6 +155,19 @@ export function InsoelProvider({ children }) {
       console.error("Error al obtener el carrusel por título:", error);
       throw error; // Puedes manejar el error según tus necesidades
     }
+  };
+
+   /** ------------------ubicaciones----------------------- */
+   const [ubicaciones, setUbicaciones] = useState([]);
+   const [ubicacion, setUbicacion] = useState([]);
+
+   const crearUbicacion= async (ubicacion) => {
+    const res = await crearUbicacionRequest(ubicacion);
+    console.log(res);
+  };
+  const obtenerUbicaciones= async () => {
+    const ubicaciones = await getUbicacionesRequest();
+    setUbicaciones(ubicaciones.data);
   };
 
   return (
@@ -157,6 +184,7 @@ export function InsoelProvider({ children }) {
         createCarrusel, //carruseles
         obtenerCarruseles,
         eliminarCarrusel,
+        editarCarrusel,
         getCarruselPorTitulo,
         getCarrusel,
         carruseles,
@@ -167,6 +195,8 @@ export function InsoelProvider({ children }) {
         deleteProyecto,
         getProyectos,
         getProyecto,
+        crearUbicacion, // ubicaciones
+        obtenerUbicaciones,
         proyectos,
         proyecto,
       }}

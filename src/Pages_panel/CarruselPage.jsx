@@ -12,7 +12,7 @@ function CarruselPage() {
       const [mostrarFormulario, setMostrarFormulario] = useState(false);
       useEffect(() => {
         obtenerCarruseles();
-      }, []);
+      }, []); 
     
       const obtenerCarruseles = async () => {
         try {

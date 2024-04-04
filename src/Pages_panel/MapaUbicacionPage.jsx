@@ -1,10 +1,11 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import FormUbicacion from '../Components_Panel/FormUbicacion';
 import ListMapaUbicacion from '../Components_Panel/ListMapaUbicacion';
 import Paginador from '../Components_Panel/Paginador';
+import { getUbicacionesRequest } from '../api/ubicaciones';
 
 function MapaUbicacionPage() {
-  
+  /*
     const ubicaciones = [
         {
           id: 1,
@@ -57,9 +58,23 @@ function MapaUbicacionPage() {
           },
         
       ];
-
+*/
+      const [ubicaciones, setUbicaciones] = useState([]);
       const [mostrarFormulario, setMostrarFormulario] = useState(false);
       const [filtroNombre, setFiltroNombre] = useState('');
+
+      useEffect(() => {
+        obtenerUbicaciones();
+      }, []); 
+    
+      const obtenerUbicaciones = async () => {
+        try {
+          const ubicaciones = await getUbicacionesRequest();
+          setUbicaciones(ubicaciones.data);
+        } catch (error) {
+          console.error('Error al obtener las Ubicaciones', error);
+        }
+      };
 
       const handleClickNuevoProyecto = () => {
         setMostrarFormulario(true);
@@ -105,7 +120,7 @@ function MapaUbicacionPage() {
           <ListMapaUbicacion ubicaciones={ubicaciones.filter(ubicacion => ubicacion.nombre.toLowerCase().includes(filtroNombre.toLowerCase()))} />
         </div>
       )}
-      
+       
       
     </div>
       )
