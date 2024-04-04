@@ -17,7 +17,6 @@ function Carrusel({ carruseles, tituloCarrusel }) {
    const carruselSeleccionado = carruseles.find(carrusel => carrusel.titulo === tituloCarrusel);
    //console.log('titulo:', carruselSeleccionado);
   
-  
   //console.log('Carruseles recibidos en Carrusel:', carruseles);
   const { setTxtColor, setLogoColor } = useInsoel();
   const [imagenActiva, setImagenActiva] = useState(0);
@@ -84,6 +83,7 @@ function Carrusel({ carruseles, tituloCarrusel }) {
     );
   }
 
+  const imagenesDelCarrusel = carruselSeleccionado.imagenes;
 
   return (
     <div className="">
