@@ -79,6 +79,18 @@ function Carrusel({ carruseles, tituloCarrusel }) {
             )}
           </div>
         ))}
+        {/* Contenido para pantallas pequeñas */}
+        <div className="md:hidden bg-white p-4 text-center">
+          <h3 className="font-bold text-black mb-1">
+            Materializamos tus ideas
+          </h3>
+          <h1 className="text-2xl font-bold text-black">
+            AUTOMATIZACION Y <br className="lg:hidden xl:block" /> CONTROL
+          </h1>
+          <button className="bg-primary bg-opacity-75 text-black py-3 px-8 mt-2 border-2 border-black/50 bg-gradient-to-r hover:from-secondary hover:to-tertiary">
+            <Link to="/web-insol/blog">CONOCE MÁS</Link>
+          </button>
+        </div>
       </div>
     );
   }
