@@ -1,21 +1,76 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { deleteSubMenuRequest, editarSubMenuRequest } from "../api/subMenus";
 
 function SubMenu({ submenu }) {
+  const [confirmDelete, setConfirmDelete] = useState(false);
   const [editando, setEditando] = useState(false);
   const [nuevoArea, setNuevoArea] = useState(submenu.area);
   const [nuevoEnlace, setNuevoEnlace] = useState(submenu.enlace);
+  const [nuevaImg, setNuevaImg] = useState(submenu.img);
   const [nuevaDescripcion, setNuevaDescripcion] = useState(submenu.descripcion);
   const [nuevaImagen, setNuevaImagen] = useState(null);
+
+  // Definir el id 
+  const id = submenu ? submenu._id : null;
+
+  useEffect(() => {
+    if (submenu) {
+      setNuevoArea(submenu.area);
+      setNuevoEnlace(submenu.enlace);
+      setNuevaImg(submenu.img);
+      setNuevaDescripcion(submenu.descripcion)
+    }
+  }, [submenu]);
+
+  const handleClick = async () => {
+    try {
+      if (!id) {
+        throw new Error("El ID del submenu no está definido");
+      }
+
+      if (!confirmDelete) {
+        setConfirmDelete(true); // Mostrar el mensaje de confirmación
+        return; // Salir de la función para esperar la confirmación del usuario
+      }
+
+      // Si confirmDelete es true, proceder con la eliminación
+      const data = await deleteSubMenuRequest(id);
+      console.log("SubMenu eliminado:", data);
+
+      // Restablecer el estado después de eliminar
+      setConfirmDelete(false);
+
+      // Recargar la lista de carruseles después de eliminar uno (
+    } catch (error) {
+      console.error("Error al eliminar el SubMenu:", error);
+      // Aquí podrías manejar el error de alguna manera, por ejemplo, mostrando un mensaje al usuario
+    }
+  };
 
   const handleEditar = () => {
     setEditando(true);
   };
  
-  const handleGuardar = () => {
-    // Aquí deberías implementar la lógica para guardar los cambios
-    setEditando(false);
-    // También puedes enviar los nuevos valores al backend o realizar cualquier acción necesaria
+  const handleGuardar = async () => {
+    try {
+      // Console.log para verificar el estado de newImagenes
+    console.log("Estado :", nuevaImg);
+    
+      // Realizar solicitud PUT al backend para actualizar el carrusel
+      const response = await editarSubMenuRequest(id, {
+        area: nuevoArea,
+        enlace: nuevoEnlace,
+        img: nuevaImg,
+        descripcion: nuevaDescripcion,
+      }); 
+      console.log("SubMENU actualizado:", response.data);
+      setEditando(false); // Finalizar modo edición
+    } catch (error) {
+      console.error("Error al actualizar el carrusel:", error);
+      // Manejar el error según sea necesario
+    }
   };
+  
 
   return (
     <div className="h-64 mt-5 mr-5 ml-5">
@@ -36,7 +91,7 @@ function SubMenu({ submenu }) {
               <p className="text-black ml-2 mt-5">{submenu.enlace}</p>
               </div>
               <img
-                src={submenu.img1}
+                src={`http://localhost:3000/uploads/SubMenu/${submenu?.img?.nuevoNombre}`}
                 alt={submenu.area}
                 className={editando ? "w-full h-40 object-cover rounded-md m-2" : "h-48 ml-28 mt-5  "}
               />
@@ -103,34 +158,56 @@ function SubMenu({ submenu }) {
             )}
           </div>
         </div>
-
+{/* botones  */}
         <div className="flex justify-end">
-          {editando ? (
+        {confirmDelete ? (
             <>
               <button
-                onClick={handleGuardar}
-                className="bg-green-500 hover:bg-green-600 text-white py-1 px-4 rounded-md mr-2"
+                onClick={handleClick}
+                className="bg-red-500 hover:bg-red-600 text-white py-1 px-4 rounded-md mr-2"
               >
-                Guardar
+                Confirmar Eliminar
               </button>
               <button
+                onClick={() => setConfirmDelete(false)}
                 className="bg-gray-500 hover:bg-gray-600 text-white py-1 px-4 rounded-md"
-                onClick={() => setEditando(false)}
               >
                 Cancelar
               </button>
             </>
           ) : (
             <>
-              <button
-                onClick={handleEditar}
-                className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-4 rounded-md mr-2"
-              >
-                Editar
-              </button>
-              <button className="bg-red-500 hover:bg-red-600 text-white py-1 px-4 rounded-md">
-                Eliminar
-              </button>
+              {editando ? (
+                <>
+                  <button
+                    onClick={handleGuardar}
+                    className="bg-secondary hover:bg-darkPrimary text-white py-1 px-4 rounded-md mr-2"
+                  >
+                    Guardar
+                  </button>
+                  <button
+                    onClick={() => setEditando(false)}
+                    className="bg-gray-500 hover:bg-gray-600 text-white py-1 px-4 rounded-md"
+                  >
+                    Cancelar
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    onClick={handleClick}
+                    className="bg-red-500 hover:bg-red-600 text-white py-1 px-4 rounded-md mr-2"
+                  >
+                    Eliminar
+                  </button>
+                  <button
+                    className="bg-tertiary hover:bg-secondary text-white py-1 px-4 rounded-md"
+                    onClick={() => setEditando(true)}
+                  >
+                    Editar
+                  </button>
+                </>
+              )}
             </>
           )}
         </div>

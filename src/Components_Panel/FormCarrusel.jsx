@@ -35,7 +35,7 @@ function FormCarrusel() {
               {...register("titulo")}
               id="titulo"
               name="titulo"
-              className="mt-1 p-2 w-full border rounded-md"
+              className="mt-1 p-2 w-full border rounded-md border-gray-800"
               placeholder="Titulo "
             />
           </div>
@@ -50,7 +50,7 @@ function FormCarrusel() {
                 id="img1"
                 name="img1"
                 accept="image/*"
-                className="mt-1 p-2 w-full border rounded-md"
+                className="mt-1 p-2 w-full border rounded-md border-gray-800"
               />
             </div>
             <div className="mb-4">
@@ -63,7 +63,7 @@ function FormCarrusel() {
                 id="img2"
                 name="img2"
                 accept="image/*"
-                className="mt-1 p-2 w-full border rounded-md"
+                className="mt-1 p-2 w-full border rounded-md border-gray-800"
               />
             </div>
           </div>
@@ -79,7 +79,7 @@ function FormCarrusel() {
                 name="img3"
                 //accept: que tipo de archivo acepta en este caso imagen y el /* es que acepta jpg,, png, etc
                 accept="image/*"
-                className="mt-1 p-2 w-full border rounded-md"
+                className="mt-1 p-2 w-full border rounded-md border-gray-800"
               />
             </div>
             <div className="mb-4">
@@ -92,7 +92,7 @@ function FormCarrusel() {
                 id="img4"
                 name="img4"
                 accept="image/*"
-                className="mt-1 p-2 w-full border rounded-md"
+                className="mt-1 p-2 w-full border rounded-md border-gray-800"
               /> 
             </div>
           </div>

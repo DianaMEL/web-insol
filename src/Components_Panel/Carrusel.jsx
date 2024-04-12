@@ -168,7 +168,7 @@ function Carrusel({ carrusel }) {
                 <>
                   <button
                     onClick={handleGuardar}
-                    className="bg-green-500 hover:bg-green-600 text-white py-1 px-4 rounded-md mr-2"
+                    className="bg-secondary hover:bg-darkPrimary text-white py-1 px-4 rounded-md mr-2"
                   >
                     Guardar
                   </button>
@@ -188,7 +188,7 @@ function Carrusel({ carrusel }) {
                     Eliminar
                   </button>
                   <button
-                    className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-4 rounded-md"
+                    className="bg-tertiary hover:bg-secondary text-white py-1 px-4 rounded-md"
                     onClick={() => setEditando(true)}
                   >
                     Editar

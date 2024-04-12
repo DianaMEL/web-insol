@@ -82,8 +82,8 @@ function FormUbicacion({id}) {
               {...register("nombre")}
               id="nombre"
               name="nombre"
-              className="mt-1 p-2 w-full border rounded-md "
-              placeholder="Nombre de la Ubucacion"
+              className="mt-1 p-2 w-full border rounded-md border-gray-800"
+              placeholder="Nombre de la Ubucacion "
             />
           </div>   
           <div className="mb-4">
@@ -95,7 +95,7 @@ function FormUbicacion({id}) {
               {...register("direccion")}
               id="direccion"
               name="direccion"
-              className="mt-1 p-2 w-full border rounded-md"
+              className="mt-1 p-2 w-full border rounded-md border-gray-800"
               placeholder="Direccion del Lugar"
             />
           </div> 
@@ -109,7 +109,7 @@ function FormUbicacion({id}) {
                 {...register("latitud")}
                 id="latitud"
                 name="latitud"
-                className="mt-1 p-2 w-full border rounded-md"
+                className="mt-1 p-2 w-full border rounded-md border-gray-800"
               />
             </div>
             <div className="mb-4">
@@ -121,7 +121,7 @@ function FormUbicacion({id}) {
                 {...register("longitud")}
                 id="longitud"
                 name="longitud"
-                className="mt-1 p-2 w-full border rounded-md"
+                className="mt-1 p-2 w-full border rounded-md border-gray-800"
               />
             </div>
           </div>

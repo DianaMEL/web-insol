@@ -39,8 +39,11 @@ function CarruselPage() {
             <FormCarrusel/>
             </div>
           ) : (
-            // Mostrar el botón "Nuevo Proyecto" cuando mostrarFormulario es false
-            <button onClick={handleClickNuevoProyecto} className="mt-14 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md">Nuevo Carrusel</button>
+            <div className='mt-7'>
+              
+            <button onClick={handleClickNuevoProyecto} className="mt-14 bg-tertiary hover:bg-secondary text-white py-2 px-4 rounded-md">Nuevo Carrusel</button>
+            </div>
+            
           )}
       </div>
       {!mostrarFormulario && (

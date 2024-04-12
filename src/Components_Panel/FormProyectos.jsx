@@ -58,7 +58,7 @@ function FormProyectos({reloadProyectos}) {
                   {...register("titulo")}
                   id="titulo"
                   name="titulo"
-                  className="mt-1 p-2 w-full border rounded-md"
+                  className="mt-1 p-2 w-full border rounded-md border-gray-800"
                   placeholder="Titulo del Proyecto"
                 />
               </div>
@@ -71,7 +71,7 @@ function FormProyectos({reloadProyectos}) {
                   {...register("frase")}
                   id="frase"
                   name="frase"
-                  className="mt-1 p-2 w-full border rounded-md"
+                  className="mt-1 p-2 w-full border rounded-md border-gray-800"
                   placeholder="Frase inspiradora"
                 />
               </div>
@@ -87,7 +87,7 @@ function FormProyectos({reloadProyectos}) {
                   id="video"
                   name="video"
                   accept="video/*"
-                  className="mt-1 p-2 w-full border rounded-md"
+                  className="mt-1 p-2 w-full border rounded-md border-gray-800"
                   placeholder="Agregar Video del Proyecto"
                 />
               </div>
@@ -100,7 +100,7 @@ function FormProyectos({reloadProyectos}) {
                   {...register("fecha")}
                   id="fecha"
                   name="fecha"
-                  className="mt-1 p-2 w-full border rounded-md"
+                  className="mt-1 p-2 w-full border rounded-md border-gray-800"
                   placeholder="Fecha"
                 />
               </div>
@@ -111,7 +111,7 @@ function FormProyectos({reloadProyectos}) {
                 <select
                   id="area"
                   name="area"
-                  className=" mt-1 p-2 w-full border rounded-md"
+                  className=" mt-1 p-2 w-full border rounded-md border-gray-800"
                   {...register("area")}
                 >
                   <option value="" disabled selected>
@@ -136,7 +136,7 @@ function FormProyectos({reloadProyectos}) {
                 name="contenido"
                 value={contenido}
                 onChange={handleChange}
-                className="mt-1 p-2 w-full border rounded-md"
+                className="mt-1 p-2 w-full border rounded-md border-gray-800"
                 placeholder="Informacion del Proyecto "
               ></textarea>
             </div>
@@ -152,7 +152,7 @@ function FormProyectos({reloadProyectos}) {
                   name="imagen1"
                   //accept: que tipo de archivo acepta en este caso imagen y el /* es que acepta jpg,, png, etc
                   accept="image/*"
-                  className="mt-1 p-2 w-full border rounded-md"
+                  className="mt-1 p-2 w-full border rounded-md border-gray-800"
                 />
               </div>
               <div className="mb-4">
@@ -165,7 +165,7 @@ function FormProyectos({reloadProyectos}) {
                   id="imagen2"
                   name="imagen2"
                   accept="image/*"
-                  className="mt-1 p-2 w-full border rounded-md"
+                  className="mt-1 p-2 w-full border rounded-md border-gray-800"
                 />
               </div>
               <div className="mb-4">
@@ -178,7 +178,7 @@ function FormProyectos({reloadProyectos}) {
                   id="imagen3"
                   name="imagen3"
                   accept="image/*"
-                  className="mt-1 p-2 w-full border rounded-md"
+                  className="mt-1 p-2 w-full border rounded-md border-gray-800"
                 />
               </div>
             </div>
