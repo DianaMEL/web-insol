@@ -88,7 +88,7 @@ function ProyectosPage() {
           // Mostrar el botón "Nuevo Proyecto" cuando mostrarFormulario es false
           <button
             onClick={handleClickNuevoProyecto}
-            className="mt-14 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md"
+            className="mt-14 bg-tertiary hover:bg-secondary text-white py-2 px-4 rounded-md"
           >
             Nuevo Proyecto
           </button>

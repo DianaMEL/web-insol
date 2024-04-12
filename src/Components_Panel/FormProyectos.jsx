@@ -66,8 +66,8 @@ function FormProyectos({ reloadProyectos, proyectoToUpdate, isUpdateMode }) {
                   {...register("titulo")}
                   id="titulo"
                   name="titulo"
-                  className="mt-1 p-2 w-full border rounded-md"
-                  placeholder="Título del Proyecto"
+                  className="mt-1 p-2 w-full border rounded-md border-gray-800"
+                  placeholder="Titulo del Proyecto"
                 />
               </div>
               <div className="mb-4">
@@ -79,7 +79,7 @@ function FormProyectos({ reloadProyectos, proyectoToUpdate, isUpdateMode }) {
                   {...register("frase")}
                   id="frase"
                   name="frase"
-                  className="mt-1 p-2 w-full border rounded-md"
+                  className="mt-1 p-2 w-full border rounded-md border-gray-800"
                   placeholder="Frase inspiradora"
                 />
               </div>
@@ -95,7 +95,7 @@ function FormProyectos({ reloadProyectos, proyectoToUpdate, isUpdateMode }) {
                   id="video"
                   name="video"
                   accept="video/*"
-                  className="mt-1 p-2 w-full border rounded-md"
+                  className="mt-1 p-2 w-full border rounded-md border-gray-800"
                   placeholder="Agregar Video del Proyecto"
                 />
               </div>
@@ -108,7 +108,7 @@ function FormProyectos({ reloadProyectos, proyectoToUpdate, isUpdateMode }) {
                   {...register("fecha")}
                   id="fecha"
                   name="fecha"
-                  className="mt-1 p-2 w-full border rounded-md"
+                  className="mt-1 p-2 w-full border rounded-md border-gray-800"
                   placeholder="Fecha"
                 />
               </div>
@@ -119,7 +119,7 @@ function FormProyectos({ reloadProyectos, proyectoToUpdate, isUpdateMode }) {
                 <select
                   id="area"
                   name="area"
-                  className="mt-1 p-2 w-full border rounded-md"
+                  className=" mt-1 p-2 w-full border rounded-md border-gray-800"
                   {...register("area")}
                 >
                   <option value="" disabled defaultValue>
@@ -165,7 +165,7 @@ function FormProyectos({ reloadProyectos, proyectoToUpdate, isUpdateMode }) {
                   id="imagen1"
                   name="imagen1"
                   accept="image/*"
-                  className="mt-1 p-2 w-full border rounded-md"
+                  className="mt-1 p-2 w-full border rounded-md border-gray-800"
                 />
               </div>
               <div className="mb-4">
@@ -181,7 +181,7 @@ function FormProyectos({ reloadProyectos, proyectoToUpdate, isUpdateMode }) {
                   id="imagen2"
                   name="imagen2"
                   accept="image/*"
-                  className="mt-1 p-2 w-full border rounded-md"
+                  className="mt-1 p-2 w-full border rounded-md border-gray-800"
                 />
               </div>
               <div className="mb-4">
@@ -197,7 +197,7 @@ function FormProyectos({ reloadProyectos, proyectoToUpdate, isUpdateMode }) {
                   id="imagen3"
                   name="imagen3"
                   accept="image/*"
-                  className="mt-1 p-2 w-full border rounded-md"
+                  className="mt-1 p-2 w-full border rounded-md border-gray-800"
                 />
               </div>
             </div>

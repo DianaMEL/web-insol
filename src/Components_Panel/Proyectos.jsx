@@ -72,7 +72,7 @@ function Proyectos({ proyecto, reloadProyectos, onUpdateClick}) {
         {/* Botones de eliminar y editar */}
         <div className="flex justify-end mt-4">
           {confirmDelete ? (
-            <>
+            <> 
               <button
                 onClick={handleDelete}
                 className="bg-red-500 hover:bg-red-600 text-white py-1 px-4 rounded-md mr-2"

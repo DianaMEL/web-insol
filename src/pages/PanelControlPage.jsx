@@ -3,6 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
 import NavbarPanel from "../Components_Panel/NavbarPanel";
 import { HiOutlineViewList } from "react-icons/hi";
+import { FaMapMarkedAlt } from "react-icons/fa";
+import { MdOutlineViewCarousel } from "react-icons/md";
+import { FaStore } from "react-icons/fa";
+import { GrProjects } from "react-icons/gr";
 import FormProyectos from "../Components_Panel/FormProyectos";
 import FormCarrusel from "../Components_Panel/FormCarrusel";
 import PanelPrincipal from "../Components_Panel/PanelPrincipal";
@@ -38,7 +42,7 @@ function PanelControlPage() {
   }, [isAuthenticated]);*/
 
   return (
-    <div className="bg-darkPrimary bg-opacity-50 h-screen">
+    <div className="h-screen">
       <NavbarPanel />
       <div className="flex ">
         {/* Barra lateral */}
@@ -58,7 +62,7 @@ function PanelControlPage() {
                   }`}
                   onClick={() => handleTabClick("proyectos")}
                 >
-                  <HiOutlineViewList className="flex-shrink-0 w-5 h-5  transition duration-75 dark:text-gray-400 group-hover:text-secondary text-primary" />
+                  <GrProjects className="flex-shrink-0 w-5 h-5  transition duration-75 dark:text-gray-400 group-hover:text-secondary text-primary" />
                   <span className="p-2 font-bold">Proyectos</span>
                 </a>
               </li>
@@ -72,7 +76,7 @@ function PanelControlPage() {
                   }`}
                   onClick={() => handleTabClick("mapa")}
                 >
-                  <HiOutlineViewList className="flex-shrink-0 w-5 h-5  transition duration-75 dark:text-gray-400 group-hover:text-secondary text-primary" />
+                  <FaMapMarkedAlt className="flex-shrink-0 w-5 h-5  transition duration-75 dark:text-gray-400 group-hover:text-secondary text-primary" />
                   <span className="p-2 font-bold">Mapa</span>
                 </a>
               </li>
@@ -86,7 +90,7 @@ function PanelControlPage() {
                   }`}
                   onClick={() => handleTabClick("carrusel")}
                 >
-                  <HiOutlineViewList className="flex-shrink-0 w-5 h-5  transition duration-75 dark:text-gray-400 group-hover:text-secondary text-primary" />
+                  <MdOutlineViewCarousel className="flex-shrink-0 w-5 h-5  transition duration-75 dark:text-gray-400 group-hover:text-secondary text-primary" />
                   <span className="p-2 font-bold">Carrusel</span>
                 </a>
               </li>
@@ -114,7 +118,7 @@ function PanelControlPage() {
                   }`}
                   onClick={() => handleTabClick("tienda")}
                 >
-                  <HiOutlineViewList className="flex-shrink-0 w-5 h-5  transition duration-75 dark:text-gray-400 group-hover:text-secondary text-primary" />
+                  <FaStore className="flex-shrink-0 w-5 h-5  transition duration-75 dark:text-gray-400 group-hover:text-secondary text-primary" />
                   <span className="p-2 font-bold">Tienda</span>
                 </a>
               </li>
@@ -126,9 +130,7 @@ function PanelControlPage() {
                     activeTab === "agregarProducto" ? "" : ""
                   }`}
                   onClick={() => handleTabClick("agregarProducto")}
-                >
-                  <HiOutlineViewList className="flex-shrink-0 w-5 h-5  transition duration-75 dark:text-gray-400 group-hover:text-secondary text-primary" />
-                  <span className="p-2 font-bold">Agregar Productos</span>
+                > 
                 </a>
               </li>
               {/* Agregar Categorias */}
@@ -139,9 +141,7 @@ function PanelControlPage() {
                     activeTab === "agregarCategoria" ? "" : ""
                   }`}
                   onClick={() => handleTabClick("agregarCategoria")}
-                >
-                  <HiOutlineViewList className="flex-shrink-0 w-5 h-5  transition duration-75 dark:text-gray-400 group-hover:text-secondary text-primary" />
-                  <span className="p-2 font-bold">Agregar Categoria</span>
+                > 
                 </a>
               </li>
             </ul>

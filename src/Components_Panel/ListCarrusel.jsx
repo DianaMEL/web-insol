@@ -10,7 +10,7 @@ ListCarrusel({carruseles}) {
   // Verificamos si el arreglo de datos está vacío o es nulo
   if (!carruseles.length) return <h1>No hay datos disponibles</h1>;
 
-  // Estados para el paginador
+  // Estados para el paginador 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 1; // Cambia este valor según tus necesidades numero de elementos por página
 
@@ -25,7 +25,7 @@ ListCarrusel({carruseles}) {
   const paginatedData = carruseles.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
-  );
+  ); 
   
     return (
         <div>

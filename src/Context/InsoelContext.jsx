@@ -14,10 +14,18 @@ import {
 import {
   createCarruselRequest,
   deleteCarruselRequest,
+  editCarruselRequest,
   getCarruselesRequest,
   getCarruselPorTituloRequest,
   getCarruselRequest,
 } from "../api/carruseles"
+import { 
+  crearUbicacionRequest, 
+  deleteUbicacionRequest, 
+  getUbicacionesRequest, 
+  updateUbicacionRequest
+} from "../api/ubicaciones";
+import { crearSubMenuRequest, deleteSubMenuRequest, editarSubMenuRequest, getSubMenusRequest } from "../api/subMenus";
 
 const InsoelContext = createContext();
 
@@ -63,9 +71,6 @@ export function InsoelProvider({ children }) {
   //----------------Proyectos--------------
   const [proyectos, setProyectos] = useState([]);
   const [proyecto, setProyecto] = useState([]);
-
-  const [carruseles, setcarruseles] = useState([]);
-  const [carrusel, setCarrusel] = useState([]);
 
 
   // Funciones para la seccion de contactarnos
@@ -126,6 +131,9 @@ export function InsoelProvider({ children }) {
   }
 
   /** ------------------carrusel----------------------- */
+  const [carruseles, setcarruseles] = useState([]);
+  const [carrusel, setCarrusel] = useState([]);
+
   const createCarrusel = async (carrusel) => {
     const res = await createCarruselRequest(carrusel);
     console.log(res);
@@ -154,6 +162,15 @@ export function InsoelProvider({ children }) {
       console.error(error)
     }
   }
+
+  const editarCarrusel = async (id, carrusel) => {
+    try {
+      await editCarruselRequest(id, carrusel);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const getCarruselPorTitulo = async (titulo) => {
     try {
       const carruseles = await getCarruselPorTituloRequest(titulo);
@@ -164,6 +181,72 @@ export function InsoelProvider({ children }) {
       throw error; // Puedes manejar el error según tus necesidades
     }
   };
+
+   /** ------------------ubicaciones----------------------- */
+   const [ubicaciones, setUbicaciones] = useState([]);
+   const [ubicacion, setUbicacion] = useState([]);
+
+   const crearUbicacion= async (ubicacion) => {
+    const res = await crearUbicacionRequest(ubicacion);
+    console.log(res);
+  };
+  const obtenerUbicaciones= async () => {
+    const ubicaciones = await getUbicacionesRequest();
+    setUbicaciones(ubicaciones.data);
+  };
+
+  const deleteUbicacion = async (id) => {
+    try {
+      const res = await deleteUbicacionRequest(id);
+      console.log(res)
+      if (res.status === 204)
+        setUbicacion(ubicacion.filter((ubicacion) => ubicacion._id !== id));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updateUbicacion = async (id, ubicacion) => {
+    try {
+      await updateUbicacionRequest(id, ubicacion);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  /** ------------------submenu----------------------- */
+  const [subMenus, setSubMenus] = useState([]);
+  const [subMenu, setSubMenu] = useState([]);
+
+  const crearSubMenu= async (subMenu) => {
+   const res = await crearSubMenuRequest(subMenu);
+   console.log(res);
+ };
+
+ const obtenerSubMenus= async () => {
+  const subMenus = await getSubMenusRequest();
+  setSubMenus(subMenus.data);
+};
+
+const deleteSubMenu = async (id) => {
+  try {
+    const res = await deleteSubMenuRequest(id);
+    console.log(res)
+    if (res.status === 204)
+      setSubMenu(subMenu.filter((submenu) => submenu._id !== id));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const updateSubMenu = async (id, submenu) => {
+  try {
+    await editarSubMenuRequest(id, submenu);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 
   return (
     <InsoelContext.Provider
@@ -179,6 +262,7 @@ export function InsoelProvider({ children }) {
         createCarrusel, //carruseles
         obtenerCarruseles,
         eliminarCarrusel,
+        editarCarrusel,
         getCarruselPorTitulo,
         getCarrusel,
         carruseles,
@@ -190,6 +274,14 @@ export function InsoelProvider({ children }) {
         deleteProyecto,
         getProyectos,
         getProyecto,
+        crearUbicacion, // ubicaciones
+        obtenerUbicaciones,
+        deleteUbicacion,
+        updateUbicacion,
+        crearSubMenu, // SUBMENU
+        obtenerSubMenus,
+        deleteSubMenu,
+        updateSubMenu,
         proyectos,
         proyecto,
       }}
