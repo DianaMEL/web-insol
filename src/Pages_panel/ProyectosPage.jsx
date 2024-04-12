@@ -6,19 +6,24 @@ import FormProyectos from "../Components_Panel/FormProyectos";
 import { useInsoel } from "../Context/InsoelContext";
 
 function ProyectosPage() {
-  const {getProyectos, proyectos} = useInsoel()
+  const { getProyectos, proyectos } = useInsoel();
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
+  const [isUpdateMode, setIsUpdateMode] = useState(false);
+  const [proyectoToUpdate, setProyectoToUpdate] = useState(null);
   //const [addProyecto, setAddProyecto] = useState(false)
+  const [recargar, setRecargar] = useState(false)
 
   useEffect(() => {
-    getProyectos()
-  }, [])
-
-   const handleReloadProyectos = () => {
-    console.log("cargando proyectos nuevamente")
     getProyectos();
+    setRecargar(false)
+  }, [recargar]);
+
+  const handleReloadProyectos = () => {
+    console.log("cargando proyectos nuevamente");
+    getProyectos();
+    setRecargar(true)
   };
-  console.log(proyectos)
+  //console.log(proyectos)
   /** 
   const proyectos2 = [
     {
@@ -53,11 +58,16 @@ function ProyectosPage() {
     },
   ];
   */
- 
 
   const handleClickNuevoProyecto = () => {
     setMostrarFormulario(true);
     //setAddProyecto(true)
+  };
+
+  const handleClickActualizarProyecto = (proyecto) => {
+    setProyectoToUpdate(proyecto);
+    setMostrarFormulario(true);
+    setIsUpdateMode(true);
   };
   return (
     <div className="container mx-auto px-4 py-8 ">
@@ -68,7 +78,11 @@ function ProyectosPage() {
         {mostrarFormulario ? (
           <div className="">
             // Mostrar el formulario cuando mostrarFormulario es true
-            <FormProyectos reloadProyectos={handleReloadProyectos} />
+            <FormProyectos
+              proyectoToUpdate={proyectoToUpdate} // Pasa el proyecto que se va a actualizar
+              isUpdateMode={isUpdateMode} // Pasa el modo de actualización
+              reloadProyectos={handleReloadProyectos}
+            />
           </div>
         ) : (
           // Mostrar el botón "Nuevo Proyecto" cuando mostrarFormulario es false
@@ -82,7 +96,11 @@ function ProyectosPage() {
       </div>
       {!mostrarFormulario && (
         <div>
-          <ListProyectos proyectos={proyectos} reloadProyectos={handleReloadProyectos} />
+          <ListProyectos
+            proyectos={proyectos}
+            reloadProyectos={handleReloadProyectos}
+            onUpdateClick={handleClickActualizarProyecto}
+          />
         </div>
       )}
     </div>

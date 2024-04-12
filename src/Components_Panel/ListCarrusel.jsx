@@ -3,7 +3,10 @@ import Carrusel from './Carrusel'
 import Paginador from './Paginador';
 import HomePage from '../pages/HomePage';
 
-function ListCarrusel({carruseles}) { 
+function 
+
+
+ListCarrusel({carruseles}) { 
   // Verificamos si el arreglo de datos está vacío o es nulo
   if (!carruseles.length) return <h1>No hay datos disponibles</h1>;
 

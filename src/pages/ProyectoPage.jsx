@@ -74,7 +74,7 @@ function ProyectoPage() {
               {proyecto.titulo}
             </h1>
             <h2 className="text-xl text-secondary">{fechaFormateada(proyecto.fecha)}</h2>
-            <div className="text-justify ">{proyecto.contenido}</div>
+            <div dangerouslySetInnerHTML={{ __html: proyecto.contenido }}/>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {proyecto.imagenes.map((imagen, index) => (
                 <div key={index} className="relative group">

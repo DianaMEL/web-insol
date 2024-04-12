@@ -9,6 +9,7 @@ import {
   getProyectoRequest,
   getProyectosRequest,
   deleteProyectoRequest,
+  updateProyectoRequest,
 } from "../api/proyectos";
 import {
   createCarruselRequest,
@@ -43,6 +44,7 @@ export function InsoelProvider({ children }) {
 
     // Obtener el día
     const dia = fecha.getDate();
+    //console.log(fecha)
 
     // Obtener el mes
     const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
@@ -53,6 +55,7 @@ export function InsoelProvider({ children }) {
 
     // Formatear la fecha en el formato deseado
     const fechaFormateada = `${dia} de ${mes} del ${año}`;
+    //console.log(fechaFormateada)
 
     return fechaFormateada
   }
@@ -102,6 +105,25 @@ export function InsoelProvider({ children }) {
       console.error(error)
     }
   };
+
+  const formDataToJson = (formData) => {
+    const json = {};
+    formData.forEach((value, key) => {
+      json[key] = value;
+    });
+    return json;
+  };
+
+  const updateProyecto = async(id, proyecto) =>{
+    //console.log(id)
+    //console.log(proyecto)
+    try {
+      const proyectoActualizado = await updateProyectoRequest(id, proyecto)
+      console.log(proyectoActualizado)
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   /** ------------------carrusel----------------------- */
   const createCarrusel = async (carrusel) => {
@@ -164,6 +186,7 @@ export function InsoelProvider({ children }) {
         fechaFormateada,
         createSolicitud,// Proyectos
         crearProyecto,
+        updateProyecto,
         deleteProyecto,
         getProyectos,
         getProyecto,

@@ -1,57 +1,65 @@
-import React, { useState } from "react";
-
-import LogoAmarilloBlanco from "../img/Logos/AmarilloBlanco.png";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useInsoel } from "../Context/InsoelContext";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css"; // Estilo por defecto del editor
 
-function FormProyectos({reloadProyectos}) {
+function FormProyectos({ reloadProyectos, proyectoToUpdate, isUpdateMode }) {
   const [contenido, setContenido] = useState("");
   const { register, handleSubmit, setValue } = useForm();
-  const { crearProyecto } = useInsoel();
+  const { crearProyecto, updateProyecto } = useInsoel();
 
-  const handleChange = (event) => {
-    // Reemplazar saltos de línea con \n
-    setContenido(event.target.value);
+  useEffect(() => {
+    if (isUpdateMode && proyectoToUpdate) {
+      setValue("titulo", proyectoToUpdate.titulo);
+      setValue("fecha", proyectoToUpdate.fecha);
+      setValue("area", proyectoToUpdate.area);
+      setValue("frase", proyectoToUpdate.frase);
+      setContenido(proyectoToUpdate.contenido); // Aquí estableces el contenido del editor
+    }
+  }, [isUpdateMode, proyectoToUpdate, setValue]);
+
+  const handleChange = (value) => {
+    setContenido(value);
   };
+
   const onSubmit = handleSubmit(async (data) => {
     const formData = new FormData();
     formData.append("titulo", data.titulo);
     formData.append("fecha", data.fecha);
-    formData.append("contenido", data.contenido);
-    formData.append("area", data.area)
+    formData.append("contenido", contenido); // Aquí usas el estado contenido
+    formData.append("area", data.area);
     formData.append("frase", data.frase);
     formData.append("imagen1", data.imagen1[0]);
     formData.append("imagen2", data.imagen2[0]);
     formData.append("imagen3", data.imagen3[0]);
     formData.append("video", data.video[0]);
-    //console.log(data.area)
-    await crearProyecto(formData);
-    reloadProyectos()
+    console.log([...formData.entries()]);
+
+    if (isUpdateMode && proyectoToUpdate) {
+      await updateProyecto(proyectoToUpdate._id, formData);
+    } else {
+      await crearProyecto(formData);
+    }
+
+    console.log("Enviando formulario...");
+    reloadProyectos();
   });
 
-  /** 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    // Aquí guardas la descripción en la base de datos
-    // Asegúrate de que el backend interprete \n como saltos de línea
-    console.log("Descripción a guardar:", contenido);
-    
-  };
-  */
-
   return (
-    <div className="flex ">
-      <div className=" ml-10 mr-10">
+    <div className="flex">
+      <div className="ml-10 mr-10">
         <div className="text-left mt-4 mb-2">
-          <h1 className="font-bold text-2xl text-secondary">Nuevo Proyecto </h1>
+          <h1 className="font-bold text-2xl text-secondary">
+            {isUpdateMode ? "Actualizar Proyecto" : "Nuevo Proyecto"}
+          </h1>
         </div>
         <div className=" ">
           <form onSubmit={onSubmit}>
             <div className="grid grid-cols-2 gap-4">
-              <div className="mb-4 ">
-                <label for="titulo" className="block text-lg font-bold ">
-                  Titulo
+              <div className="mb-4">
+                <label htmlFor="titulo" className="block text-lg font-bold">
+                  Título
                 </label>
                 <input
                   type="text"
@@ -59,11 +67,11 @@ function FormProyectos({reloadProyectos}) {
                   id="titulo"
                   name="titulo"
                   className="mt-1 p-2 w-full border rounded-md"
-                  placeholder="Titulo del Proyecto"
+                  placeholder="Título del Proyecto"
                 />
               </div>
               <div className="mb-4">
-                <label for="frase" className="block text-lg font-semibold ">
+                <label htmlFor="frase" className="block text-lg font-semibold">
                   Frase
                 </label>
                 <input
@@ -78,7 +86,7 @@ function FormProyectos({reloadProyectos}) {
             </div>
             <div className="grid grid-cols-3 gap-4">
               <div className="mb-4">
-                <label for="video" className="block text-lg font-semibold">
+                <label htmlFor="video" className="block text-lg font-semibold">
                   Video
                 </label>
                 <input
@@ -92,7 +100,7 @@ function FormProyectos({reloadProyectos}) {
                 />
               </div>
               <div className="mb-4">
-                <label for="fecha" className="block text-lg font-semibold ">
+                <label htmlFor="fecha" className="block text-lg font-semibold">
                   Fecha del Proyecto
                 </label>
                 <input
@@ -105,20 +113,24 @@ function FormProyectos({reloadProyectos}) {
                 />
               </div>
               <div className="mb-4">
-                <label for="fecha" className="block text-lg font-semibold ">
+                <label htmlFor="area" className="block text-lg font-semibold">
                   Seleccionar
                 </label>
                 <select
                   id="area"
                   name="area"
-                  className=" mt-1 p-2 w-full border rounded-md"
+                  className="mt-1 p-2 w-full border rounded-md"
                   {...register("area")}
                 >
-                  <option value="" disabled selected>
+                  <option value="" disabled defaultValue>
                     Area / Campo
                   </option>
-                  <option value= "Desarrollo Tecnológico">Desarrollo Tecnológico</option>
-                  <option value="Soluciones de Integracion">Soluciones de Integracion</option>
+                  <option value="Desarrollo Tecnológico">
+                    Desarrollo Tecnológico
+                  </option>
+                  <option value="Soluciones de Integracion">
+                    Soluciones de Integracion
+                  </option>
                   <option value="Infraestructura TI">Infraestructura TI</option>
                   <option value="Adquisición de Equipos y Herramientas">
                     Adquisición de Equipos y Herramientas
@@ -127,22 +139,24 @@ function FormProyectos({reloadProyectos}) {
               </div>
             </div>
             <div className="mb-4">
-              <label for="contenido" className="block text-lg font-semibold ">
+              <label
+                htmlFor="contenido"
+                className="block text-lg font-semibold"
+              >
                 Contenido
               </label>
-              <textarea
-                id="contenido"
-                {...register("contenido")}
-                name="contenido"
+              <ReactQuill
+                theme="snow"
                 value={contenido}
                 onChange={handleChange}
-                className="mt-1 p-2 w-full border rounded-md"
-                placeholder="Informacion del Proyecto "
-              ></textarea>
+              />
             </div>
             <div className="grid grid-cols-3 gap-4">
               <div className="mb-4">
-                <label for="imagen1" className="block text-lg font-semibold ">
+                <label
+                  htmlFor="imagen1"
+                  className="block text-lg font-semibold"
+                >
                   Imagen 1
                 </label>
                 <input
@@ -150,13 +164,15 @@ function FormProyectos({reloadProyectos}) {
                   {...register("imagen1")}
                   id="imagen1"
                   name="imagen1"
-                  //accept: que tipo de archivo acepta en este caso imagen y el /* es que acepta jpg,, png, etc
                   accept="image/*"
                   className="mt-1 p-2 w-full border rounded-md"
                 />
               </div>
               <div className="mb-4">
-                <label for="imagen2" className="block text-lg font-semibold ">
+                <label
+                  htmlFor="imagen2"
+                  className="block text-lg font-semibold"
+                >
                   Imagen 2
                 </label>
                 <input
@@ -169,7 +185,10 @@ function FormProyectos({reloadProyectos}) {
                 />
               </div>
               <div className="mb-4">
-                <label for="imagen3" className="block text-lg font-semibold ">
+                <label
+                  htmlFor="imagen3"
+                  className="block text-lg font-semibold"
+                >
                   Imagen 3
                 </label>
                 <input
@@ -185,134 +204,13 @@ function FormProyectos({reloadProyectos}) {
             <div className="mb-12">
               <button
                 type="submit"
-                className="bg-primary text-black py-2 px-4 rounded-md hover:bg-darkPrimary hover:text-white absolute right-14 "
+                className="bg-primary text-black py-2 px-4 rounded-md hover:bg-darkPrimary hover:text-white absolute right-14"
               >
                 Guardar
               </button>
             </div>
           </form>
         </div>
-        <form onSubmit={onSubmit} encType="multipart/form-data">
-          <div className="mb-4">
-            <label for="titulo" className="block text-sm font-medium">
-              Titulo
-            </label>
-            <input
-              type="text"
-              {...register("titulo")}
-              id="titulo"
-              name="titulo"
-              className="mt-1 p-2 w-full border rounded-md"
-              placeholder="Titulo del Proyecto"
-            />
-          </div>
-          <div class="grid grid-cols-2 gap-4">
-            <div className="mb-4">
-              <label for="video" className="block text-sm font-medium">
-                Video
-              </label>
-              <input
-                type="file"
-                {...register("video")}
-                id="video"
-                name="video"
-                accept="video/*"
-                className="mt-1 p-2 w-full border rounded-md"
-                placeholder="Agregar Video del Proyecto"
-              />
-            </div>
-            <div className="mb-4">
-              <label for="fecha" className="block text-sm font-medium ">
-                Fecha del Proyecto
-              </label>
-              <input
-                type="date"
-                {...register("fecha")}
-                id="fecha"
-                name="fecha"
-                className="mt-1 p-2 w-full border rounded-md"
-                placeholder="Fecha"
-              />
-            </div>
-          </div>
-          <div className="mb-4">
-            <label for="contenido" className="block text-sm font-medium ">
-              Contenido
-            </label>
-            <textarea
-              id="contenido"
-              {...register("contenido")}
-              name="contenido"
-              value={contenido}
-              onChange={handleChange}
-              className="mt-1 p-2 w-full border rounded-md"
-              placeholder="Informacion del Proyecto "
-            ></textarea>
-          </div>
-          <div class="grid grid-cols-3 gap-4">
-            <div className="mb-4">
-              <label for="imagen1" className="block text-sm font-medium ">
-                Imagen 1
-              </label>
-              <input
-                type="file"
-                {...register("imagen1")}
-                id="imagen1" 
-                name="imagen1"
-                //accept: que tipo de archivo acepta en este caso imagen y el /* es que acepta jpg,, png, etc
-                accept="image/*"
-                className="mt-1 p-2 w-full border rounded-md"
-              />
-            </div>
-            <div className="mb-4">
-              <label for="imagen2" className="block text-sm font-medium ">
-                Imagen 2
-              </label>
-              <input
-                type="file"
-                {...register("imagen2")}
-                id="imagen2"
-                name="imagen2"
-                accept="image/*"
-                className="mt-1 p-2 w-full border rounded-md"
-              />
-            </div>
-            <div className="mb-4">
-              <label for="imagen3" className="block text-sm font-medium ">
-                Imagen 3
-              </label>
-              <input
-                type="file"
-                {...register("imagen3")}
-                id="imagen3"
-                name="imagen3"
-                accept="image/*"
-                className="mt-1 p-2 w-full border rounded-md"
-              />
-            </div>
-          </div>
-          <div className="mb-4">
-            <label for="frase" className="block text-sm font-medium ">
-              Frase
-            </label>
-            <input
-              type="text"
-              {...register("frase")}
-              id="frase"
-              name="frase"
-              className="mt-1 p-2 w-full border rounded-md"
-              placeholder="Frase inspiradora"
-            />
-          </div>
-          <div className="mb-4">
-            <button
-              type="submit"
-              className="bg-primary text-black py-2 px-4 rounded-md hover:bg-darkPrimary hover:text-white"
-            >
-              Guardar
-            </button>
-          </div>
-        </form>
       </div>
     </div>
   );

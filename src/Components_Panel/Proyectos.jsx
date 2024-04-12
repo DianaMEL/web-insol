@@ -2,10 +2,11 @@ import React, { useRef, useState } from "react";
 import { useInsoel } from "../Context/InsoelContext";
 import { Link } from 'react-router-dom';
 
-function Proyectos({ proyecto, reloadProyectos }) {
+function Proyectos({ proyecto, reloadProyectos, onUpdateClick}) {
   const { deleteProyecto, fechaFormateada } = useInsoel();
   const videoRef = useRef(null);
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const contenidoTruncado = ""
 
   const MAX_LENGTH = 300; // Número máximo de caracteres que deseas mostrar
 
@@ -28,6 +29,7 @@ function Proyectos({ proyecto, reloadProyectos }) {
       setConfirmDelete(true);
     }
   };
+  console.log(proyecto.fecha)
 
   return (
     <div className="ml-5 mt-5 mr-5">
@@ -40,7 +42,7 @@ function Proyectos({ proyecto, reloadProyectos }) {
             <p className="text-black mb-4">{fechaFormateada(proyecto.fecha)}</p>
             <p className="text-black mb-4">{proyecto.area}</p>
             <p className="text-black mb-4">
-              {truncateText(proyecto.contenido, MAX_LENGTH)}
+            <div dangerouslySetInnerHTML={{ __html: truncateText(proyecto.contenido, MAX_LENGTH) }}/>
             </p>
             <p className="italic text-black mb-4">{proyecto.frase}</p>
           </div>
@@ -98,6 +100,7 @@ function Proyectos({ proyecto, reloadProyectos }) {
                 ? "hidden"
                 : "bg-blue-500 hover:bg-blue-600 text-white py-1 px-4 rounded-md"
             }`}
+            onClick={()=>{onUpdateClick(proyecto)}}
           >
             Editar
           </button>

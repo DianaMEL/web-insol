@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from 'react'
-import {useNavigate} from 'react-router-dom'
-import { useAuth } from '../Context/AuthContext';
-import NavbarPanel from '../Components_Panel/NavbarPanel'
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../Context/AuthContext";
+import NavbarPanel from "../Components_Panel/NavbarPanel";
 import { HiOutlineViewList } from "react-icons/hi";
 import FormProyectos from "../Components_Panel/FormProyectos";
 import FormCarrusel from "../Components_Panel/FormCarrusel";
@@ -27,9 +27,9 @@ function PanelControlPage() {
     setShowSubMenu(!showSubMenu);
   };
 
-  const { logout, isAuthenticated} = useAuth();
-  const navigate = useNavigate()
- /* useEffect(() => {
+  const { logout, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+  /* useEffect(() => {
     if (isAuthenticated) {
       navigate("/web-insol/panel");
     } else {
@@ -62,7 +62,7 @@ function PanelControlPage() {
                   <span className="p-2 font-bold">Proyectos</span>
                 </a>
               </li>
-              
+
               {/* Mapa */}
               <li>
                 <a
@@ -76,7 +76,7 @@ function PanelControlPage() {
                   <span className="p-2 font-bold">Mapa</span>
                 </a>
               </li>
-              
+
               {/* Carrusel */}
               <li>
                 <a
@@ -104,7 +104,7 @@ function PanelControlPage() {
                   <span className="p-2 font-bold">SubMenu</span>
                 </a>
               </li>
-              
+
               {/* Tienda */}
               <li>
                 <a
@@ -182,12 +182,12 @@ function PanelControlPage() {
             </div>
           )}
           {activeTab === "nuevoProyecto" && (
-            <div className="mt-24"> 
+            <div className="mt-24">
               <FormProyectos />
             </div>
           )}
           {activeTab === "agregarProducto" && (
-            <div className=""> 
+            <div className="">
               <FormProductos />
             </div>
           )}
@@ -197,12 +197,12 @@ function PanelControlPage() {
             </div>
           )}
           {activeTab === "agregarImg" && (
-            <div className=""> 
+            <div className="">
               <FormCarrusel />
             </div>
           )}
           {activeTab === "agregarUbicacion" && (
-            <div className=""> 
+            <div className="">
               <FormUbicacion />
             </div>
           )}
