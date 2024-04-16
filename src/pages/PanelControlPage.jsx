@@ -21,10 +21,13 @@ import MapaUbicacionPage from "../Pages_panel/MapaUbicacionPage";
 function PanelControlPage() {
   const [activeTab, setActiveTab] = useState(null); // Estado para rastrear la pestaña activa
   const [showSubMenu, setShowSubMenu] = useState(false); // Estado para rastrear si se muestra el submenú de Proyectos
+  const [key, setKey] = useState(0); // Clave para forzar la recarga del componente
 
   const handleTabClick = (tabName) => {
     // Esta función cambiará el estado activeTab cuando se haga clic en una pestaña
     setActiveTab(tabName);
+    // Incrementar la clave para forzar la recarga del componente
+    setKey((prevKey) => prevKey + 1);
   };
 
   const toggleSubMenu = () => {
@@ -55,101 +58,94 @@ function PanelControlPage() {
             <ul className="space-y-2 font-medium">
               {/* Proyectos */}
               <li>
-                <a
-                  href="#"
-                  className={`flex items-center text-white hover:text-black hover:bg-primary p-2 mt-2 rounded-lg dark:text-white group ${
+                <button
+                  className={`flex items-center w-full text-white hover:text-black hover:bg-primary p-2 mt-2 rounded-lg dark:text-white group ${
                     activeTab === "proyectos" ? "" : ""
                   }`}
                   onClick={() => handleTabClick("proyectos")}
                 >
                   <GrProjects className="flex-shrink-0 w-5 h-5  transition duration-75 dark:text-gray-400 group-hover:text-secondary text-primary" />
                   <span className="p-2 font-bold">Proyectos</span>
-                </a>
+                </button>
               </li>
 
               {/* Mapa */}
               <li>
-                <a
-                  href="#"
-                  className={`flex items-center text-white hover:text-black hover:bg-primary p-2 mt-2 rounded-lg dark:text-white group ${
+                <button
+                  className={`flex items-center w-full text-white hover:text-black hover:bg-primary p-2 mt-2 rounded-lg dark:text-white group ${
                     activeTab === "mapa" ? "" : ""
                   }`}
                   onClick={() => handleTabClick("mapa")}
                 >
                   <FaMapMarkedAlt className="flex-shrink-0 w-5 h-5  transition duration-75 dark:text-gray-400 group-hover:text-secondary text-primary" />
                   <span className="p-2 font-bold">Mapa</span>
-                </a>
+                </button>
               </li>
 
               {/* Carrusel */}
               <li>
-                <a
-                  href="#"
-                  className={`flex items-center text-white hover:text-black hover:bg-primary p-2 mt-2 rounded-lg dark:text-white group ${
+                <button
+                  className={`flex items-center w-full text-white hover:text-black hover:bg-primary p-2 mt-2 rounded-lg dark:text-white group ${
                     activeTab === "carrusel" ? "" : ""
                   }`}
                   onClick={() => handleTabClick("carrusel")}
                 >
                   <MdOutlineViewCarousel className="flex-shrink-0 w-5 h-5  transition duration-75 dark:text-gray-400 group-hover:text-secondary text-primary" />
                   <span className="p-2 font-bold">Carrusel</span>
-                </a>
+                </button>
               </li>
 
               {/* SubMenu */}
               <li>
-                <a
-                  href="#"
-                  className={`flex items-center text-white hover:text-black hover:bg-primary p-2 mt-2 rounded-lg dark:text-white group ${
+                <button
+                  className={`flex items-center w-full text-white hover:text-black hover:bg-primary p-2 mt-2 rounded-lg dark:text-white group ${
                     activeTab === "submenu" ? "" : ""
                   }`}
                   onClick={() => handleTabClick("submenu")}
                 >
                   <HiOutlineViewList className="flex-shrink-0 w-5 h-5  transition duration-75 dark:text-gray-400 group-hover:text-secondary text-primary" />
                   <span className="p-2 font-bold">SubMenu</span>
-                </a>
+                </button>
               </li>
 
               {/* Tienda */}
               <li>
-                <a
-                  href="#"
-                  className={`flex items-center text-white hover:text-black hover:bg-primary p-2 mt-2 rounded-lg dark:text-white group ${
+                <button
+                  className={`flex items-center w-full text-white hover:text-black hover:bg-primary p-2 mt-2 rounded-lg dark:text-white group ${
                     activeTab === "tienda" ? "" : ""
                   }`}
                   onClick={() => handleTabClick("tienda")}
                 >
                   <FaStore className="flex-shrink-0 w-5 h-5  transition duration-75 dark:text-gray-400 group-hover:text-secondary text-primary" />
                   <span className="p-2 font-bold">Tienda</span>
-                </a>
+                </button>
               </li>
               {/* Agregar Productos */}
               <li>
-                <a
-                  href="#"
-                  className={`flex items-center text-white hover:text-black hover:bg-primary p-2 mt-2 rounded-lg dark:text-white group ${
+                <button
+                  className={`flex items-center w-full text-white hover:text-black hover:bg-primary p-2 mt-2 rounded-lg dark:text-white group ${
                     activeTab === "agregarProducto" ? "" : ""
                   }`}
                   onClick={() => handleTabClick("agregarProducto")}
                 > 
-                </a>
+                </button>
               </li>
               {/* Agregar Categorias */}
               <li>
-                <a
-                  href="#"
-                  className={`flex items-center text-white hover:text-black hover:bg-primary p-2 mt-2 rounded-lg dark:text-white group ${
+                <button
+                  className={`flex items-center w-full text-white hover:text-black hover:bg-primary p-2 mt-2 rounded-lg dark:text-white group ${
                     activeTab === "agregarCategoria" ? "" : ""
                   }`}
                   onClick={() => handleTabClick("agregarCategoria")}
                 > 
-                </a>
+                </button>
               </li>
             </ul>
           </div>
         </aside>
 
         {/* Contenido principal */}
-        <div className="flex-1 xl:mt-0 sm:ml-64 ">
+        <div key={key} className="flex-1 xl:mt-0 sm:ml-64 ">
           {/* Contenido dinámico basado en la pestaña activa */}
           {!activeTab && (
             <div>
