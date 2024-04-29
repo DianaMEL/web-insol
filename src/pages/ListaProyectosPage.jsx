@@ -18,7 +18,7 @@ function ListaProyectosPage() {
       <h2>Proyectos</h2>
       {proyectos.map((proyecto) => (
         <div key={proyecto._id}>
-          <h3>{proyecto.titulo}</h3>
+          <h3>{proyecto.titulo}</h3> 
           <p>{proyecto.contenido}</p>
           <button onClick={useNavigate}></button>
           {/** 

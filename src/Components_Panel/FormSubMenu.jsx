@@ -2,7 +2,7 @@ import React from 'react'
 import { useForm } from "react-hook-form";
 import { useInsoel } from '../Context/InsoelContext';
 
-function FormSubMenu() {
+function FormSubMenu({reloadSubMenu}) {
     const { register, handleSubmit } = useForm();
     const {crearSubMenu} = useInsoel();
 
@@ -14,6 +14,9 @@ function FormSubMenu() {
         formData.append('descripcion', data.descripcion);
         //console.log(formData)
         await crearSubMenu(formData)
+
+        console.log("Enviando formulario...");
+        reloadSubMenu();
       })
 
 

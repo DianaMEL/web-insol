@@ -6,15 +6,15 @@ import FormProyectos from "../Components_Panel/FormProyectos";
 import { useInsoel } from "../Context/InsoelContext";
 
 function ProyectosPage() {
-  const { getProyectos, proyectos } = useInsoel();
+  const { getProyectos, proyectos } = useInsoel(); 
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
   const [isUpdateMode, setIsUpdateMode] = useState(false);
-  const [proyectoToUpdate, setProyectoToUpdate] = useState(null);
+  const [proyectoToUpdate, setProyectoToUpdate] = useState(null); 
   //const [addProyecto, setAddProyecto] = useState(false)
   const [recargar, setRecargar] = useState(false)
 
   useEffect(() => {
-    getProyectos();
+    getProyectos(); 
     setRecargar(false)
   }, [recargar]);
 
@@ -98,7 +98,7 @@ function ProyectosPage() {
         <div>
           <ListProyectos
             proyectos={proyectos}
-            reloadProyectos={handleReloadProyectos}
+            reloadProyectos={handleReloadProyectos} 
             onUpdateClick={handleClickActualizarProyecto}
           />
         </div>

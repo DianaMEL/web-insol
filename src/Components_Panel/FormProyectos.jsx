@@ -55,7 +55,7 @@ function FormProyectos({ reloadProyectos, proyectoToUpdate, isUpdateMode }) {
           </h1>
         </div>
         <div className=" ">
-          <form onSubmit={onSubmit}>
+          <form onSubmit={onSubmit}> 
             <div className="grid grid-cols-2 gap-4">
               <div className="mb-4">
                 <label htmlFor="titulo" className="block text-lg font-bold">

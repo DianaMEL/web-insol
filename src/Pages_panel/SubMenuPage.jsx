@@ -4,6 +4,7 @@ import Automa from "../img/Noticias/automatizacion.jpg";
 import ListSubMenu from '../Components_Panel/ListSubMenu';
 import FormSubMenu from '../Components_Panel/FormSubMenu'
 import { getSubMenusRequest } from '../api/subMenus';
+import { useInsoel } from '../Context/InsoelContext';
 
 function SubMenuPage() {
   /*  const submenus = [
@@ -22,27 +23,37 @@ function SubMenuPage() {
           enlace: "https://ejemplo.com/proyecto1"
         },
       ]; */
-
+    
     const [submenus, setSubMenus] = useState([]);
     const [mostrarFormulario, setMostrarFormulario] = useState(false);
+    const [recargar, setRecargar] = useState(false)
+
+    const obtenerSubMenus = async () => {
+      try {
+        const subMenus = await getSubMenusRequest();
+        setSubMenus(subMenus.data);
+      } catch (error) {
+        console.error('Error al obtener los SubMenus', error);
+      }
+    }; 
 
     useEffect(() => {
       obtenerSubMenus();
-    },[]);
+      setRecargar(false);
+    },[recargar]);
+
+    const handleReloadSubMenu = () => {
+      console.log("cargando SubMenus nuevamente");
+      obtenerSubMenus();
+      setRecargar(true);
+    };
 
       const handleClickNuevoProyecto = () => {
         setMostrarFormulario(true);
       };
     
     
-      const obtenerSubMenus = async () => {
-        try {
-          const subMenus = await getSubMenusRequest();
-          setSubMenus(subMenus.data);
-        } catch (error) {
-          console.error('Error al obtener los SubMenus', error);
-        }
-      };
+      
   
     return (
         <div className="container mx-auto px-4 py-8 ">
@@ -53,7 +64,8 @@ function SubMenuPage() {
         {mostrarFormulario ? (
             <div className=''>
                 // Mostrar el formulario cuando mostrarFormulario es true
-            <FormSubMenu />
+            <FormSubMenu
+            reloadSubMenu={handleReloadSubMenu} />
             </div>
           ) : (
             // Mostrar el botón "Nuevo Proyecto" cuando mostrarFormulario es false
@@ -63,7 +75,8 @@ function SubMenuPage() {
       </div>
       {!mostrarFormulario && (
             <div>
-              <ListSubMenu submenus={submenus} />
+              <ListSubMenu submenus={submenus} 
+               reloadSubMenu={handleReloadSubMenu}  />
             </div>
           )}
     </div>

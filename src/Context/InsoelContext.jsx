@@ -165,11 +165,13 @@ export function InsoelProvider({ children }) {
 
   const editarCarrusel = async (id, carrusel) => {
     try {
-      await editCarruselRequest(id, carrusel);
+      const carruselActualizado = await editCarruselRequest(id, carrusel);
+      console.log(carruselActualizado)
     } catch (error) {
       console.error(error);
     }
   };
+
 
   const getCarruselPorTitulo = async (titulo) => {
     try {
@@ -239,13 +241,15 @@ const deleteSubMenu = async (id) => {
   }
 };
 
-const updateSubMenu = async (id, submenu) => {
+const editarSubMenu = async (id, subMenu) => {
   try {
-    await editarSubMenuRequest(id, submenu);
+    const subMenuActualizado = await editarSubMenuRequest(id, subMenu);
+    console.log(subMenuActualizado)
   } catch (error) {
     console.error(error);
   }
 };
+
 
 
   return (
@@ -281,7 +285,7 @@ const updateSubMenu = async (id, submenu) => {
         crearSubMenu, // SUBMENU
         obtenerSubMenus,
         deleteSubMenu,
-        updateSubMenu,
+        editarSubMenu,
         proyectos,
         proyecto,
       }}
