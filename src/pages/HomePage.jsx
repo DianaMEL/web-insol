@@ -37,7 +37,7 @@ function HomePage() {
     setOpacidadColor('bg-opacity-75 bg-gradient-to-b from-secondary bottom-96');
 
     // Establece el título de la página
-    document.title = "Nosotros | INSOEL";
+    document.title = "INSOEL";
     return () => {
       document.title = "INSOEL";
     };

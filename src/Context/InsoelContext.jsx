@@ -18,14 +18,19 @@ import {
   getCarruselesRequest,
   getCarruselPorTituloRequest,
   getCarruselRequest,
-} from "../api/carruseles"
-import { 
-  crearUbicacionRequest, 
-  deleteUbicacionRequest, 
-  getUbicacionesRequest, 
-  updateUbicacionRequest
+} from "../api/carruseles";
+import {
+  crearUbicacionRequest,
+  deleteUbicacionRequest,
+  getUbicacionesRequest,
+  updateUbicacionRequest,
 } from "../api/ubicaciones";
-import { crearSubMenuRequest, deleteSubMenuRequest, editarSubMenuRequest, getSubMenusRequest } from "../api/subMenus";
+import {
+  crearSubMenuRequest,
+  deleteSubMenuRequest,
+  editarSubMenuRequest,
+  getSubMenusRequest,
+} from "../api/subMenus";
 
 const InsoelContext = createContext();
 
@@ -46,7 +51,7 @@ export function InsoelProvider({ children }) {
   );
 
   //-----------Funcion para formatear la fecha de ISO -------
-  const fechaFormateada = (fechaISO) =>{
+  const fechaFormateada = (fechaISO) => {
     // Convertir la cadena de fecha a objeto Date
     const fecha = new Date(fechaISO);
 
@@ -55,7 +60,20 @@ export function InsoelProvider({ children }) {
     //console.log(fecha)
 
     // Obtener el mes
-    const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+    const meses = [
+      "enero",
+      "febrero",
+      "marzo",
+      "abril",
+      "mayo",
+      "junio",
+      "julio",
+      "agosto",
+      "septiembre",
+      "octubre",
+      "noviembre",
+      "diciembre",
+    ];
     const mes = meses[fecha.getMonth()];
 
     // Obtener el año
@@ -65,13 +83,12 @@ export function InsoelProvider({ children }) {
     const fechaFormateada = `${dia} de ${mes} del ${año}`;
     //console.log(fechaFormateada)
 
-    return fechaFormateada
-  }
+    return fechaFormateada;
+  };
 
   //----------------Proyectos--------------
   const [proyectos, setProyectos] = useState([]);
   const [proyecto, setProyecto] = useState([]);
-
 
   // Funciones para la seccion de contactarnos
 
@@ -82,32 +99,41 @@ export function InsoelProvider({ children }) {
 
   /** ------------------Proyectos----------------------- */
   const crearProyecto = async (proyecto) => {
-    const res = await crearProyectoRequest(proyecto);
-    console.log(res);
-  };
-  const deleteProyecto = async (id) =>{
     try {
-      const res = await  deleteProyectoRequest(id)
+      const res = await crearProyectoRequest(proyecto);
+      return res;
+    } catch (error) {
+      console.error(error);
+      throw error; // Propaga el error para que sea capturado en la llamada a crearProyecto
+    }
+
+    //console.log(res);
+  };
+  const deleteProyecto = async (id) => {
+    try {
+      const res = await deleteProyectoRequest(id);
       if (res.status === 204) {
-      setProyectos(proyecto.filter((proyecto) => proyecto._id !== id))}
-          
-  } catch (error) {
+        setProyectos(proyecto.filter((proyecto) => proyecto._id !== id));
+      }
+    } catch (error) {
       console.log(error);
-  }
-  }
+      throw error;
+    }
+  };
   const getProyectos = async () => {
     const proyectos = await getProyectosRequest();
     setProyectos(proyectos.data);
-  }; 
+  };
   const getProyecto = async (id) => {
     //console.log(id)
     try {
       const proyecto = await getProyectoRequest(id);
-      setProyecto(proyecto.data)
+      setProyecto(proyecto.data);
       //console.log(proyecto.data)
-      return proyecto.data
+      return proyecto.data;
     } catch (error) {
-      console.error(error)
+      console.error(error);
+      throw error;
     }
   };
 
@@ -119,16 +145,18 @@ export function InsoelProvider({ children }) {
     return json;
   };
 
-  const updateProyecto = async(id, proyecto) =>{
+  const updateProyecto = async (id, proyecto) => {
     //console.log(id)
     //console.log(proyecto)
     try {
-      const proyectoActualizado = await updateProyectoRequest(id, proyecto)
-      console.log(proyectoActualizado)
+      const proyectoActualizado = await updateProyectoRequest(id, proyecto);
+
+      console.log(proyectoActualizado);
     } catch (error) {
-      console.error(error)
+      console.error(error);
+      throw error;
     }
-  }
+  };
 
   /** ------------------carrusel----------------------- */
   const [carruseles, setcarruseles] = useState([]);
@@ -143,25 +171,25 @@ export function InsoelProvider({ children }) {
     setcarruseles(carruseles.data);
   };
   const getCarrusel = async (id) => {
-    console.log(id)
+    console.log(id);
     try {
       const carrusel = await getCarruselRequest(id);
-      setCarrusel(carrusel.data)
-      return carrusel.data
+      setCarrusel(carrusel.data);
+      return carrusel.data;
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   };
   const eliminarCarrusel = async (id) => {
-    console.log(id)
+    console.log(id);
     try {
       const carrusel = await deleteCarruselRequest(id);
-      setCarrusel(carrusel.data)
-      return carrusel.data
+      setCarrusel(carrusel.data);
+      return carrusel.data;
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   const editarCarrusel = async (id, carrusel) => {
     try {
@@ -176,7 +204,9 @@ export function InsoelProvider({ children }) {
   const getCarruselPorTitulo = async (titulo) => {
     try {
       const carruseles = await getCarruselPorTituloRequest(titulo);
-      const carruselFiltrado = carruseles.data.filter(carrusel => carrusel.titulo === titulo);
+      const carruselFiltrado = carruseles.data.filter(
+        (carrusel) => carrusel.titulo === titulo
+      );
       return carruselFiltrado;
     } catch (error) {
       console.error("Error al obtener el carrusel por título:", error);
@@ -184,15 +214,20 @@ export function InsoelProvider({ children }) {
     }
   };
 
-   /** ------------------ubicaciones----------------------- */
-   const [ubicaciones, setUbicaciones] = useState([]);
-   const [ubicacion, setUbicacion] = useState([]);
+  /** ------------------ubicaciones----------------------- */
+  const [ubicaciones, setUbicaciones] = useState([]);
+  const [ubicacion, setUbicacion] = useState([]);
 
-   const crearUbicacion= async (ubicacion) => {
-    const res = await crearUbicacionRequest(ubicacion);
-    console.log(res);
+  const crearUbicacion = async (ubicacion) => {
+    try {
+      const res = await crearUbicacionRequest(ubicacion);
+      return res;
+    } catch (error) {
+      console.error(error);
+      throw error; // Propaga el error para que sea capturado en la llamada a crearUbicacion
+    }
   };
-  const obtenerUbicaciones= async () => {
+  const obtenerUbicaciones = async () => {
     const ubicaciones = await getUbicacionesRequest();
     setUbicaciones(ubicaciones.data);
   };
@@ -200,7 +235,7 @@ export function InsoelProvider({ children }) {
   const deleteUbicacion = async (id) => {
     try {
       const res = await deleteUbicacionRequest(id);
-      console.log(res)
+      console.log(res);
       if (res.status === 204)
         setUbicacion(ubicacion.filter((ubicacion) => ubicacion._id !== id));
     } catch (error) {
@@ -220,15 +255,15 @@ export function InsoelProvider({ children }) {
   const [subMenus, setSubMenus] = useState([]);
   const [subMenu, setSubMenu] = useState([]);
 
-  const crearSubMenu= async (subMenu) => {
-   const res = await crearSubMenuRequest(subMenu);
-   console.log(res);
- };
+  const crearSubMenu = async (subMenu) => {
+    const res = await crearSubMenuRequest(subMenu);
+    console.log(res);
+  };
 
- const obtenerSubMenus= async () => {
-  const subMenus = await getSubMenusRequest();
-  setSubMenus(subMenus.data);
-};
+  const obtenerSubMenus = async () => {
+    const subMenus = await getSubMenusRequest();
+    setSubMenus(subMenus.data);
+  };
 
 const deleteSubMenu = async (id) => {
   try {
@@ -250,6 +285,13 @@ const editarSubMenu = async (id, subMenu) => {
   }
 };
 
+  const updateSubMenu = async (id, submenu) => {
+    try {
+      await editarSubMenuRequest(id, submenu);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
 
   return (
@@ -272,7 +314,7 @@ const editarSubMenu = async (id, subMenu) => {
         carruseles,
         carrusel,
         fechaFormateada,
-        createSolicitud,// Proyectos
+        createSolicitud, // Proyectos
         crearProyecto,
         updateProyecto,
         deleteProyecto,
@@ -280,6 +322,7 @@ const editarSubMenu = async (id, subMenu) => {
         getProyecto,
         crearUbicacion, // ubicaciones
         obtenerUbicaciones,
+        ubicaciones,
         deleteUbicacion,
         updateUbicacion,
         crearSubMenu, // SUBMENU

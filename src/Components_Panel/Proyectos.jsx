@@ -29,7 +29,7 @@ function Proyectos({ proyecto, reloadProyectos, onUpdateClick}) {
       setConfirmDelete(true);
     }
   };
-  console.log(proyecto.fecha)
+  //console.log(proyecto.fecha)
 
   return (
     <div className="ml-5 mt-5 mr-5">

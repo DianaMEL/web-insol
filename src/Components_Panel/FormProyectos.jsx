@@ -3,8 +3,10 @@ import { useForm } from "react-hook-form";
 import { useInsoel } from "../Context/InsoelContext";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Estilo por defecto del editor
+//import { toast, ToastContainer } from "react-toastify";
+//import "react-toastify/dist/ReactToastify.css";
 
-function FormProyectos({ reloadProyectos, proyectoToUpdate, isUpdateMode }) {
+function FormProyectos({ reloadProyectos, proyectoToUpdate, isUpdateMode, toast }) {
   const [contenido, setContenido] = useState("");
   const { register, handleSubmit, setValue } = useForm();
   const { crearProyecto, updateProyecto } = useInsoel();
@@ -16,6 +18,9 @@ function FormProyectos({ reloadProyectos, proyectoToUpdate, isUpdateMode }) {
       setValue("area", proyectoToUpdate.area);
       setValue("frase", proyectoToUpdate.frase);
       setContenido(proyectoToUpdate.contenido); // Aquí estableces el contenido del editor
+      setValue("desc_Img1", proyectoToUpdate.imagenes[0].descripcion)
+      setValue("desc_Img2", proyectoToUpdate.imagenes[1].descripcion)
+      setValue("desc_Img3", proyectoToUpdate.imagenes[2].descripcion)
     }
   }, [isUpdateMode, proyectoToUpdate, setValue]);
 
@@ -33,23 +38,33 @@ function FormProyectos({ reloadProyectos, proyectoToUpdate, isUpdateMode }) {
     formData.append("imagen1", data.imagen1[0]);
     formData.append("imagen2", data.imagen2[0]);
     formData.append("imagen3", data.imagen3[0]);
+    formData.append("desc_Img1", data.desc_Img1);
+    formData.append("desc_Img2", data.desc_Img2);
+    formData.append("desc_Img3", data.desc_Img3);
     formData.append("video", data.video[0]);
     console.log([...formData.entries()]);
 
     if (isUpdateMode && proyectoToUpdate) {
-      await updateProyecto(proyectoToUpdate._id, formData);
+      //await updateProyecto(proyectoToUpdate._id, formData);
+      await toast.promise(updateProyecto(proyectoToUpdate._id, formData), {
+        pending: "Actualizando proyecto...",
+        success: "Proyecto actualizado con éxito",
+        error: "Error al actualizar el proyecto"
+      });
     } else {
-      await crearProyecto(formData);
+      await toast.promise(crearProyecto(formData), {
+        pending: "Guardando proyecto...",
+        success: "Proyecto guardado con éxito",
+        error: "Error al guardar el proyecto"
+      });
     }
-
-    console.log("Enviando formulario...");
     reloadProyectos();
   });
 
   return (
     <div className="flex">
       <div className="ml-10 mr-10">
-        <div className="text-left mt-4 mb-2">
+        <div className="text-left mt-10 mb-2">
           <h1 className="font-bold text-2xl text-secondary">
             {isUpdateMode ? "Actualizar Proyecto" : "Nuevo Proyecto"}
           </h1>
@@ -147,6 +162,7 @@ function FormProyectos({ reloadProyectos, proyectoToUpdate, isUpdateMode }) {
               </label>
               <ReactQuill
                 theme="snow"
+                className="border-gray-800 border "
                 value={contenido}
                 onChange={handleChange}
               />
@@ -201,10 +217,38 @@ function FormProyectos({ reloadProyectos, proyectoToUpdate, isUpdateMode }) {
                 />
               </div>
             </div>
+
+            {/*input para descripcion de las imagenes */}
+            <div className="grid grid-cols-3 gap-4 mb-2">
+              <input
+                {...register("desc_Img1")}
+                id="desc_Img1"
+                name="desc_Img1"
+                type="text"
+                className="mt-1 p-2 w-full border rounded-md border-gray-800"
+                placeholder="Descripción imagen 1"
+              />
+              <input
+                {...register("desc_Img2")}
+                id="desc_Img2"
+                name="desc_Img2"
+                type="text"
+                className="mt-1 p-2 w-full border rounded-md border-gray-800"
+                placeholder="Descripción imagen 2"
+              />
+              <input
+                {...register("desc_Img3")}
+                id="desc_Img3"
+                name="desc_Img3"
+                type="text"
+                className="mt-1 p-2 w-full border rounded-md border-gray-800"
+                placeholder="Descripción imagen 3"
+              />
+            </div>
             <div className="mb-12">
               <button
                 type="submit"
-                className="bg-primary text-black py-2 px-4 rounded-md hover:bg-darkPrimary hover:text-white absolute right-14"
+                className="mt-2 bg-primary text-black py-2 px-4 rounded-md hover:bg-darkPrimary hover:text-white absolute right-14 w-1/4"
               >
                 Guardar
               </button>
