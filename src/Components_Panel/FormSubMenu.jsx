@@ -28,9 +28,9 @@ function FormSubMenu({reloadSubMenu}) {
               </div>
           <div className="my-5 ">
             <form onSubmit={onSubmit} encType="multipart/form-data">
-            <div class="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-3 gap-4">
             <div className="mb-4">
-                <label for="area" className="block text-lg sm:text-base md:text-lg lg:text-xl font-semibold">
+                <label htmlFor="area" className="block text-lg sm:text-base md:text-lg lg:text-xl font-semibold">
                   Area
                 </label>
                 <input
@@ -43,7 +43,7 @@ function FormSubMenu({reloadSubMenu}) {
                 />
                 </div>
                 <div className="mb-4">
-                <label for="enlace" className="block text-lg sm:text-base md:text-lg lg:text-xl font-semibold">
+                <label htmlFor="enlace" className="block text-lg sm:text-base md:text-lg lg:text-xl font-semibold">
                   enlace
                 </label>
                 <input
@@ -56,7 +56,7 @@ function FormSubMenu({reloadSubMenu}) {
                 />
               </div>
               <div className="mb-4">
-                <label for="img" className="block text-lg font-semibold ">
+                <label htmlFor="img" className="block text-lg font-semibold ">
                     Imagen 
                   </label>
                   <input

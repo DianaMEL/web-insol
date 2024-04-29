@@ -27,7 +27,7 @@ function FormCarrusel() {
       <div className="my-12 ">
         <form onSubmit={onSubmit} encType="multipart/form-data">
           <div className="mb-4">
-            <label for="titulo" className="block text-lg sm:text-base md:text-lg lg:text-xl font-semibold">
+            <label htmlFor="titulo" className="block text-lg sm:text-base md:text-lg lg:text-xl font-semibold">
               Titulo
             </label>
             <input
@@ -41,7 +41,7 @@ function FormCarrusel() {
           </div>
           <div class="grid grid-cols-2 gap-4">
             <div className="mb-4">
-            <label for="img1" className="block text-lg font-semibold ">
+            <label htmlFor="img1" className="block text-lg font-semibold ">
                 Imagen 1
               </label>
               <input
@@ -54,7 +54,7 @@ function FormCarrusel() {
               />
             </div>
             <div className="mb-4">
-            <label for="img2" className="block text-lg font-semibold ">
+            <label htmlFor="img2" className="block text-lg font-semibold ">
                 Imagen 2
               </label>
               <input
@@ -69,7 +69,7 @@ function FormCarrusel() {
           </div>
           <div class="grid grid-cols-2 gap-4">
             <div className="mb-4">
-              <label for="img3" className="block text-lg font-semibold ">
+              <label htmlFor="img3" className="block text-lg font-semibold ">
                 Imagen 3
               </label>
               <input
@@ -83,7 +83,7 @@ function FormCarrusel() {
               />
             </div>
             <div className="mb-4">
-              <label for="img4" className="block text-lg font-semibold ">
+              <label htmlFor="img4" className="block text-lg font-semibold ">
                 Imagen 4
               </label>
               <input
