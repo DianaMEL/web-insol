@@ -18,7 +18,7 @@ function ProyectoPage() {
     const fetchProyecto = async () => {
       try {
         const res = await getProyecto(id);
-        console.log(res);
+        //console.log(res);
       } catch (error) {
         console.error("Error al obtener el proyecto:", error);
       } finally {
@@ -40,8 +40,6 @@ function ProyectoPage() {
     setVideoLoaded(true);
   };
 
-  
-
   return (
     <>
       {isLoading || !proyecto ? (
@@ -49,12 +47,12 @@ function ProyectoPage() {
       ) : (
         <div className="bg-bajo min-h-screen  flex flex-col">
           <div className="relative w-full h-auto md:h-screen">
-          {!videoLoaded && ( // Mostrar el gif o video de carga mientras el video principal se está cargando
-            <div className="absolute inset-y-0 inset-x-0 flex justify-center max-h-[80%] md:max-h-full items-center bg-black bg-opacity-50 mt-52 sm:mt-0">
-              {/* gif de carga */}
-              <img src={Carga} alt="Cargando..." />
-            </div>
-          )}
+            {!videoLoaded && ( // Mostrar el gif o video de carga mientras el video principal se está cargando
+              <div className="absolute inset-y-0 inset-x-0 flex justify-center max-h-[80%] md:max-h-full items-center bg-black bg-opacity-50 mt-52 sm:mt-0">
+                {/* gif de carga */}
+                <img src={Carga} alt="Cargando..." />
+              </div>
+            )}
             <video
               loop
               muted
@@ -67,14 +65,15 @@ function ProyectoPage() {
                 videoLoaded ? "block" : "hidden"
               }`}
             />
-
-        </div>
+          </div>
           <div className="text-black m-3 bg-light p-6 rounded-md shadow-md space-y-4">
             <h1 className="text-4xl font-semibold text-accent">
               {proyecto.titulo}
             </h1>
-            <h2 className="text-xl text-secondary">{fechaFormateada(proyecto.fecha)}</h2>
-            <div dangerouslySetInnerHTML={{ __html: proyecto.contenido }}/>
+            <h2 className="text-xl text-secondary">
+              {fechaFormateada(proyecto.fecha)}
+            </h2>
+            <div dangerouslySetInnerHTML={{ __html: proyecto.contenido }} />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {proyecto.imagenes.map((imagen, index) => (
                 <div key={index} className="relative group">
@@ -85,7 +84,7 @@ function ProyectoPage() {
                   />
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                     <p className="text-primary bg-secondary bg-opacity-75 p-2 text-lg font-bold">
-                      descripcion
+                      {imagen.descripcion}
                     </p>
                   </div>
                 </div>

@@ -4,62 +4,10 @@ import ListMapaUbicacion from "../Components_Panel/ListMapaUbicacion";
 import Paginador from "../Components_Panel/Paginador";
 import { getUbicacionesRequest } from "../api/ubicaciones";
 import { RiSearchLine } from 'react-icons/ri';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function MapaUbicacionPage() {
-  /*
-    const ubicaciones = [
-        {
-          id: 1,
-          nombre: "UNAM",
-          direccion:"Col. Loma Linda, San Juan del Rio, QRO, C.P.76820.",
-          latitud: "15.654 ",
-          longitud:"130.5434234",
-        },
-        {
-            id: 2,
-            nombre: "UNAM",
-            direccion:"Col. Loma Linda, San Juan del Rio, QRO, C.P.76820.",
-            latitud: "15.654 ",
-            longitud:"130.5434234",
-          },
-          {
-            id: 3,
-            nombre: "UNAM",
-            direccion:"Col. Loma Linda, San Juan del Rio, QRO, C.P.76820.",
-            latitud: "15.654 ",
-            longitud:"130.5434234",
-          },
-          {
-            id: 4,
-            nombre: "UNAM",
-            direccion:"Col. Loma Linda, San Juan del Rio, QRO, C.P.76820.",
-            latitud: "15.654 ",
-            longitud:"130.5434234",
-          },
-          {
-            id: 5,
-            nombre: "UNAM",
-            direccion:"Col. Loma Linda, San Juan del Rio, QRO, C.P.76820.",
-            latitud: "15.654 ",
-            longitud:"130.5434234",
-          },
-          {
-            id: 6,
-            nombre: "UNAM",
-            direccion:"Col. Loma Linda, San Juan del Rio, QRO, C.P.76820.",
-            latitud: "15.654 ",
-            longitud:"130.5434234",
-          },
-          {
-            id: 7,
-            nombre: "UNAM",
-            direccion:"Col. Loma Linda, San Juan del Rio, QRO, C.P.76820.",
-            latitud: "15.654 ",
-            longitud:"130.5434234",
-          },
-        
-      ];
-*/
   const [ubicaciones, setUbicaciones] = useState([]);
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
   const [filtroNombre, setFiltroNombre] = useState("");
@@ -94,7 +42,7 @@ function MapaUbicacionPage() {
         {mostrarFormulario ? (
           <div className="">
             {/* Mostrar el formulario cuando mostrarFormulario es true */}
-            <FormUbicacion />
+            <FormUbicacion toast={toast} />
           </div>
         ) : (
           <div>
@@ -123,6 +71,7 @@ function MapaUbicacionPage() {
             </div>
           </div>
         )}
+        <ToastContainer/>
       </div>
       {!mostrarFormulario && (
         <div>

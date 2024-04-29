@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { useInsoel } from '../Context/InsoelContext'
 import { useForm } from 'react-hook-form';
 
-function FormUbicacion({id}) {
+function FormUbicacion({id, toast}) {
 
   const { register, handleSubmit, setValue } = useForm();
   const {crearUbicacion, getUbicacion} = useInsoel();
@@ -35,11 +35,16 @@ function FormUbicacion({id}) {
     loadUbicacion();
   }, []);
 
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = handleSubmit(async(data) => {
     if (id) {
       setMostrarMensaje(true);
     } else {
-      crearUbicacion(data);
+      await toast.promise( crearUbicacion(data), {
+        pending: "Guardando ubicación...",
+        success: "Ubicación guardada con éxito",
+        error: "Error al guardar la ubicación"
+      });
+      //crearUbicacion(data);
       // Muestra el mensaje de confirmación
       setMostrarMensaje(true);
       // Reinicia los campos del formulario

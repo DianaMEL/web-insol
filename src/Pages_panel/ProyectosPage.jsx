@@ -4,6 +4,8 @@ import Automa from "../img/Noticias/automatizacion.jpg";
 import ListProyectos from "../Components_Panel/ListProyectos";
 import FormProyectos from "../Components_Panel/FormProyectos";
 import { useInsoel } from "../Context/InsoelContext";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function ProyectosPage() {
   const { getProyectos, proyectos } = useInsoel();
@@ -19,9 +21,10 @@ function ProyectosPage() {
   }, [recargar]);
 
   const handleReloadProyectos = () => {
-    console.log("cargando proyectos nuevamente");
     getProyectos();
     setRecargar(true)
+    setMostrarFormulario(false)
+    setIsUpdateMode(false)
   };
   //console.log(proyectos)
   /** 
@@ -77,11 +80,12 @@ function ProyectosPage() {
         )}
         {mostrarFormulario ? (
           <div className="">
-            // Mostrar el formulario cuando mostrarFormulario es true
+           { /* Mostrar el formulario cuando mostrarFormulario es true*/}
             <FormProyectos
               proyectoToUpdate={proyectoToUpdate} // Pasa el proyecto que se va a actualizar
               isUpdateMode={isUpdateMode} // Pasa el modo de actualización
               reloadProyectos={handleReloadProyectos}
+              toast = {toast}
             />
           </div>
         ) : (
@@ -103,6 +107,7 @@ function ProyectosPage() {
           />
         </div>
       )}
+      <ToastContainer/>
     </div>
   );
 }
