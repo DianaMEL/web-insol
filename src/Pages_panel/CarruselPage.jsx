@@ -10,6 +10,7 @@ function CarruselPage() {
   const [carruseles, setCarruseles] = useState([]);
  
       const [mostrarFormulario, setMostrarFormulario] = useState(false);
+
       useEffect(() => {
         obtenerCarruseles();
       }, []); 
@@ -26,6 +27,7 @@ function CarruselPage() {
       const handleClickNuevoProyecto = () => {
         setMostrarFormulario(true);
       };
+
 
     return (
         <div className="container mx-auto px-4 py-8 ">

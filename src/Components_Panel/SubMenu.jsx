@@ -1,26 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { deleteSubMenuRequest, editarSubMenuRequest } from "../api/subMenus";
+import { deleteSubMenuRequest,
+ } from "../api/subMenus";
+import { useForm } from "react-hook-form";
+import { useInsoel } from "../Context/InsoelContext";
 
-function SubMenu({ submenu }) {
+function SubMenu({ submenu, reloadSubMenu }) {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [editando, setEditando] = useState(false);
-  const [nuevoArea, setNuevoArea] = useState(submenu.area);
-  const [nuevoEnlace, setNuevoEnlace] = useState(submenu.enlace);
-  const [nuevaImg, setNuevaImg] = useState(submenu.img);
-  const [nuevaDescripcion, setNuevaDescripcion] = useState(submenu.descripcion);
-  const [nuevaImagen, setNuevaImagen] = useState(null);
+  const { register, handleSubmit, setValue  } = useForm(); 
+  const { editarSubMenu } = useInsoel();
 
   // Definir el id 
   const id = submenu ? submenu._id : null;
 
   useEffect(() => {
     if (submenu) {
-      setNuevoArea(submenu.area);
-      setNuevoEnlace(submenu.enlace);
-      setNuevaImg(submenu.img);
-      setNuevaDescripcion(submenu.descripcion)
+      setValue("area", submenu.area);
+      setValue("enlace", submenu.enlace);
+      setValue("descripcion", submenu.descripcion);
     }
-  }, [submenu]);
+  }, [submenu, setValue]);
 
   const handleClick = async () => {
     try {
@@ -39,8 +38,9 @@ function SubMenu({ submenu }) {
 
       // Restablecer el estado después de eliminar
       setConfirmDelete(false);
+      // Recargar la lista de carruseles después de eliminar uno 
+      reloadSubMenu();
 
-      // Recargar la lista de carruseles después de eliminar uno (
     } catch (error) {
       console.error("Error al eliminar el SubMenu:", error);
       // Aquí podrías manejar el error de alguna manera, por ejemplo, mostrando un mensaje al usuario
@@ -51,25 +51,19 @@ function SubMenu({ submenu }) {
     setEditando(true);
   };
  
-  const handleGuardar = async () => {
-    try {
-      // Console.log para verificar el estado de newImagenes
-    console.log("Estado :", nuevaImg);
-    
-      // Realizar solicitud PUT al backend para actualizar el carrusel
-      const response = await editarSubMenuRequest(id, {
-        area: nuevoArea,
-        enlace: nuevoEnlace,
-        img: nuevaImg,
-        descripcion: nuevaDescripcion,
-      }); 
-      console.log("SubMENU actualizado:", response.data);
-      setEditando(false); // Finalizar modo edición
-    } catch (error) {
-      console.error("Error al actualizar el carrusel:", error);
-      // Manejar el error según sea necesario
-    }
-  };
+  const onSubmit = handleSubmit(async(data)=>{
+    const formData = new FormData();
+    formData.append('area', data.area);
+    formData.append('enlace', data.enlace);
+    formData.append('img', data.img[0]);
+    formData.append('descripcion', data.descripcion);
+    console.log([...formData.entries()]);
+    //console.log(formData)
+    await editarSubMenu(submenu._id, formData)
+
+setEditando(false);
+    reloadSubMenu();
+  })
   
 
   return (
@@ -104,57 +98,70 @@ function SubMenu({ submenu }) {
           </div>
           <div className="">
             {editando && (
-              <>
-              <div className="grid grid-cols-2 ">
-              <input
-                  type="text"
-                  value={nuevoArea}
-                  onChange={(e) => setNuevoArea(e.target.value)}
-                  className="mb-2 w-full border border-gray-400 rounded-md p-1 mr-3"
-                />
-                 <select
-                  value={nuevoEnlace}
-                  onChange={(e) => setNuevoEnlace(e.target.value)}
-                  className="mb-4 w-full border border-gray-400 rounded-md p-2 ml-2 mr-2 mt-1"
-                >
-                  <option value="opcion1">Opción 1</option>
-                  <option value="opcion2">Opción 2</option>
-                  <option value="opcion3">Opción 3</option>
-                </select>
-
-              </div>
-                
-                <div className="grid grid-cols-2">
-                <input
-                  type="file"
-                  onChange={(e) => {
-                    const file = e.target.files[0];
-                    if (file) {
-                      setNuevaImagen(URL.createObjectURL(file));
-                    } else {
-                      setNuevaImagen(null);
-                    }
-                  }}
-                  className="mb-2 w-full border border-gray-400 rounded-md p-1"
-                />
-
-                {nuevaImagen && (
-                  <img
-                    src={nuevaImagen}
-                    alt="Imagen seleccionada"
-                    className="w-56 rounded-md mb-4 text-center"
+              <form onSubmit={onSubmit}>
+              <div class="grid grid-cols-2 gap-4">
+              <div className="">
+                  <label htmlFor="area" className="block text-lg sm:text-base md:text-lg lg:text-xl font-semibold">
+                    Area
+                  </label>
+                  <input
+                    type="text"
+                    {...register("area")}
+                    id="area"
+                    name="area"
+                    className="mt-1 p-2 w-full border rounded-md border-gray-800"
+                    placeholder="area "
                   />
-                )}
+                  </div>
+                  <div className="">
+                  <label htmlFor="enlace" className="block text-lg sm:text-base md:text-lg lg:text-xl font-semibold">
+                    enlace
+                  </label>
+                  <input
+                    type="text"
+                    {...register("enlace")}
+                    id="enlace"
+                    name="enlace"
+                    className="mt-1 p-2 w-full border rounded-md border-gray-800"
+                    placeholder="enlace "
+                  />
                 </div>
-                
-                <textarea
-                  value={nuevaDescripcion}
-                  onChange={(e) => setNuevaDescripcion(e.target.value)}
-                  className="mb-2 w-full border border-gray-400 rounded-md p-1"
-                  style={{ height: "auto", minHeight: "100px" }} // Establecer altura automática y una altura mínima
-                  rows={Math.max(nuevaDescripcion.split("\n").length, 3)} // Ajustar el número de filas basado en el número de líneas de texto
-                ></textarea>
-              </>
+                </div>
+                <div className="">
+                  <label htmlFor="img" className="block text-lg font-semibold ">
+                      Imagen 
+                    </label>
+                    <input
+                      type="file"
+                      {...register("img")}
+                      id="img"
+                      name="img"
+                      accept="image/*"
+                      className="mt-1 p-2 w-full border rounded-md border-gray-800"
+                    />
+                  </div>
+                  <div className="">
+                  <label htmlFor="descripcion" className="block text-lg font-semibold">
+          Descripción
+      </label>
+      <textarea
+          {...register("descripcion")}
+          id="descripcion"
+          name="descripcion"
+          className="mt-1 p-2 w-full border rounded-md border-gray-800"
+          rows="3" // puedes ajustar este valor según la cantidad de líneas que desees mostrar inicialmente
+      />
+                  </div>
+              
+                  <div className="flex justify-center">
+            <button
+              type="submit"
+              className="bg-secondary hover:bg-darkPrimary text-white py-1 px-4 rounded-md "
+            >
+              Guardar
+            </button>
+          </div>
+              </form>
             )}
           </div>
         </div>
@@ -179,12 +186,6 @@ function SubMenu({ submenu }) {
             <>
               {editando ? (
                 <>
-                  <button
-                    onClick={handleGuardar}
-                    className="bg-secondary hover:bg-darkPrimary text-white py-1 px-4 rounded-md mr-2"
-                  >
-                    Guardar
-                  </button>
                   <button
                     onClick={() => setEditando(false)}
                     className="bg-gray-500 hover:bg-gray-600 text-white py-1 px-4 rounded-md"

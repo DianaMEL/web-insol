@@ -193,11 +193,13 @@ export function InsoelProvider({ children }) {
 
   const editarCarrusel = async (id, carrusel) => {
     try {
-      await editCarruselRequest(id, carrusel);
+      const carruselActualizado = await editCarruselRequest(id, carrusel);
+      console.log(carruselActualizado)
     } catch (error) {
       console.error(error);
     }
   };
+
 
   const getCarruselPorTitulo = async (titulo) => {
     try {
@@ -263,16 +265,25 @@ export function InsoelProvider({ children }) {
     setSubMenus(subMenus.data);
   };
 
-  const deleteSubMenu = async (id) => {
-    try {
-      const res = await deleteSubMenuRequest(id);
-      console.log(res);
-      if (res.status === 204)
-        setSubMenu(subMenu.filter((submenu) => submenu._id !== id));
-    } catch (error) {
-      console.log(error);
-    }
-  };
+const deleteSubMenu = async (id) => {
+  try {
+    const res = await deleteSubMenuRequest(id);
+    console.log(res)
+    if (res.status === 204)
+      setSubMenu(subMenu.filter((submenu) => submenu._id !== id));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const editarSubMenu = async (id, subMenu) => {
+  try {
+    const subMenuActualizado = await editarSubMenuRequest(id, subMenu);
+    console.log(subMenuActualizado)
+  } catch (error) {
+    console.error(error);
+  }
+};
 
   const updateSubMenu = async (id, submenu) => {
     try {
@@ -281,6 +292,7 @@ export function InsoelProvider({ children }) {
       console.error(error);
     }
   };
+
 
   return (
     <InsoelContext.Provider
@@ -316,7 +328,7 @@ export function InsoelProvider({ children }) {
         crearSubMenu, // SUBMENU
         obtenerSubMenus,
         deleteSubMenu,
-        updateSubMenu,
+        editarSubMenu,
         proyectos,
         proyecto,
       }}
