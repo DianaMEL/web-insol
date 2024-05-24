@@ -6,10 +6,16 @@ import "react-quill/dist/quill.snow.css"; // Estilo por defecto del editor
 //import { toast, ToastContainer } from "react-toastify";
 //import "react-toastify/dist/ReactToastify.css";
 
-function FormProyectos({ reloadProyectos, proyectoToUpdate, isUpdateMode, toast }) {
+function FormProyectos({
+  reloadProyectos,
+  proyectoToUpdate,
+  isUpdateMode,
+  toast,
+}) {
   const [contenido, setContenido] = useState("");
   const { register, handleSubmit, setValue } = useForm();
-  const { crearProyecto, updateProyecto } = useInsoel();
+  const { crearProyecto, updateProyecto, obtenerAreas, areas} =
+    useInsoel();
 
   useEffect(() => {
     if (isUpdateMode && proyectoToUpdate) {
@@ -18,15 +24,21 @@ function FormProyectos({ reloadProyectos, proyectoToUpdate, isUpdateMode, toast 
       setValue("area", proyectoToUpdate.area);
       setValue("frase", proyectoToUpdate.frase);
       setContenido(proyectoToUpdate.contenido); // Aquí estableces el contenido del editor
-      setValue("desc_Img1", proyectoToUpdate.imagenes[0].descripcion)
-      setValue("desc_Img2", proyectoToUpdate.imagenes[1].descripcion)
-      setValue("desc_Img3", proyectoToUpdate.imagenes[2].descripcion)
+      setValue("desc_Img1", proyectoToUpdate.imagenes[0].descripcion);
+      setValue("desc_Img2", proyectoToUpdate.imagenes[1].descripcion);
+      setValue("desc_Img3", proyectoToUpdate.imagenes[2].descripcion);
     }
   }, [isUpdateMode, proyectoToUpdate, setValue]);
 
   const handleChange = (value) => {
     setContenido(value);
   };
+
+  useEffect(() => {
+    obtenerAreas()
+  }, []);
+
+  console.log(areas);
 
   const onSubmit = handleSubmit(async (data) => {
     const formData = new FormData();
@@ -49,13 +61,13 @@ function FormProyectos({ reloadProyectos, proyectoToUpdate, isUpdateMode, toast 
       await toast.promise(updateProyecto(proyectoToUpdate._id, formData), {
         pending: "Actualizando proyecto...",
         success: "Proyecto actualizado con éxito",
-        error: "Error al actualizar el proyecto"
+        error: "Error al actualizar el proyecto",
       });
     } else {
       await toast.promise(crearProyecto(formData), {
         pending: "Guardando proyecto...",
         success: "Proyecto guardado con éxito",
-        error: "Error al guardar el proyecto"
+        error: "Error al guardar el proyecto",
       });
     }
     reloadProyectos();
@@ -70,7 +82,7 @@ function FormProyectos({ reloadProyectos, proyectoToUpdate, isUpdateMode, toast 
           </h1>
         </div>
         <div className=" ">
-          <form onSubmit={onSubmit}> 
+          <form onSubmit={onSubmit}>
             <div className="grid grid-cols-2 gap-4">
               <div className="mb-4">
                 <label htmlFor="titulo" className="block text-lg font-bold">
@@ -131,6 +143,7 @@ function FormProyectos({ reloadProyectos, proyectoToUpdate, isUpdateMode, toast 
                 <label htmlFor="area" className="block text-lg font-semibold">
                   Seleccionar
                 </label>
+                {/** 
                 <select
                   id="area"
                   name="area"
@@ -150,6 +163,19 @@ function FormProyectos({ reloadProyectos, proyectoToUpdate, isUpdateMode, toast 
                   <option value="Adquisición de Equipos y Herramientas">
                     Adquisición de Equipos y Herramientas
                   </option>
+                </select>*/}
+                <select
+                  id="area"
+                  name="area"
+                  className=" mt-1 p-2 w-full border rounded-md border-gray-800"
+                  {...register("area")}
+                >
+                  <option value=""  defaultValue>
+                    Area / Campo
+                  </option>
+                  {areas.map((area) => (
+                    <option key={area._id} value={area.area}>{area.area}</option>
+                  ))}
                 </select>
               </div>
             </div>

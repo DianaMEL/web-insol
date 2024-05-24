@@ -28,7 +28,7 @@ import ListaProyectosPage from "./pages/ListaProyectosPage";
 import FormProyectos from "./Components_Panel/FormProyectos";
 import ProyectoPage from './pages/ProyectoPage'
 import FormCarrusel from "./Components_Panel/FormCarrusel";
-import FormSubMenu from "./Components_Panel/FormSubMenu";
+import FormArea from "./Components_Panel/FormArea";
 import FormProductos from "./Components_Panel/FormProductos";
 import PanelPrincipal from "./Components_Panel/PanelPrincipal";
 import FormCategoria from "./Components_Panel/FormCategoria";
@@ -72,7 +72,7 @@ function App() {
             <Route path="/web-insol/formularioProductos" element={<FormProductos />} />
             <Route path="/web-insol/formularioCategorias" element={<FormCategoria />} />
             <Route path="/web-insol/formularioUbicacion" element={<FormUbicacion />} />
-            <Route path="/web-insol/formularioSubMenu" element={<FormSubMenu />} />
+            <Route path="/web-insol/formularioArea" element={<FormArea />} />
             <Route pant="/web-insol/panel/panelPrincipal" element={<PanelPrincipal />} />
             <Route pant="/web-insol/panel/proyectos" element={<ProyectosPage/>} /> 
             <Route pant="/web-insol/panel/carrusel" element={<CarruselPage />} />

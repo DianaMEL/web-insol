@@ -4,7 +4,6 @@ import Footer from "../Components/Footer";
 import { useParams } from "react-router-dom";
 import LoadingScreen from "../Components/LoadingScreen";
 import Carga from "../img/Proyectos/Banco_Uat/001.gif";
-import Bio from "../img/Proyectos/Bio_Reactor/001.mp4";
 
 function ProyectoPage() {
   const { getProyecto, proyecto, fechaFormateada } = useInsoel();
@@ -17,8 +16,7 @@ function ProyectoPage() {
   useEffect(() => {
     const fetchProyecto = async () => {
       try {
-        const res = await getProyecto(id);
-        //console.log(res);
+        await getProyecto(id);
       } catch (error) {
         console.error("Error al obtener el proyecto:", error);
       } finally {
@@ -26,17 +24,16 @@ function ProyectoPage() {
       }
     };
     fetchProyecto();
-  }, []);
+  }, [id]);
 
   useEffect(() => {
-    document.title = proyecto ? `${proyecto.titulo} | INSOEL ` : "INSOEL";
+    document.title = proyecto ? `${proyecto.titulo} | INSOEL` : "INSOEL";
     return () => {
       document.title = "INSOEL";
     };
   }, [proyecto]);
 
   const handleLoadedData = () => {
-    console.log("cargado");
     setVideoLoaded(true);
   };
 
@@ -45,18 +42,17 @@ function ProyectoPage() {
       {isLoading || !proyecto ? (
         <LoadingScreen />
       ) : (
-        <div className="bg-bajo min-h-screen  flex flex-col">
+        <div className="bg-bajo min-h-screen flex flex-col">
           <div className="relative w-full h-auto md:h-screen">
-            {!videoLoaded && ( // Mostrar el gif o video de carga mientras el video principal se está cargando
+            {!videoLoaded && (
               <div className="absolute inset-y-0 inset-x-0 flex justify-center max-h-[80%] md:max-h-full items-center bg-black bg-opacity-50 mt-52 sm:mt-0">
-                {/* gif de carga */}
                 <img src={Carga} alt="Cargando..." />
               </div>
             )}
             <video
               loop
               muted
-              preload={"auto"}
+              preload="auto"
               ref={videoRef}
               autoPlay
               onLoadedData={handleLoadedData}

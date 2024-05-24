@@ -27,6 +27,8 @@ const Navbar_Context = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [isContentActive, setIsContentActive] = useState(false);
 
+  const { obtenerSubMenu, subMenu } = useInsoel();
+
   const handleInfoToggle = (info) => {
     setActiveInfo(activeInfo === info ? null : info);
     if (activeInfo === info) {
@@ -55,20 +57,20 @@ const Navbar_Context = () => {
   const imagePaths = [image1, image2, image3, image4];
 
   const enlaces = [
-    "/proyectos/BancoUAT",
-    "/proyectos/Biorreactor",
-    "/proyectos/Consultas",
-    "/web-insol/Tienda",
+    !subMenu ? "/proyectos/BancoUAT" : `/web-insol/proyecto/${subMenu.enlace1}`,
+    !subMenu ? "/proyectos/Biorreactor" : `/web-insol/proyecto/${subMenu.enlace2}`,
+    !subMenu ? "/proyectos/Consultas" :  `/web-insol/proyecto/${subMenu.enlace3}`,
+    !subMenu ? "/web-insol/Tienda" : `/web-insol/proyecto/${subMenu.enlace4}`,
   ];
 
   const descripciones = [
-    "Explora nuestra sección de Desarrollo Tecnológico para conocer los proyectos pioneros que hemos llevado a cabo. Desde la creación de soluciones personalizadas hasta la adopción de tecnologías emergentes, demostramos nuestro compromiso con la innovación y el avance en el mundo digital.",
+    !subMenu ?"Explora nuestra sección de Desarrollo Tecnológico para conocer los proyectos pioneros que hemos llevado a cabo. Desde la creación de soluciones personalizadas hasta la adopción de tecnologías emergentes, demostramos nuestro compromiso con la innovación y el avance en el mundo digital." : subMenu.area1.descripcion,
 
-    "Descubre nuestra amplia gama de proyectos de integración, donde combinamos tecnología innovadora y expertise empresarial para ofrecer soluciones personalizadas y eficientes. Desde integración de sistemas hasta implementaciones de software a medida, cada proyecto refleja nuestro compromiso con la excelencia y la satisfacción del cliente.",
+    !subMenu ? "Descubre nuestra amplia gama de proyectos de integración, donde combinamos tecnología innovadora y expertise empresarial para ofrecer soluciones personalizadas y eficientes. Desde integración de sistemas hasta implementaciones de software a medida, cada proyecto refleja nuestro compromiso con la excelencia y la satisfacción del cliente." : subMenu.area2.descripcion,
 
-    "Descubre cómo nuestra empresa ha transformado la infraestructura tecnológica con proyectos innovadores y eficientes. Desde la implementación de sistemas de gestión avanzados hasta la optimización de redes y servidores, nuestra sección de Infraestructura TI muestra nuestro compromiso con la excelencia tecnológica y la mejora continua.",
+    !subMenu ? "Descubre cómo nuestra empresa ha transformado la infraestructura tecnológica con proyectos innovadores y eficientes. Desde la implementación de sistemas de gestión avanzados hasta la optimización de redes y servidores, nuestra sección de Infraestructura TI muestra nuestro compromiso con la excelencia tecnológica y la mejora continua." : subMenu.area3.descripcion,
 
-    "Descubre nuestra sección de adquisición de equipos y herramientas, donde nuestra tienda virtual te brinda acceso directo a los productos líderes de la industria. Descubre soluciones eficientes para impulsar tus proyectos con facilidad y confianza.",
+    !subMenu ? "Descubre nuestra sección de adquisición de equipos y herramientas, donde nuestra tienda virtual te brinda acceso directo a los productos líderes de la industria. Descubre soluciones eficientes para impulsar tus proyectos con facilidad y confianza." : subMenu.area4.descripcion,
   ];
 
   const [imagen, setImagen] = useState(0);
@@ -85,6 +87,13 @@ const Navbar_Context = () => {
       setIsContentActive(false); // Desactiva el contenido al salir del recuadro
     }
   };
+
+  useEffect(() => {
+    obtenerSubMenu();
+  }, []);
+  if (subMenu) {
+    //console.log(subMenu.area1)
+  }
 
   return (
     <div>
@@ -314,7 +323,9 @@ const Navbar_Context = () => {
                               to="/proyectos/BancoUAT"
                               className="block text-black hover:bg-primary rounded p-2"
                             >
-                              Desarrollo Tecnológico
+                              {!subMenu
+                                ? "Desarrollo Tecnológico 2"
+                                : subMenu.area1.area}
                             </Link>
                           </li>
                           <li className="space-y-2 list-disc pt-2 pb-2">
@@ -322,7 +333,7 @@ const Navbar_Context = () => {
                               to="/proyectos/Biorreactor"
                               className="block text-black hover:bg-primary rounded p-2"
                             >
-                              Soluciones de Integración
+                              Soluciones de Integración 3
                             </Link>
                           </li>
                           <li className="space-y-2 list-disc pt-2 pb-2">
@@ -371,7 +382,7 @@ const Navbar_Context = () => {
                     onClick={() => handleClick(0)}
                     //onClick={() => handleInfoToggle("proyectos")}
                   >
-                    Desarrollo Tecnológico
+                    {!subMenu ? "Desarrollo Tecnológico 2" : subMenu.area1.area}
                     <br />
                   </p>
                   <br />
@@ -383,7 +394,9 @@ const Navbar_Context = () => {
                     }`}
                     onClick={() => handleClick(1)}
                   >
-                    Soluciones de Integración
+                    {!subMenu
+                      ? "Soluciones de Integración"
+                      : subMenu.area2.area}
                     <br />
                   </p>
                   <br />
@@ -395,7 +408,7 @@ const Navbar_Context = () => {
                     }`}
                     onClick={() => handleClick(2)}
                   >
-                    Infraestructura TI
+                    {!subMenu ? "Infraestructura TI" : subMenu.area3.area}
                     <br />
                   </p>
                   <br />
@@ -407,7 +420,9 @@ const Navbar_Context = () => {
                     }`}
                     onClick={() => handleClick(3)}
                   >
-                    Adquisición de Equipos y Herramientas
+                    {!subMenu
+                      ? "Adquisición de Equipos y Herramientas"
+                      : subMenu.area4.area}
                   </p>
                 </div>
 

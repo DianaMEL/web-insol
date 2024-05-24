@@ -2,9 +2,9 @@ import React from 'react'
 import { useForm } from "react-hook-form";
 import { useInsoel } from '../Context/InsoelContext';
 
-function FormSubMenu({reloadSubMenu}) {
+function FormArea({reloadArea}) {
     const { register, handleSubmit } = useForm();
-    const {crearSubMenu} = useInsoel();
+    const {crearArea} = useInsoel();
 
     const onSubmit = handleSubmit(async(data)=>{
         const formData = new FormData();
@@ -13,10 +13,10 @@ function FormSubMenu({reloadSubMenu}) {
         formData.append('img', data.img[0]);
         formData.append('descripcion', data.descripcion);
         //console.log(formData)
-        await crearSubMenu(formData)
+        await crearArea(formData)
 
         console.log("Enviando formulario...");
-        reloadSubMenu();
+        reloadArea();
       })
 
 
@@ -97,4 +97,4 @@ function FormSubMenu({reloadSubMenu}) {
       )
 }
 
-export default FormSubMenu
+export default FormArea

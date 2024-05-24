@@ -51,7 +51,7 @@ const Map = () => {
   useEffect(() => {
     obtenerUbicaciones();
   }, []);
-  console.log(ubicaciones);
+  //console.log(ubicaciones);
 
   const ZoomButton = () => {
     const map = useMap();

@@ -1,30 +1,30 @@
 import React, { useState, useEffect } from "react";
-import { deleteSubMenuRequest,
- } from "../api/subMenus";
+import { deleteAreaRequest,
+ } from "../api/area";
 import { useForm } from "react-hook-form";
 import { useInsoel } from "../Context/InsoelContext";
 
-function SubMenu({ submenu, reloadSubMenu }) {
+function Area({ area, reloadArea }) {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [editando, setEditando] = useState(false);
   const { register, handleSubmit, setValue  } = useForm(); 
-  const { editarSubMenu } = useInsoel();
+  const { editarArea } = useInsoel();
 
   // Definir el id 
-  const id = submenu ? submenu._id : null;
+  const id = area ? area._id : null;
 
   useEffect(() => {
-    if (submenu) {
-      setValue("area", submenu.area);
-      setValue("enlace", submenu.enlace);
-      setValue("descripcion", submenu.descripcion);
+    if (area) {
+      setValue("area", area.area);
+      setValue("enlace", area.enlace);
+      setValue("descripcion", area.descripcion);
     }
-  }, [submenu, setValue]);
+  }, [area, setValue]);
 
   const handleClick = async () => {
     try {
       if (!id) {
-        throw new Error("El ID del submenu no está definido");
+        throw new Error("El ID del area no está definido");
       }
 
       if (!confirmDelete) {
@@ -33,16 +33,16 @@ function SubMenu({ submenu, reloadSubMenu }) {
       }
 
       // Si confirmDelete es true, proceder con la eliminación
-      const data = await deleteSubMenuRequest(id);
-      console.log("SubMenu eliminado:", data);
+      const data = await deleteAreaRequest(id);
+      console.log("area eliminada:", data);
 
       // Restablecer el estado después de eliminar
       setConfirmDelete(false);
       // Recargar la lista de carruseles después de eliminar uno 
-      reloadSubMenu();
+      reloadArea();
 
     } catch (error) {
-      console.error("Error al eliminar el SubMenu:", error);
+      console.error("Error al eliminar el area:", error);
       // Aquí podrías manejar el error de alguna manera, por ejemplo, mostrando un mensaje al usuario
     }
   };
@@ -59,10 +59,10 @@ function SubMenu({ submenu, reloadSubMenu }) {
     formData.append('descripcion', data.descripcion);
     console.log([...formData.entries()]);
     //console.log(formData)
-    await editarSubMenu(submenu._id, formData)
+    await editarArea(area._id, formData)
 
 setEditando(false);
-    reloadSubMenu();
+    reloadArea();
   })
   
 
@@ -80,19 +80,19 @@ setEditando(false);
             <div className={editando ? "grid grid-cols-2 mr-3" : " "}>
               <div>
               <h2 className="text-2xl text-center  font-semibold text-secondary m-2 ">
-                {submenu.area}
+                {area.area}
               </h2>
-              <p className="text-black ml-2 mt-5">{submenu.enlace}</p>
+              <p className="text-black ml-2 mt-5">{area.enlace}</p>
               </div>
               <img
-                src={`http://localhost:3000/uploads/SubMenu/${submenu?.img?.nuevoNombre}`}
-                alt={submenu.area}
+                src={`http://localhost:3000/uploads/Area/${area?.img?.nuevoNombre}`}
+                alt={area.area}
                 className={editando ? "w-full h-40 object-cover rounded-md m-2" : "h-48 ml-28 mt-5  "}
               />
             </div>
             
               <p className={editando ? "text-black m-4 text-justify " : "text-black m-4 text-justify  text-lg mt-10"}>
-                {submenu.descripcion}
+                {area.descripcion}
               </p>
             
           </div>
@@ -217,4 +217,4 @@ setEditando(false);
   );
 }
 
-export default SubMenu;
+export default Area;

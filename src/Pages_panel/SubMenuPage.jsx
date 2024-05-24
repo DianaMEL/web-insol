@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react'
 
 import Automa from "../img/Noticias/automatizacion.jpg";
-import ListSubMenu from '../Components_Panel/ListSubMenu';
-import FormSubMenu from '../Components_Panel/FormSubMenu'
-import { getSubMenusRequest } from '../api/subMenus';
+import ListArea from '../Components_Panel/ListArea';
+import FormArea from '../Components_Panel/FormArea'
+import { getAreasRequest } from '../api/area';
 import { useInsoel } from '../Context/InsoelContext';
 
-function SubMenuPage() {
-  /*  const submenus = [
+function AreaPage() {
+  /*  const areas = [
         {
           id: 1,
           area: "Desarrollo Tecnologico",
@@ -24,27 +24,27 @@ function SubMenuPage() {
         },
       ]; */
     
-    const [submenus, setSubMenus] = useState([]);
+    const [areas, setAreas] = useState([]);
     const [mostrarFormulario, setMostrarFormulario] = useState(false);
     const [recargar, setRecargar] = useState(false)
 
-    const obtenerSubMenus = async () => {
+    const obtenerAreas = async () => {
       try {
-        const subMenus = await getSubMenusRequest();
-        setSubMenus(subMenus.data);
+        const areas = await getAreasRequest();
+        setAreas(areas.data);
       } catch (error) {
-        console.error('Error al obtener los SubMenus', error);
+        console.error('Error al obtener las Areas', error);
       }
     }; 
 
     useEffect(() => {
-      obtenerSubMenus();
+      obtenerAreas();
       setRecargar(false);
     },[recargar]);
 
-    const handleReloadSubMenu = () => {
-      console.log("cargando SubMenus nuevamente");
-      obtenerSubMenus();
+    const handleReloadArea = () => {
+      console.log("cargando Areas nuevamente");
+      obtenerAreas();
       setRecargar(true);
     };
 
@@ -59,28 +59,28 @@ function SubMenuPage() {
         <div className="container mx-auto px-4 py-8 ">
       <div className="flex justify-between items-center ">
       {!mostrarFormulario && (
-            <h1 className="mt-10 text-3xl font-bold ml-5">SubMenus</h1>
+            <h1 className="mt-10 text-3xl font-bold ml-5">Areas</h1>
           )}
         {mostrarFormulario ? (
             <div className=''>
                 // Mostrar el formulario cuando mostrarFormulario es true
-            <FormSubMenu
-            reloadSubMenu={handleReloadSubMenu} />
+            <FormArea
+            reloadArea={handleReloadArea} />
             </div>
           ) : (
             // Mostrar el botón "Nuevo Proyecto" cuando mostrarFormulario es false
             /* onClick={handleClickNuevoProyecto} */
-            <button onClick={handleClickNuevoProyecto} className="mt-14 bg-tertiary hover:bg-secondary text-white py-2 px-4 rounded-md">Nuevo SubMenu</button>
+            <button onClick={handleClickNuevoProyecto} className="mt-14 bg-tertiary hover:bg-secondary text-white py-2 px-4 rounded-md">Nueva Area</button>
           )}
       </div>
       {!mostrarFormulario && (
             <div>
-              <ListSubMenu submenus={submenus} 
-               reloadSubMenu={handleReloadSubMenu}  />
+              <ListArea areas={areas} 
+               reloadarea={handleReloadArea}  />
             </div>
           )}
     </div>
       )
 }
 
-export default SubMenuPage
+export default AreaPage
