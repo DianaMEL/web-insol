@@ -3,7 +3,7 @@ import LogoAmarilloBlanco from "../img/Logos/AmarilloBlanco.png";
 import { useForm } from "react-hook-form";
 import { useInsoel } from '../Context/InsoelContext';
 
-function FormCarrusel() {
+function FormCarrusel({reloadCarrusel, toast}) {
   const { register, handleSubmit } = useForm();
   const { createCarrusel } = useInsoel();
 
@@ -11,11 +11,20 @@ function FormCarrusel() {
     const formData = new FormData();
     formData.append('titulo', data.titulo)
     formData.append('img1', data.img1[0]);
-    formData.append('img2', data.img2[0]);
+    formData.append('img2', data.img2[0]); 
     formData.append('img3', data.img3[0]);
     formData.append('img4', data.img4[0]);
     //console.log(formData)
-    await createCarrusel(formData)
+    //await createCarrusel(formData)
+
+    await toast.promise(createCarrusel(formData), {
+      pending: "Guardando Carrusel...",
+      success: "Carrusel guardado con éxito",
+      error: "Error al guardar el Carrusel"
+    });
+    
+    console.log("Enviando formulario...");
+    reloadCarrusel();
   })
 
   return (

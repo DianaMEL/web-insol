@@ -104,7 +104,7 @@ function PanelControlPage() {
                   onClick={() => handleTabClick("submenu")}
                 >
                   <HiOutlineViewList className="flex-shrink-0 w-5 h-5  transition duration-75 dark:text-gray-400 group-hover:text-secondary text-primary" />
-                  <span className="p-2 font-bold">SubMenu</span>
+                  <span className="p-2 font-bold">Areas</span>
                 </button>
               </li>
 

@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 import SubMenu from './SubMenu'
 import Paginador from './Paginador';
 
-function ListSubMenu({submenus, reloadSubMenu}) {
+function ListSubMenu({submenus, reloadSubMenu, toast}) {
    // Verificamos si el arreglo de datos está vacío o es nulo
    if (!submenus.length) return <h1>No hay datos disponibles</h1>;
 
@@ -27,11 +27,11 @@ function ListSubMenu({submenus, reloadSubMenu}) {
           {" "} 
           <div className="grid gap-4 grid-cols-1">
             {paginatedData.map((submenu) => (
-              <SubMenu key={submenu.id} submenu={submenu} reloadSubMenu={reloadSubMenu} />
+              <SubMenu key={submenu.id} submenu={submenu} reloadSubMenu={reloadSubMenu} toast={toast}/>
             ))}
           </div> 
           <div style={{ position: 'fixed', bottom: '20px', right: '20px' }}>
-        <Paginador
+        <Paginador 
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={handlePageChange}

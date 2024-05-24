@@ -2,7 +2,7 @@ import React from 'react'
 import { useForm } from "react-hook-form";
 import { useInsoel } from '../Context/InsoelContext';
 
-function FormSubMenu({reloadSubMenu}) {
+function FormSubMenu({reloadSubMenu, toast}) {
     const { register, handleSubmit } = useForm();
     const {crearSubMenu} = useInsoel();
 
@@ -13,7 +13,13 @@ function FormSubMenu({reloadSubMenu}) {
         formData.append('img', data.img[0]);
         formData.append('descripcion', data.descripcion);
         //console.log(formData)
-        await crearSubMenu(formData)
+        //await crearSubMenu(formData)
+
+        await toast.promise(crearSubMenu(formData), {
+          pending: "Guardando SubMenu...",
+          success: "SubMenu Guardado con Éxito",
+          error: "Error al Guardar el SubMenu"
+        });
 
         console.log("Enviando formulario...");
         reloadSubMenu();

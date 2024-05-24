@@ -40,6 +40,7 @@ export const useInsoel = () => {
     throw new Error("useInsoel must be used with, a Insoelprovider");
   }
   return context;
+ 
 };
 
 export function InsoelProvider({ children }) {
@@ -49,6 +50,8 @@ export function InsoelProvider({ children }) {
   const [opacidadColor, setOpacidadColor] = useState(
     "bg-opacity-75 bg-gradient-to-b from-secondary bottom-96"
   );
+
+  
 
   //-----------Funcion para formatear la fecha de ISO -------
   const fechaFormateada = (fechaISO) => {
@@ -163,8 +166,13 @@ export function InsoelProvider({ children }) {
   const [carrusel, setCarrusel] = useState([]);
 
   const createCarrusel = async (carrusel) => {
-    const res = await createCarruselRequest(carrusel);
-    console.log(res);
+    try {
+      const res = await createCarruselRequest(carrusel);
+    return res;
+    } catch (error) {
+      throw error;
+    }
+    
   };
   const obtenerCarruseles = async () => {
     const carruseles = await getCarruselesRequest();
@@ -214,6 +222,8 @@ export function InsoelProvider({ children }) {
     }
   };
 
+ 
+
   /** ------------------ubicaciones----------------------- */
   const [ubicaciones, setUbicaciones] = useState([]);
   const [ubicacion, setUbicacion] = useState([]);
@@ -256,8 +266,12 @@ export function InsoelProvider({ children }) {
   const [subMenu, setSubMenu] = useState([]);
 
   const crearSubMenu = async (subMenu) => {
-    const res = await crearSubMenuRequest(subMenu);
+    try {
+      const res = await crearSubMenuRequest(subMenu);
     console.log(res);
+    } catch (error) {
+      throw error;
+    }
   };
 
   const obtenerSubMenus = async () => {
@@ -292,6 +306,12 @@ const editarSubMenu = async (id, subMenu) => {
       console.error(error);
     }
   };
+  
+  const [carruselActivo, setCarruselActivo] = useState(''); 
+
+  useEffect(() => {
+    console.log("Valor de carruselActivo en el contexto:", carruselActivo);
+  }, [carruselActivo]);
 
 
   return (
@@ -329,6 +349,8 @@ const editarSubMenu = async (id, subMenu) => {
         obtenerSubMenus,
         deleteSubMenu,
         editarSubMenu,
+        carruselActivo,  //carrusel
+        setCarruselActivo,
         proyectos,
         proyecto,
       }}

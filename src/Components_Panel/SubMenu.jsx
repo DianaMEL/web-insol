@@ -4,7 +4,7 @@ import { deleteSubMenuRequest,
 import { useForm } from "react-hook-form";
 import { useInsoel } from "../Context/InsoelContext";
 
-function SubMenu({ submenu, reloadSubMenu }) {
+function SubMenu({ submenu, reloadSubMenu, toast }) {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [editando, setEditando] = useState(false);
   const { register, handleSubmit, setValue  } = useForm(); 
@@ -38,7 +38,6 @@ function SubMenu({ submenu, reloadSubMenu }) {
 
       // Restablecer el estado después de eliminar
       setConfirmDelete(false);
-      // Recargar la lista de carruseles después de eliminar uno 
       reloadSubMenu();
 
     } catch (error) {
@@ -59,7 +58,13 @@ function SubMenu({ submenu, reloadSubMenu }) {
     formData.append('descripcion', data.descripcion);
     console.log([...formData.entries()]);
     //console.log(formData)
-    await editarSubMenu(submenu._id, formData)
+    //await editarSubMenu(submenu._id, formData)
+
+    await toast.promise(editarSubMenu(submenu._id, formData), {
+      pending: "Editando SubMenu...",
+      success: "SubMenu Editado con Éxito",
+      error: "Error al Editar el SubMenu"
+    });
 
 setEditando(false);
     reloadSubMenu();
@@ -95,7 +100,7 @@ setEditando(false);
                 {submenu.descripcion}
               </p>
             
-          </div>
+          </div> 
           <div className="">
             {editando && (
               <form onSubmit={onSubmit}>

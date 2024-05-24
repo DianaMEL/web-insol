@@ -12,14 +12,23 @@ import image4 from "../img/Carrusel/5.png";
 // Crea un array de rutas de imágenes
 const imagePaths = [image1, image2, image3, image4];
 
-function Carrusel({ carruseles, tituloCarrusel }) {
-   // Buscar el carrusel por el título
-   const carruselSeleccionado = carruseles.find(carrusel => carrusel.titulo === tituloCarrusel);
+function Carrusel({ carruseles, tituloCarrusel }) { 
+  
+  if (carruseles.length === 0) {
+    return <div>No hay carruseles disponibles</div>;  
+  }
+
+  console.log("Valor de tituloCarrusel en Carrusel:", tituloCarrusel);
+
+  // Buscar el carrusel por el título
+  const carruselSeleccionado = carruseles.find(carrusel => carrusel.titulo === tituloCarrusel);
    //console.log('titulo:', carruselSeleccionado);
   
   //console.log('Carruseles recibidos en Carrusel:', carruseles);
   const { setTxtColor, setLogoColor } = useInsoel();
   const [imagenActiva, setImagenActiva] = useState(0);
+
+ 
   
   useEffect(() => {
     if (carruselSeleccionado) {

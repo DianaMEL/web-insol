@@ -10,24 +10,35 @@ import { useInsoel } from "../Context/InsoelContext";
 import { getCarruselesRequest } from '../api/carruseles';
 
 function HomePage() {
+ 
 
-  
-  const [carruseles, setCarruseles] = useState([]);
-  const {setLogoColor, setTxtColor, setProyectColor, setOpacidadColor} = useInsoel();
+  const [carruseles, setCarruseles] = useState([]); 
+  const {carruselActivo, setLogoColor, setTxtColor, setProyectColor, setOpacidadColor} = useInsoel();
+
 
   useEffect(() => {
-    
-    const obtenerCarruseles = async () => {
-      try {
-        const carruseles = await getCarruselesRequest();
-        setCarruseles(carruseles.data);
-      } catch (error) {
-        console.error('Error al obtener carruseles', error);
-      }
-    };
+    console.log("Valor de carruselActivo en HomePage:", carruselActivo);
+  }, [carruselActivo]);
 
-    obtenerCarruseles();
-  }, []);
+ // Función para obtener los carruseles
+ const obtenerCarruseles = async () => {
+  try {
+    const response = await getCarruselesRequest();
+    console.log("Carruseles obtenidos:", response.data);
+    setCarruseles(response.data);
+  } catch (error) {
+    console.error('Error al obtener carruseles', error);
+  }
+};
+
+// Llama a la función para obtener los carruseles
+useEffect(() => {
+  obtenerCarruseles();
+}, []);
+
+  useEffect(() => {
+    console.log("Carruseles en HomePage:", carruseles);
+  }, [carruseles]);
 
   useEffect(() => {
     // Llamadas asincrónicas para establecer los colores
@@ -41,7 +52,8 @@ function HomePage() {
     return () => {
       document.title = "INSOEL";
     };
-  }, []); // Este efecto se ejecuta solo una vez al montar el componente
+  }, [carruselActivo]);
+
 
   return ( 
     <div className="flex flex-col h-screen  ">

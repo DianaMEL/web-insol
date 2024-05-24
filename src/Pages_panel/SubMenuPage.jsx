@@ -5,6 +5,8 @@ import ListSubMenu from '../Components_Panel/ListSubMenu';
 import FormSubMenu from '../Components_Panel/FormSubMenu'
 import { getSubMenusRequest } from '../api/subMenus';
 import { useInsoel } from '../Context/InsoelContext';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function SubMenuPage() {
   /*  const submenus = [
@@ -28,7 +30,7 @@ function SubMenuPage() {
     const [mostrarFormulario, setMostrarFormulario] = useState(false);
     const [recargar, setRecargar] = useState(false)
 
-    const obtenerSubMenus = async () => {
+    const obtenerSubMenus = async () => { 
       try {
         const subMenus = await getSubMenusRequest();
         setSubMenus(subMenus.data);
@@ -42,10 +44,12 @@ function SubMenuPage() {
       setRecargar(false);
     },[recargar]);
 
+
     const handleReloadSubMenu = () => {
       console.log("cargando SubMenus nuevamente");
       obtenerSubMenus();
       setRecargar(true);
+      setMostrarFormulario(false)
     };
 
       const handleClickNuevoProyecto = () => {
@@ -59,13 +63,13 @@ function SubMenuPage() {
         <div className="container mx-auto px-4 py-8 ">
       <div className="flex justify-between items-center ">
       {!mostrarFormulario && (
-            <h1 className="mt-10 text-3xl font-bold ml-5">SubMenus</h1>
+            <h1 className="mt-10 text-3xl font-bold ml-5">Areas</h1>
           )}
         {mostrarFormulario ? (
             <div className=''>
                 // Mostrar el formulario cuando mostrarFormulario es true
             <FormSubMenu
-            reloadSubMenu={handleReloadSubMenu} />
+            reloadSubMenu={handleReloadSubMenu} toast={toast} />
             </div>
           ) : (
             // Mostrar el botón "Nuevo Proyecto" cuando mostrarFormulario es false
@@ -73,10 +77,14 @@ function SubMenuPage() {
             <button onClick={handleClickNuevoProyecto} className="mt-14 bg-tertiary hover:bg-secondary text-white py-2 px-4 rounded-md">Nuevo SubMenu</button>
           )}
       </div>
+
+      <ToastContainer/>
+
       {!mostrarFormulario && (
             <div>
               <ListSubMenu submenus={submenus} 
-               reloadSubMenu={handleReloadSubMenu}  />
+               reloadSubMenu={handleReloadSubMenu} toast={toast} 
+           />
             </div>
           )}
     </div>

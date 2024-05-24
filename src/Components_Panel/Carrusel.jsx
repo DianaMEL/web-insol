@@ -6,14 +6,11 @@ import { useForm } from "react-hook-form";
 import { useInsoel } from "../Context/InsoelContext";
 
 
-function Carrusel({ carrusel }) {
+function Carrusel({ carrusel, reloadCarrusel, toast }) {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const { register, handleSubmit, setValue  } = useForm(); 
   const { editarCarrusel } = useInsoel();
   const [editando, setEditando] = useState(false);
-  const [nuevoTitulo, setNuevoTitulo] = useState(carrusel.titulo);
-  const [newImagenes, setNewImagenes] = useState(carrusel.imagenes);
-  const [nuevaImagen, setNuevaImagen] = useState(null);
   //console.log('Datos del carrusel:', carrusel.titulo, carrusel.imagenes);
 
   // Definir el id del carrusel
@@ -43,8 +40,8 @@ function Carrusel({ carrusel }) {
 
       // Restablecer el estado después de eliminar
       setConfirmDelete(false);
+      reloadCarrusel();
 
-      // Recargar la lista de carruseles después de eliminar uno (
     } catch (error) {
       console.error("Error al eliminar el carrusel:", error);
       // Aquí podrías manejar el error de alguna manera, por ejemplo, mostrando un mensaje al usuario
@@ -64,12 +61,22 @@ function Carrusel({ carrusel }) {
     formData.append('imagen4', data.imagen4[0]);
     console.log([...formData.entries()]);
     //console.log(formData)
-    await editarCarrusel(carrusel._id, formData)
+    //await editarCarrusel(carrusel._id, formData)
+
+    await toast.promise(editarCarrusel(carrusel._id, formData), {
+      pending: "Editando Carrusel...",
+      success: "Carrusel Editado con Éxito",
+      error: "Error al Editar el Carrusel"
+    });
+
+setEditando(false);
+    reloadCarrusel();
   })
+
   
 
   return (
-    <div className="m-5 ">
+    <div className="m-5 mt-8 ">
       <div className="bg-opacity-25 bg-gray-900 shadow-xl rounded-md p-4 relative">
         <div
           className={`grid grid-cols-1 ${
@@ -80,7 +87,7 @@ function Carrusel({ carrusel }) {
             className={editando ? "rid grid-cols-1 md:grid-cols-2 gap-6" : ""}
           >
             <h2 className="text-2xl text-center font-semibold text-secondary mb-4">
-              {carrusel.titulo}
+             {/*} {carrusel.titulo} */}
             </h2>
 
             <div
@@ -105,18 +112,8 @@ function Carrusel({ carrusel }) {
             {editando && (
               <form onSubmit={onSubmit} >
               <div className="mb-4">
-                <label htmlFor="titulo" className="block text-lg sm:text-base md:text-lg lg:text-xl font-semibold">
-                  Titulo
-                </label>
-                <input
-                  type="text"
-                  {...register("titulo")}
-                  id="titulo"
-                  name="titulo"
-                  className="mt-1 p-2 w-full border rounded-md border-gray-800"
-                  placeholder="Titulo "
-                />
-              </div>
+                
+              </div> 
               <div class="grid grid-cols-2 gap-4">
                 <div className="mb-4">
                 <label htmlFor="imagen1" className="block text-lg font-semibold ">
@@ -189,6 +186,7 @@ function Carrusel({ carrusel }) {
 
         {/* Botones de eliminar y editar */}
         <div className="flex justify-end ">
+          {/*
           {confirmDelete ? (
             <>
               <button
@@ -204,7 +202,7 @@ function Carrusel({ carrusel }) {
                 Cancelar
               </button>
             </>
-          ) : (
+          ) : ( */}
             <>
               {editando ? (
                 <>
@@ -217,13 +215,13 @@ function Carrusel({ carrusel }) {
                   </button>
                 </>
               ) : (
-                <>
+                <>{/*
                   <button
                     onClick={handleClick}
                     className="bg-red-500 hover:bg-red-600 text-white py-1 px-4 rounded-md mr-2 mt-5"
                   >
                     Eliminar
-                  </button>
+                  </button> */}
                   <button
                     className="bg-tertiary hover:bg-secondary text-white py-1 px-4 rounded-md mt-5"
                     onClick={() => setEditando(true)}
@@ -233,7 +231,7 @@ function Carrusel({ carrusel }) {
                 </>
               )}
             </>
-          )}
+         {/*} )} */}
         </div>
       </div>
     </div>

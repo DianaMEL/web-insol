@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import MapaUbicacion from './MapaUbicacion'
 import Paginador from './Paginador';
 
-function ListMapaUbicacion({ubicaciones}) {
+function ListMapaUbicacion({ubicaciones, reloadMapa}) {
   // Verificamos si el arreglo de datos está vacío o es nulo
   if (!ubicaciones.length) return <h1>No hay datos disponibles</h1>;
 
@@ -27,7 +27,7 @@ function ListMapaUbicacion({ubicaciones}) {
     <div>
       <div className="">
         {paginatedData.map((ubicacion) => (
-          <MapaUbicacion key={ubicacion.id} ubicacion={ubicacion} />
+          <MapaUbicacion key={ubicacion.id} ubicacion={ubicacion} reloadMapa={reloadMapa} />
         ))}
       </div>
       {/* Contenedor para el paginador con estilos para posicionarlo */}
