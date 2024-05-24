@@ -59,7 +59,13 @@ function Area({ area, reloadArea }) {
     formData.append('descripcion', data.descripcion);
     console.log([...formData.entries()]);
     //console.log(formData)
-    await editarArea(area._id, formData)
+    //await editarArea(area._id, formData)
+
+    await toast.promise(editarArea(area._id, formData), {
+      pending: "Editando Area...",
+      success: "Area Editada con Éxito",
+      error: "Error al Editar el Area"
+    });
 
 setEditando(false);
     reloadArea();
@@ -95,7 +101,7 @@ setEditando(false);
                 {area.descripcion}
               </p>
             
-          </div>
+          </div> 
           <div className="">
             {editando && (
               <form onSubmit={onSubmit}>

@@ -11,10 +11,7 @@ function MapaUbicacionPage() {
   const [ubicaciones, setUbicaciones] = useState([]);
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
   const [filtroNombre, setFiltroNombre] = useState("");
-
-  useEffect(() => {
-    obtenerUbicaciones();
-  }, []);
+  const [recargar, setRecargar] = useState(false)
 
   const obtenerUbicaciones = async () => {
     try {
@@ -24,6 +21,19 @@ function MapaUbicacionPage() {
       console.error("Error al obtener las Ubicaciones", error);
     }
   };
+
+  useEffect(() => {
+    obtenerUbicaciones();
+    setRecargar(false);
+  }, [recargar]);
+
+  const handleReloadMapa = () => {
+    console.log("cargando Mapa nuevamente");
+    obtenerUbicaciones();
+    setRecargar(true);
+    setMostrarFormulario(false)
+  };
+
 
   const handleClickNuevoProyecto = () => {
     setMostrarFormulario(true);
@@ -42,7 +52,7 @@ function MapaUbicacionPage() {
         {mostrarFormulario ? (
           <div className="">
             {/* Mostrar el formulario cuando mostrarFormulario es true */}
-            <FormUbicacion toast={toast} />
+            <FormUbicacion toast={toast} reloadMapa={handleReloadMapa}/>
           </div>
         ) : (
           <div>
@@ -82,6 +92,7 @@ function MapaUbicacionPage() {
                 .toLowerCase()
                 .includes(filtroNombre.toLowerCase())
             )}
+            reloadMapa={handleReloadMapa}
           />
         </div>
       )}

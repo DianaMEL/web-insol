@@ -13,7 +13,14 @@ function FormArea({reloadArea}) {
         formData.append('img', data.img[0]);
         formData.append('descripcion', data.descripcion);
         //console.log(formData)
-        await crearArea(formData)
+        //await crearArea(formData)
+        //await crearSubMenu(formData)
+
+        await toast.promise(crearArea(formData), {
+          pending: "Guardando Area...",
+          success: "Area Guardado con Éxito",
+          error: "Error al Guardar el Area"
+        });
 
         console.log("Enviando formulario...");
         reloadArea();
@@ -28,9 +35,9 @@ function FormArea({reloadArea}) {
               </div>
           <div className="my-5 ">
             <form onSubmit={onSubmit} encType="multipart/form-data">
-            <div class="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-3 gap-4">
             <div className="mb-4">
-                <label for="area" className="block text-lg sm:text-base md:text-lg lg:text-xl font-semibold">
+                <label htmlFor="area" className="block text-lg sm:text-base md:text-lg lg:text-xl font-semibold">
                   Area
                 </label>
                 <input
@@ -43,7 +50,7 @@ function FormArea({reloadArea}) {
                 />
                 </div>
                 <div className="mb-4">
-                <label for="enlace" className="block text-lg sm:text-base md:text-lg lg:text-xl font-semibold">
+                <label htmlFor="enlace" className="block text-lg sm:text-base md:text-lg lg:text-xl font-semibold">
                   enlace
                 </label>
                 <input
@@ -56,7 +63,7 @@ function FormArea({reloadArea}) {
                 />
               </div>
               <div className="mb-4">
-                <label for="img" className="block text-lg font-semibold ">
+                <label htmlFor="img" className="block text-lg font-semibold ">
                     Imagen 
                   </label>
                   <input

@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 import Area from './Area'
 import Paginador from './Paginador';
 
-function ListArea({areas, reloadArea}) {
+function ListArea({areas, reloadArea, toast}) {
    // Verificamos si el arreglo de datos está vacío o es nulo
    if (!areas.length) return <h1>No hay datos disponibles</h1>;
 
@@ -27,11 +27,11 @@ function ListArea({areas, reloadArea}) {
           {" "} 
           <div className="grid gap-4 grid-cols-1">
             {paginatedData.map((area) => (
-              <Area key={area.id} area={area} reloadArea={reloadArea} />
+              <Area key={area.id} area={area} reloadArea={reloadArea} toast={toast} />
             ))}
           </div> 
           <div style={{ position: 'fixed', bottom: '20px', right: '20px' }}>
-        <Paginador
+        <Paginador 
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={handlePageChange}

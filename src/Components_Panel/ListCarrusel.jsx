@@ -3,10 +3,7 @@ import Carrusel from './Carrusel'
 import Paginador from './Paginador';
 import HomePage from '../pages/HomePage';
 
-function 
-
-
-ListCarrusel({carruseles}) { 
+function ListCarrusel({carruseles, reloadCarrusel, toast}) { 
   // Verificamos si el arreglo de datos está vacío o es nulo
   if (!carruseles.length) return <h1>No hay datos disponibles</h1>;
 
@@ -27,12 +24,13 @@ ListCarrusel({carruseles}) {
     currentPage * itemsPerPage
   ); 
   
+
     return (
         <div>
           {" "}
           <div className="grid gap-4 grid-cols-1">
             {paginatedData.map((carrusel) => (
-              <Carrusel key={carrusel.id} carrusel={carrusel}  />
+              <Carrusel key={carrusel._id} carrusel={carrusel} reloadCarrusel={reloadCarrusel} toast={toast} />
             ))}
           </div> 
           <div style={{ position: 'fixed', bottom: '20px', right: '20px' }}>

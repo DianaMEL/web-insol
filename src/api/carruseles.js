@@ -7,3 +7,4 @@ export const getCarruselRequest = (id) => axios.get(`/carrusel/${id}`)
 export const getCarruselPorTituloRequest = (titulo) => axios.get(`/carrusel/${titulo}`)
 export const editCarruselRequest = (id, carrusel) => axios.put(`/editarCarrusel/${id}`, carrusel);
 
+

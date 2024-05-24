@@ -5,7 +5,7 @@ import {
 } from "../api/ubicaciones";
 import { useInsoel } from "../Context/InsoelContext";
 
-function MapaUbicacion({ ubicacion }) {
+function MapaUbicacion({ ubicacion, reloadMapa }) {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [editando, setEditando] = useState(false);
   const [newNombre, setNewNombre] = useState(ubicacion.nombre);
@@ -43,14 +43,16 @@ function MapaUbicacion({ ubicacion }) {
       // Restablecer el estado después de eliminar
       setConfirmDelete(false);
 
-      // Recargar la lista de carruseles después de eliminar uno (
+      // Recargar la lista de carruseles después de eliminar uno 
+      reloadMapa();
+
     } catch (error) {
       console.error("Error al eliminar la Ubicacion:", error);
       // Aquí podrías manejar el error de alguna manera, por ejemplo, mostrando un mensaje al usuario
     }
   };
 
-  const handleGuardar = async () => {
+  const handleGuardar = async () => { 
     try {
       // Console.log para verificar el estado
       console.log("Estado de ubicacion antes de enviar al backend:", ubicacion);
@@ -65,6 +67,7 @@ function MapaUbicacion({ ubicacion }) {
 
       // Salir del modo de edición
       setEditando(false);
+      reloadMapa();
 
       console.log("Ubicación actualizada:", response.data);
     } catch (error) {

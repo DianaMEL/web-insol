@@ -46,6 +46,7 @@ export const useInsoel = () => {
     throw new Error("useInsoel must be used with, a Insoelprovider");
   }
   return context;
+ 
 };
 
 export function InsoelProvider({ children }) {
@@ -55,6 +56,8 @@ export function InsoelProvider({ children }) {
   const [opacidadColor, setOpacidadColor] = useState(
     "bg-opacity-75 bg-gradient-to-b from-secondary bottom-96"
   );
+
+  
 
   //-----------Funcion para formatear la fecha de ISO -------
   const fechaFormateada = (fechaISO) => {
@@ -165,8 +168,13 @@ export function InsoelProvider({ children }) {
   const [carrusel, setCarrusel] = useState([]);
 
   const createCarrusel = async (carrusel) => {
-    const res = await createCarruselRequest(carrusel);
-    console.log(res);
+    try {
+      const res = await createCarruselRequest(carrusel);
+    return res;
+    } catch (error) {
+      throw error;
+    }
+    
   };
   const obtenerCarruseles = async () => {
     const carruseles = await getCarruselesRequest();
@@ -215,6 +223,8 @@ export function InsoelProvider({ children }) {
     }
   };
 
+ 
+
   /** ------------------ubicaciones----------------------- */
   const [ubicaciones, setUbicaciones] = useState([]);
   const [ubicacion, setUbicacion] = useState([]);
@@ -257,8 +267,12 @@ export function InsoelProvider({ children }) {
   const [area, setArea] = useState([]);
 
   const crearArea = async (area) => {
+    try{
     const res = await crearAreaRequest(area);
     console.log(res);
+    } catch (error) {
+      throw error;
+    }
   };
 
   const obtenerAreas = async () => {
@@ -295,6 +309,12 @@ export function InsoelProvider({ children }) {
       console.error(error);
     }
   };
+  
+  const [carruselActivo, setCarruselActivo] = useState(''); 
+
+  useEffect(() => {
+    console.log("Valor de carruselActivo en el contexto:", carruselActivo);
+  }, [carruselActivo]);
 
   const obtenerSubMenu = async() => {
     const subMenu = await getSubMenusRequest();
@@ -343,7 +363,9 @@ export function InsoelProvider({ children }) {
         editarArea,
         areas,
         obtenerSubMenu,//Submenu
-        subMenu
+        subMenu,
+        carruselActivo,  //carrusel
+        setCarruselActivo,
       }}
     >
       {children}

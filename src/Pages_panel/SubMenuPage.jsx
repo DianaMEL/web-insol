@@ -5,6 +5,8 @@ import ListArea from '../Components_Panel/ListArea';
 import FormArea from '../Components_Panel/FormArea'
 import { getAreasRequest } from '../api/area';
 import { useInsoel } from '../Context/InsoelContext';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function AreaPage() {
   /*  const areas = [
@@ -46,6 +48,7 @@ function AreaPage() {
       console.log("cargando Areas nuevamente");
       obtenerAreas();
       setRecargar(true);
+      setMostrarFormulario(false)
     };
 
       const handleClickNuevoProyecto = () => {
@@ -65,7 +68,7 @@ function AreaPage() {
             <div className=''>
                 // Mostrar el formulario cuando mostrarFormulario es true
             <FormArea
-            reloadArea={handleReloadArea} />
+            reloadArea={handleReloadArea} toast={toast} />
             </div>
           ) : (
             // Mostrar el botón "Nuevo Proyecto" cuando mostrarFormulario es false
@@ -73,6 +76,9 @@ function AreaPage() {
             <button onClick={handleClickNuevoProyecto} className="mt-14 bg-tertiary hover:bg-secondary text-white py-2 px-4 rounded-md">Nueva Area</button>
           )}
       </div>
+
+      <ToastContainer/>
+
       {!mostrarFormulario && (
             <div>
               <ListArea areas={areas} 

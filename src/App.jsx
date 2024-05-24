@@ -37,6 +37,9 @@ import ProyectosPage from "./Pages_panel/ProyectosPage";
 import CarruselPage from "./Pages_panel/CarruselPage";
 import SubMenuPage from "./Pages_panel/SubMenuPage";
 import MapaUbicacionPage from "./Pages_panel/MapaUbicacionPage";
+import FormSeleccionAreas from "./Components_Panel/FormSeleccionAreas";
+import MapaenFormulario from "./Components_Panel/MapaenFormulario";
+
 
 function App() {
   return (
@@ -73,6 +76,9 @@ function App() {
             <Route path="/web-insol/formularioCategorias" element={<FormCategoria />} />
             <Route path="/web-insol/formularioUbicacion" element={<FormUbicacion />} />
             <Route path="/web-insol/formularioArea" element={<FormArea />} />
+            <Route path="/web-insol/panel/mapaenFormulario" element={<MapaenFormulario />} />
+            <Route path="/web-insol/formularioSubMenu" element={<FormSubMenu />} />
+            <Route path="/web-insol/panel/formSeleccionAreas" element= {<FormSeleccionAreas />} />
             <Route pant="/web-insol/panel/panelPrincipal" element={<PanelPrincipal />} />
             <Route pant="/web-insol/panel/proyectos" element={<ProyectosPage/>} /> 
             <Route pant="/web-insol/panel/carrusel" element={<CarruselPage />} />

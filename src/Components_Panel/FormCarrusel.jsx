@@ -3,7 +3,7 @@ import LogoAmarilloBlanco from "../img/Logos/AmarilloBlanco.png";
 import { useForm } from "react-hook-form";
 import { useInsoel } from '../Context/InsoelContext';
 
-function FormCarrusel() {
+function FormCarrusel({reloadCarrusel, toast}) {
   const { register, handleSubmit } = useForm();
   const { createCarrusel } = useInsoel();
 
@@ -11,11 +11,20 @@ function FormCarrusel() {
     const formData = new FormData();
     formData.append('titulo', data.titulo)
     formData.append('img1', data.img1[0]);
-    formData.append('img2', data.img2[0]);
+    formData.append('img2', data.img2[0]); 
     formData.append('img3', data.img3[0]);
     formData.append('img4', data.img4[0]);
     //console.log(formData)
-    await createCarrusel(formData)
+    //await createCarrusel(formData)
+
+    await toast.promise(createCarrusel(formData), {
+      pending: "Guardando Carrusel...",
+      success: "Carrusel guardado con éxito",
+      error: "Error al guardar el Carrusel"
+    });
+    
+    console.log("Enviando formulario...");
+    reloadCarrusel();
   })
 
   return (
@@ -27,7 +36,7 @@ function FormCarrusel() {
       <div className="my-12 ">
         <form onSubmit={onSubmit} encType="multipart/form-data">
           <div className="mb-4">
-            <label for="titulo" className="block text-lg sm:text-base md:text-lg lg:text-xl font-semibold">
+            <label htmlFor="titulo" className="block text-lg sm:text-base md:text-lg lg:text-xl font-semibold">
               Titulo
             </label>
             <input
@@ -41,7 +50,7 @@ function FormCarrusel() {
           </div>
           <div class="grid grid-cols-2 gap-4">
             <div className="mb-4">
-            <label for="img1" className="block text-lg font-semibold ">
+            <label htmlFor="img1" className="block text-lg font-semibold ">
                 Imagen 1
               </label>
               <input
@@ -54,7 +63,7 @@ function FormCarrusel() {
               />
             </div>
             <div className="mb-4">
-            <label for="img2" className="block text-lg font-semibold ">
+            <label htmlFor="img2" className="block text-lg font-semibold ">
                 Imagen 2
               </label>
               <input
@@ -69,7 +78,7 @@ function FormCarrusel() {
           </div>
           <div class="grid grid-cols-2 gap-4">
             <div className="mb-4">
-              <label for="img3" className="block text-lg font-semibold ">
+              <label htmlFor="img3" className="block text-lg font-semibold ">
                 Imagen 3
               </label>
               <input
@@ -83,7 +92,7 @@ function FormCarrusel() {
               />
             </div>
             <div className="mb-4">
-              <label for="img4" className="block text-lg font-semibold ">
+              <label htmlFor="img4" className="block text-lg font-semibold ">
                 Imagen 4
               </label>
               <input

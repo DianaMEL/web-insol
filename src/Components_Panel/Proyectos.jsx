@@ -98,7 +98,7 @@ function Proyectos({ proyecto, reloadProyectos, onUpdateClick}) {
             className={` ${
               confirmDelete
                 ? "hidden"
-                : "bg-blue-500 hover:bg-blue-600 text-white py-1 px-4 rounded-md"
+                : "bg-tertiary hover:bg-secondary text-white py-1 px-4 rounded-md"
             }`}
             onClick={()=>{onUpdateClick(proyecto)}}
           >
@@ -108,7 +108,7 @@ function Proyectos({ proyecto, reloadProyectos, onUpdateClick}) {
             className={` ${
               confirmDelete
                 ? "hidden"
-                : "bg-secondary hover:bg-primary text-white py-1 px-4 ml-2 rounded-md"
+                : "bg-secondary hover:bg-darkPrimary text-white py-1 px-4 ml-2 rounded-md"
             }`}
           >
              <Link to={`/web-insol/proyecto/${proyecto._id}`}>Ver página</Link>
