@@ -77,7 +77,6 @@ function App() {
             <Route path="/web-insol/formularioUbicacion" element={<FormUbicacion />} />
             <Route path="/web-insol/formularioArea" element={<FormArea />} />
             <Route path="/web-insol/panel/mapaenFormulario" element={<MapaenFormulario />} />
-            <Route path="/web-insol/formularioSubMenu" element={<FormSubMenu />} />
             <Route path="/web-insol/panel/formSeleccionAreas" element= {<FormSeleccionAreas />} />
             <Route pant="/web-insol/panel/panelPrincipal" element={<PanelPrincipal />} />
             <Route pant="/web-insol/panel/proyectos" element={<ProyectosPage/>} /> 
