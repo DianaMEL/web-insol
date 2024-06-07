@@ -5,7 +5,7 @@ import {
 } from "../api/ubicaciones";
 import { useInsoel } from "../Context/InsoelContext";
 
-function MapaUbicacion({ ubicacion, reloadMapa }) {
+function MapaUbicacion({ ubicacion, reloadMapa ,onUpdateClick}) {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [editando, setEditando] = useState(false);
   const [newNombre, setNewNombre] = useState(ubicacion.nombre);
@@ -51,7 +51,7 @@ function MapaUbicacion({ ubicacion, reloadMapa }) {
       // Aquí podrías manejar el error de alguna manera, por ejemplo, mostrando un mensaje al usuario
     }
   };
-
+ 
   const handleGuardar = async () => { 
     try {
       // Console.log para verificar el estado
@@ -105,51 +105,15 @@ function MapaUbicacion({ ubicacion, reloadMapa }) {
               <tr className="text-center">
                 <td className="text-lg font-semibold text-black px-4 py-2">
                   {ubicacion.nombre}
-                  {editando && (
-                    <input
-                      type="text"
-                      value={newNombre}
-                      onChange={(e) => setNewNombre(e.target.value)}
-                      className="mb-2 mt-6 w-full border border-gray-400 rounded-md p-1 mr-3"
-                      placeholder=""
-                    />
-                  )}
                 </td>
                 <td className="text-lg font-semibold text-black px-4 py-2">
                   {ubicacion.direccion}
-                  {editando && (
-                    <input
-                      type="text"
-                      value={newDireccion}
-                      onChange={(e) => setNewDireccion(e.target.value)}
-                      className="mb-2 w-full border border-gray-400 rounded-md p-1 mr-3"
-                      placeholder=""
-                    />
-                  )}
                 </td>
                 <td className="text-lg font-semibold text-black px-4 py-2">
                   {ubicacion.latitud}
-                  {editando && (
-                    <input
-                      type="text"
-                      value={newLatitud}
-                      onChange={(e) => setNewLatitud(e.target.value)}
-                      className="mb-2 mt-6 w-full border border-gray-400 rounded-md p-1 mr-3"
-                      placeholder=""
-                    />
-                  )}
                 </td>
                 <td className="text-lg font-semibold text-black px-4 py-2 ">
                   {ubicacion.longitud}
-                  {editando && (
-                    <input
-                      type="text"
-                      value={newLongitud}
-                      onChange={(e) => setNewLongitud(e.target.value)}
-                      className="mb-2 mt-6 w-full border border-gray-400 rounded-md p-1 mr-3"
-                      placeholder=""
-                    />
-                  )}
                 </td>
                 <td className="flex justify-center">
                   {/* Botones de eliminar y editar */}
@@ -170,40 +134,26 @@ function MapaUbicacion({ ubicacion, reloadMapa }) {
                         </button>
                       </>
                     ) : (
-                      <>
-                        {editando ? (
-                          <>
-                            <button
-                              onClick={handleGuardar}
-                              className="bg-secondary hover:bg-darkPrimary text-white py-1 px-4 rounded-md  m-3"
-                            >
-                              Guardar 
-                            </button>
-                            <button
-                              onClick={() => setEditando(false)}
-                              className="bg-gray-500 hover:bg-gray-600 text-white py-1 px-4 rounded-md"
-                            >
-                              Cancelar
-                            </button>
-                          </>
-                        ) : (
-                          <>
-                            <button
-                              onClick={handleClick}
-                              className="bg-red-500 hover:bg-red-600 text-white py-1 px-4 rounded-md mr-2"
-                            >
-                              Eliminar
-                            </button>
-                            <button
-                              className="bg-tertiary hover:bg-secondary text-white py-1 px-4 rounded-md"
-                              onClick={() => setEditando(true)}
-                            >
-                              Editar
-                            </button>
-                          </>
-                        )}
-                      </>
+                     
+                      <button
+                      onClick={handleClick}
+                        className="bg-red-500 hover:bg-red-600 text-white py-1 px-4 rounded-md mr-2"
+                      >
+                        Eliminar
+                      </button>
                     )}
+                    <button
+                      className={` ${
+                        confirmDelete
+                          ? "hidden"
+                          : "bg-tertiary hover:bg-secondary text-white py-1 px-4 rounded-md"
+                      }`}
+                      onClick={()=>{onUpdateClick(ubicacion)}}
+                    >
+                      Editar
+                    </button> 
+                           
+              
                   </div>
                 </td>
               </tr>

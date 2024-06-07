@@ -27,6 +27,7 @@ function ProyectoPage() {
   }, [id]);
 
   useEffect(() => {
+    setOpacidadColor(" bg-secondary h-24 ");
     document.title = proyecto ? `${proyecto.titulo} | INSOEL` : "INSOEL";
     return () => {
       document.title = "INSOEL";
@@ -65,7 +66,7 @@ function ProyectoPage() {
           <div className="text-black m-3 bg-light p-6 rounded-md shadow-md space-y-4">
             <h1 className="text-4xl font-semibold text-accent">
               {proyecto.titulo}
-            </h1>
+            </h1> 
             <h2 className="text-xl text-secondary">
               {fechaFormateada(proyecto.fecha)}
             </h2>
@@ -76,7 +77,7 @@ function ProyectoPage() {
                   <img
                     src={`http://localhost:3000/uploads/${imagen.nuevoNombre}`}
                     alt={`Imagen ${index}`}
-                    className="w-[35rem] h-[25rem] object-cover rounded-md transition-transform transform hover:scale-105"
+                    className="object-contain  w-[36rem] h-[24rem]  rounded-md transition-transform transform hover:scale-105"
                   />
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                     <p className="text-primary bg-secondary bg-opacity-75 p-2 text-lg font-bold">

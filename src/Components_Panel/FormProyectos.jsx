@@ -52,7 +52,7 @@ function FormProyectos({
     formData.append("imagen3", data.imagen3[0]);
     formData.append("desc_Img1", data.desc_Img1);
     formData.append("desc_Img2", data.desc_Img2);
-    formData.append("desc_Img3", data.desc_Img3);
+    formData.append("desc_Img3", data.desc_Img3); 
     formData.append("video", data.video[0]);
     console.log([...formData.entries()]);
 

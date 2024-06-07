@@ -10,8 +10,10 @@ import "react-toastify/dist/ReactToastify.css";
 function MapaUbicacionPage() {
   const [ubicaciones, setUbicaciones] = useState([]);
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
+  const [isUpdateMode, setIsUpdateMode] = useState(false);
   const [filtroNombre, setFiltroNombre] = useState("");
   const [recargar, setRecargar] = useState(false)
+  const [ubicacionToUpdate, setUbicacionToUpdate] = useState(null); 
 
   const obtenerUbicaciones = async () => {
     try {
@@ -32,6 +34,7 @@ function MapaUbicacionPage() {
     obtenerUbicaciones();
     setRecargar(true);
     setMostrarFormulario(false)
+    setIsUpdateMode(false)
   };
 
 
@@ -43,6 +46,12 @@ function MapaUbicacionPage() {
     setFiltroNombre(event.target.value);
   };
 
+  const handleClickActualizarUbicacion = (ubicacion) => {
+    setUbicacionToUpdate(ubicacion);
+    setMostrarFormulario(true);
+    setIsUpdateMode(true);
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="justify-between items-center mb-8">
@@ -52,7 +61,11 @@ function MapaUbicacionPage() {
         {mostrarFormulario ? (
           <div className="">
             {/* Mostrar el formulario cuando mostrarFormulario es true */}
-            <FormUbicacion toast={toast} reloadMapa={handleReloadMapa}/>
+            <FormUbicacion 
+              ubicacionToUpdate={ubicacionToUpdate} // Pasa la ubicacion que se va a actualizar
+              isUpdateMode={isUpdateMode} // Pasa el modo de actualización 
+              toast={toast} 
+              reloadMapa={handleReloadMapa}/>
           </div>
         ) : (
           <div>
@@ -93,6 +106,7 @@ function MapaUbicacionPage() {
                 .includes(filtroNombre.toLowerCase())
             )}
             reloadMapa={handleReloadMapa}
+            onUpdateClick={handleClickActualizarUbicacion}
           />
         </div>
       )}

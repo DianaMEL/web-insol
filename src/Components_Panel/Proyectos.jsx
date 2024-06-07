@@ -7,8 +7,9 @@ function Proyectos({ proyecto, reloadProyectos, onUpdateClick}) {
   const videoRef = useRef(null);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const contenidoTruncado = ""
-
-  const MAX_LENGTH = 300; // Número máximo de caracteres que deseas mostrar
+ 
+  const MAX_LENGTH = 200; // Número máximo de caracteres que deseas mostrar
+  const MAX = 50;
 
   // Función para truncar el texto si es demasiado largo
   const truncateText = (text, maxLength) => {
@@ -18,6 +19,7 @@ function Proyectos({ proyecto, reloadProyectos, onUpdateClick}) {
       return text;
     }
   };
+
 
   const handleDelete = () => {
     if (confirmDelete) {
@@ -44,7 +46,9 @@ function Proyectos({ proyecto, reloadProyectos, onUpdateClick}) {
             <p className="text-black mb-4">
             <div dangerouslySetInnerHTML={{ __html: truncateText(proyecto.contenido, MAX_LENGTH) }}/>
             </p>
-            <p className="italic text-black mb-4">{proyecto.frase}</p>
+            <p className="italic text-black mb-4">
+              <div dangerouslySetInnerHTML={{ __html: truncateText(proyecto.frase, MAX) }} />
+              </p>
           </div>
           <div>
             <div className="grid grid-cols-2 gap-4">

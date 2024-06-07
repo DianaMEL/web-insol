@@ -5,11 +5,23 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-function FormUbicacion({ id, toast, reloadMapa }) {
-  const { register, handleSubmit, setValue } = useForm();
-  const { crearUbicacion } = useInsoel();
+function FormUbicacion({ ubicacion, toast, reloadMapa, ubicacionToUpdate,
+  isUpdateMode, }) {
+    const { register, handleSubmit, setValue, watch } = useForm();
+  const { crearUbicacion, updateUbicacion } = useInsoel();
   const [mostrarMensaje, setMostrarMensaje] = useState(false);
   const [coordinates, setCoordinates] = useState([23.6345, -102.5528]); // Coordenadas por defecto para México
+  // Definir el id
+  const id = ubicacion ? ubicacion._id : null;
+
+  // Cargar los datos iniciales cuando isUpdateMode es verdadero
+  useEffect(() => {
+    if (isUpdateMode && ubicacionToUpdate) {
+      setValue("nombre", ubicacionToUpdate.nombre);
+      setValue("direccion", ubicacionToUpdate.direccion);
+      setCoordinates([ubicacionToUpdate.latitud, ubicacionToUpdate.longitud]);
+    }
+  }, [isUpdateMode, ubicacionToUpdate, setValue]);
 
   // Función para manejar el clic en el mapa y actualizar las coordenadas
   const handleMapClick = (e) => {
@@ -18,25 +30,38 @@ function FormUbicacion({ id, toast, reloadMapa }) {
     setValue("longitud", e.latlng.lng.toString());
   };
 
-  // Función para enviar el formulario
-  const onSubmit = handleSubmit(async (data) => {
-    // Lógica para guardar la ubicación y mostrar un mensaje de confirmación
-    await toast.promise(crearUbicacion(data), {
-      pending: "Guardando ubicación...",
-      success: "Ubicación guardada con éxito",
-      error: "Error al guardar la ubicación"
-    });
-    // mensaje de confirmacion 
+   // Función para enviar el formulario
+   const onSubmit = handleSubmit(async (data) => {
+    try {
+      if (isUpdateMode) {
+      // Lógica para actualizar la ubicación
+      await toast.promise(updateUbicacion(ubicacionToUpdate._id,  data), {
+        pending: "Actualizando ubicación...",
+        success: "Ubicación actualizada con éxito",
+        error: "Error al actualizar la ubicación"
+      });
+    } else {
+      // Lógica para crear una nueva ubicación
+      await toast.promise(crearUbicacion(data), {
+        pending: "Guardando ubicación...",
+        success: "Ubicación guardada con éxito",
+        error: "Error al guardar la ubicación"
+      });
+    }
+    // Mensaje de confirmación
     setMostrarMensaje(true);
 
-    //reinicia los campos del formulario 
+    // Reiniciar los campos del formulario
     setValue("nombre", "");
     setValue("direccion", "");
     setValue("latitud", "");
     setValue("longitud", "");
 
-    //actualiza el mapa 
+    // Actualizar el mapa
     reloadMapa();
+  } catch (error) {
+    console.error("Error al guardar la ubicación:", error);
+  }
   });
 
   // Función para obtener las coordenadas a partir de una dirección ingresada
@@ -57,13 +82,13 @@ function FormUbicacion({ id, toast, reloadMapa }) {
       setValue("latitud", coordinates[0].toString());
       setValue("longitud", coordinates[1].toString());
     }
-  }, [coordinates]);
+  }, [coordinates, setValue]);
 
   return (
     <div className='flex'>
       <div className="">
         <div className="text-left mt-20 mb-5 ml-10">
-          <h1 className="font-bold text-2xl text-secondary">Nueva Ubicacion al Mapa</h1>
+        <h1 className="font-bold text-2xl text-secondary">{isUpdateMode ? "Actualizar Ubicación" : "Nueva Ubicación al Mapa"}</h1>
         </div>
         <div className="mx-10 my-14 w-full">
           <form onSubmit={onSubmit}>
@@ -129,7 +154,7 @@ function FormUbicacion({ id, toast, reloadMapa }) {
                 type="submit"
                 className="bg-primary text-black py-2 px-4 rounded-md hover:bg-darkPrimary hover:text-white absolute  mr-3"
               >
-                Guardar
+                {isUpdateMode ? "Actualizar" : "Guardar"}
               </button>
             </div>
           </form>

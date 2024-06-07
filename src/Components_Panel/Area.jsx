@@ -93,7 +93,7 @@ setEditando(false);
               <img
                 src={`http://localhost:3000/uploads/Area/${area?.img?.nuevoNombre}`}
                 alt={area.area}
-                className={editando ? "w-full h-40 object-cover rounded-md m-2" : "h-48 ml-28 mt-5  "}
+                className={editando ? "w-full h-40 object-cover rounded-md m-2" : "h-52 ml-28 mt-5  "}
               />
             </div>
             
@@ -119,6 +119,7 @@ setEditando(false);
                     placeholder="area "
                   />
                   </div>
+                  {/*}
                   <div className="">
                   <label htmlFor="enlace" className="block text-lg sm:text-base md:text-lg lg:text-xl font-semibold">
                     enlace
@@ -131,7 +132,7 @@ setEditando(false);
                     className="mt-1 p-2 w-full border rounded-md border-gray-800"
                     placeholder="enlace "
                   />
-                </div>
+            </div> */}
                 </div>
                 <div className="">
                   <label htmlFor="img" className="block text-lg font-semibold ">

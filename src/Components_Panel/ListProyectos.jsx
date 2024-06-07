@@ -4,7 +4,7 @@ import Paginador from './Paginador';
 
 function ListProyectos({ proyectos, reloadProyectos, onUpdateClick}) {
   // Verificamos si el arreglo de datos está vacío o es nulo
-  if (!proyectos.length) return <h1>No hay datos disponibles</h1>;
+  if (!proyectos.length) return <h1>No hay datos disponibles</h1>; 
 
   // Estados para el paginador
   const [currentPage, setCurrentPage] = useState(1);
