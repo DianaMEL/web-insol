@@ -120,9 +120,9 @@ function MainRoutes() {
       <Route path="/web-insol/clientes" element={<ClientesPage />} />
       <Route path="/web-insol/nosotros" element={<NosotrosPage />} />
       <Route path="/web-insol/contactanos" element={<ContactanosPage />} />
-      <Route path="/proyectos/Biorreactor" element={<BiorreactorPage />} />
-      <Route path="/proyectos/BancoUAT" element={<BancoUatPage />} />
-      <Route path="/proyectos/Consultas" element={<SistemaDeConsultasPage />} />
+      <Route path="/web-insol/proyectos/Biorreactor" element={<BiorreactorPage />} />
+      <Route path="/web-insol/proyectos/BancoUAT" element={<BancoUatPage />} />
+      <Route path="/web-insol/proyectos/Consultas" element={<SistemaDeConsultasPage />} />
       <Route path="/web-insol/mapa" element={<MapaPage />} />
       <Route path="/web-insol/blog" element={<BlogPage />} />
       <Route path="/web-insol/proyecto/:id" element={<ProyectoPage/>} />

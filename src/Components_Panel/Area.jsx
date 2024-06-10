@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { deleteAreaRequest,
- } from "../api/area";
+import { deleteAreaRequest } from "../api/area";
 import { useForm } from "react-hook-form";
 import { useInsoel } from "../Context/InsoelContext";
 
-function Area({ area, reloadArea }) {
+function Area({ area, reloadArea, toast }) {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [editando, setEditando] = useState(false);
-  const { register, handleSubmit, setValue  } = useForm(); 
+  const { register, handleSubmit, setValue } = useForm();
   const { editarArea } = useInsoel();
 
-  // Definir el id 
+  // Definir el id
   const id = area ? area._id : null;
 
   useEffect(() => {
@@ -38,9 +37,8 @@ function Area({ area, reloadArea }) {
 
       // Restablecer el estado después de eliminar
       setConfirmDelete(false);
-      // Recargar la lista de carruseles después de eliminar uno 
+      // Recargar la lista de carruseles después de eliminar uno
       reloadArea();
-
     } catch (error) {
       console.error("Error al eliminar el area:", error);
       // Aquí podrías manejar el error de alguna manera, por ejemplo, mostrando un mensaje al usuario
@@ -50,13 +48,13 @@ function Area({ area, reloadArea }) {
   const handleEditar = () => {
     setEditando(true);
   };
- 
-  const onSubmit = handleSubmit(async(data)=>{
+
+  const onSubmit = handleSubmit(async (data) => {
     const formData = new FormData();
-    formData.append('area', data.area);
-    formData.append('enlace', data.enlace);
-    formData.append('img', data.img[0]);
-    formData.append('descripcion', data.descripcion);
+    formData.append("area", data.area);
+    formData.append("enlace", data.enlace);
+    formData.append("img", data.img[0]);
+    formData.append("descripcion", data.descripcion);
     console.log([...formData.entries()]);
     //console.log(formData)
     //await editarArea(area._id, formData)
@@ -64,13 +62,12 @@ function Area({ area, reloadArea }) {
     await toast.promise(editarArea(area._id, formData), {
       pending: "Editando Area...",
       success: "Area Editada con Éxito",
-      error: "Error al Editar el Area"
+      error: "Error al Editar el Area",
     });
 
-setEditando(false);
+    setEditando(false);
     reloadArea();
-  })
-  
+  });
 
   return (
     <div className="h-64 mt-5 mr-5 ml-5">
@@ -85,95 +82,113 @@ setEditando(false);
           >
             <div className={editando ? "grid grid-cols-2 mr-3" : " "}>
               <div>
-              <h2 className="text-2xl text-center  font-semibold text-secondary m-2 ">
-                {area.area}
-              </h2>
-              <p className="text-black ml-2 mt-5">{area.enlace}</p>
+                <h2 className="text-2xl text-center  font-semibold text-secondary m-2 ">
+                  {area.area}
+                </h2>
+                <p className="text-black ml-2 mt-5">{area.enlace}</p>
               </div>
               <img
                 src={`http://localhost:3000/uploads/Area/${area?.img?.nuevoNombre}`}
                 alt={area.area}
-                className={editando ? "w-full h-40 object-cover rounded-md m-2" : "h-48 ml-28 mt-5  "}
+                className={
+                  editando
+                    ? "w-full h-40 object-cover rounded-md m-2"
+                    : "h-48 ml-28 mt-5  "
+                }
               />
             </div>
-            
-              <p className={editando ? "text-black m-4 text-justify " : "text-black m-4 text-justify  text-lg mt-10"}>
-                {area.descripcion}
-              </p>
-            
-          </div> 
+
+            <p
+              className={
+                editando
+                  ? "text-black m-4 text-justify "
+                  : "text-black m-4 text-justify  text-lg mt-10"
+              }
+            >
+              {area.descripcion}
+            </p>
+          </div>
           <div className="">
             {editando && (
               <form onSubmit={onSubmit}>
-              <div class="grid grid-cols-2 gap-4">
-              <div className="">
-                  <label htmlFor="area" className="block text-lg sm:text-base md:text-lg lg:text-xl font-semibold">
-                    Area
-                  </label>
-                  <input
-                    type="text"
-                    {...register("area")}
-                    id="area"
-                    name="area"
-                    className="mt-1 p-2 w-full border rounded-md border-gray-800"
-                    placeholder="area "
-                  />
-                  </div>
+                <div class="grid grid-cols-2 gap-4">
                   <div className="">
-                  <label htmlFor="enlace" className="block text-lg sm:text-base md:text-lg lg:text-xl font-semibold">
-                    enlace
-                  </label>
-                  <input
-                    type="text"
-                    {...register("enlace")}
-                    id="enlace"
-                    name="enlace"
-                    className="mt-1 p-2 w-full border rounded-md border-gray-800"
-                    placeholder="enlace "
-                  />
-                </div>
-                </div>
-                <div className="">
-                  <label htmlFor="img" className="block text-lg font-semibold ">
-                      Imagen 
+                    <label
+                      htmlFor="area"
+                      className="block text-lg sm:text-base md:text-lg lg:text-xl font-semibold"
+                    >
+                      Area
                     </label>
                     <input
-                      type="file"
-                      {...register("img")}
-                      id="img"
-                      name="img"
-                      accept="image/*"
+                      type="text"
+                      {...register("area")}
+                      id="area"
+                      name="area"
                       className="mt-1 p-2 w-full border rounded-md border-gray-800"
+                      placeholder="area "
                     />
                   </div>
                   <div className="">
-                  <label htmlFor="descripcion" className="block text-lg font-semibold">
-          Descripción
-      </label>
-      <textarea
-          {...register("descripcion")}
-          id="descripcion"
-          name="descripcion"
-          className="mt-1 p-2 w-full border rounded-md border-gray-800"
-          rows="3" // puedes ajustar este valor según la cantidad de líneas que desees mostrar inicialmente
-      />
+                    <label
+                      htmlFor="enlace"
+                      className="block text-lg sm:text-base md:text-lg lg:text-xl font-semibold"
+                    >
+                      enlace
+                    </label>
+                    <input
+                      type="text"
+                      {...register("enlace")}
+                      id="enlace"
+                      name="enlace"
+                      className="mt-1 p-2 w-full border rounded-md border-gray-800"
+                      placeholder="enlace "
+                    />
                   </div>
-              
-                  <div className="flex justify-center">
-            <button
-              type="submit"
-              className="bg-secondary hover:bg-darkPrimary text-white py-1 px-4 rounded-md "
-            >
-              Guardar
-            </button>
-          </div>
+                </div>
+                <div className="">
+                  <label htmlFor="img" className="block text-lg font-semibold ">
+                    Imagen
+                  </label>
+                  <input
+                    type="file"
+                    {...register("img")}
+                    id="img"
+                    name="img"
+                    accept="image/*"
+                    className="mt-1 p-2 w-full border rounded-md border-gray-800"
+                  />
+                </div>
+                <div className="">
+                  <label
+                    htmlFor="descripcion"
+                    className="block text-lg font-semibold"
+                  >
+                    Descripción
+                  </label>
+                  <textarea
+                    {...register("descripcion")}
+                    id="descripcion"
+                    name="descripcion"
+                    className="mt-1 p-2 w-full border rounded-md border-gray-800"
+                    rows="3" // puedes ajustar este valor según la cantidad de líneas que desees mostrar inicialmente
+                  />
+                </div>
+
+                <div className="flex justify-center">
+                  <button
+                    type="submit"
+                    className="bg-secondary hover:bg-darkPrimary text-white py-1 px-4 rounded-md "
+                  >
+                    Guardar
+                  </button>
+                </div>
               </form>
             )}
           </div>
         </div>
-{/* botones  */}
+        {/* botones  */}
         <div className="flex justify-end">
-        {confirmDelete ? (
+          {confirmDelete ? (
             <>
               <button
                 onClick={handleClick}

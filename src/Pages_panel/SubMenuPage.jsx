@@ -82,7 +82,7 @@ function AreaPage() {
       {!mostrarFormulario && (
             <div>
               <ListArea areas={areas} 
-               reloadarea={handleReloadArea}  />
+               reloadarea={handleReloadArea} toast={toast}  />
             </div>
           )}
     </div>

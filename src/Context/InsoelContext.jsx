@@ -10,6 +10,7 @@ import {
   getProyectosRequest,
   deleteProyectoRequest,
   updateProyectoRequest,
+  getProyectosByAreaRequest,
 } from "../api/proyectos";
 import {
   createCarruselRequest,
@@ -141,6 +142,16 @@ export function InsoelProvider({ children }) {
       throw error;
     }
   };
+
+  const getProyectosByArea = async(area) =>{
+    try {
+      const proyectos = await getProyectosByAreaRequest(area)
+      return proyectos.data
+    } catch (error) {
+      console.error(error)
+      throw error
+    }
+  }
 
   const formDataToJson = (formData) => {
     const json = {};
@@ -350,6 +361,7 @@ export function InsoelProvider({ children }) {
         deleteProyecto,
         getProyectos,
         getProyecto,
+        getProyectosByArea,
         proyectos,
         proyecto,
         crearUbicacion, // ubicaciones
