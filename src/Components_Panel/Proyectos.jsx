@@ -29,7 +29,7 @@ function Proyectos({ proyecto, reloadProyectos, onUpdateClick}) {
       setConfirmDelete(true);
     }
   };
-  //console.log(proyecto.fecha)
+  console.log(proyecto.area.area)
 
   return (
     <div className="ml-5 mt-5 mr-5">
@@ -40,7 +40,7 @@ function Proyectos({ proyecto, reloadProyectos, onUpdateClick}) {
               {proyecto.titulo}
             </h2>
             <p className="text-black mb-4">{fechaFormateada(proyecto.fecha)}</p>
-            <p className="text-black mb-4">{proyecto.area}</p>
+            <p className="text-black mb-4"> {proyecto.area.area} </p>
             <p className="text-black mb-4">
             <div dangerouslySetInnerHTML={{ __html: truncateText(proyecto.contenido, MAX_LENGTH) }}/>
             </p>

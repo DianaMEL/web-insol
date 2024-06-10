@@ -23,7 +23,7 @@ function FormCarrusel({reloadCarrusel, toast}) {
       error: "Error al guardar el Carrusel"
     });
     
-    console.log("Enviando formulario...");
+    //console.log("Enviando formulario...");
     reloadCarrusel();
   })
 

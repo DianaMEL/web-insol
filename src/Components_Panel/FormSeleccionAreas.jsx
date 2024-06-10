@@ -11,6 +11,13 @@ function FormSeleccionAreas() {
   const [areasSeleccionadas, setAreasSeleccionadas] = useState([]);
   const [proyectosPorArea, setProyectosPorArea] = useState({});
   const [selecciones, setSelecciones] = useState({});
+  const [areaIds, setAreaIds] = useState([]);
+  const [proyectoIds, setProyectoIds] = useState([]);
+
+  useEffect(() => {
+    setAreaIds(Object.keys(selecciones));
+    setProyectoIds(Object.values(selecciones));
+  }, [selecciones]);
 
   const handleSeleccion = async (area) => {
     if (areasSeleccionadas.some(a => a._id === area._id)) {
@@ -37,7 +44,7 @@ function FormSeleccionAreas() {
         setAreasSeleccionadas([...areasSeleccionadas, area]);
       }
 
-      const proyectos = await getProyectosByArea(area.area);
+      const proyectos = await getProyectosByArea(area._id);
       setProyectosPorArea((prevProyectos) => ({
         ...prevProyectos,
         [area._id]: proyectos,
@@ -53,8 +60,17 @@ function FormSeleccionAreas() {
   };
 
   const handleGuardarSelecciones = () => {
-    console.log('Selecciones:', selecciones);
-    // Aquí puedes agregar la lógica para guardar las selecciones en tu aplicación
+    const subMenu = {
+      "area1" : areaIds[0],
+      "area2" : areaIds[1],
+      "area3" : areaIds[2],
+      "area4" : areaIds[3],
+      "enlace1" : proyectoIds[0],
+      "enlace2" : proyectoIds[1],
+      "enlace3" : proyectoIds[2],
+      "enlace4" : proyectoIds[3],
+    }
+    console.log(subMenu)
   };
 
   return (

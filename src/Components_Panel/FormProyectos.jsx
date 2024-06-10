@@ -174,7 +174,7 @@ function FormProyectos({
                     Area / Campo
                   </option>
                   {areas.map((area) => (
-                    <option key={area._id} value={area.area}>{area.area}</option>
+                    <option key={area._id} value={area._id}>{area.area}</option>
                   ))}
                 </select>
               </div>
