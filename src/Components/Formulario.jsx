@@ -58,7 +58,7 @@ function Formulario() {
     }
   
     // Validación de correo electrónico
-    const correoValido = /\S+@\S+\.\S+/;
+    const correoValido = /\S+@\S+\.\S+/; 
     if (!correoValido.test(formData.correo)) {
       nuevosErrores.correo = "Introduce un correo válido";
     }
@@ -84,7 +84,7 @@ function Formulario() {
     setFormData({
       nombre: "",
       empresa: "",
-      correo: "",
+      correo: "", 
       telefono: "",
       servicio: "",
       descripcion: "",

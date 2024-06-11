@@ -90,11 +90,7 @@ function Area({ area, reloadArea, toast }) {
               <img
                 src={`http://localhost:3000/uploads/Area/${area?.img?.nuevoNombre}`}
                 alt={area.area}
-                className={
-                  editando
-                    ? "w-full h-40 object-cover rounded-md m-2"
-                    : "h-48 ml-28 mt-5  "
-                }
+                className={editando ? "w-full h-40 object-cover rounded-md m-2" : "h-52 ml-28 mt-5  "}
               />
             </div>
 
@@ -128,6 +124,7 @@ function Area({ area, reloadArea, toast }) {
                       placeholder="area "
                     />
                   </div>
+                  {/*
                   <div className="">
                     <label
                       htmlFor="enlace"
@@ -144,6 +141,7 @@ function Area({ area, reloadArea, toast }) {
                       placeholder="enlace "
                     />
                   </div>
+                  */}
                 </div>
                 <div className="">
                   <label htmlFor="img" className="block text-lg font-semibold ">

@@ -13,12 +13,8 @@ function HomePage() {
  
 
   const [carruseles, setCarruseles] = useState([]); 
-  const {carruselActivo, setLogoColor, setTxtColor, setProyectColor, setOpacidadColor} = useInsoel();
+  const { setLogoColor, setTxtColor, setProyectColor, setOpacidadColor} = useInsoel();
 
-
-  useEffect(() => {
-    console.log("Valor de carruselActivo en HomePage:", carruselActivo);
-  }, [carruselActivo]);
 
  // Función para obtener los carruseles
  const obtenerCarruseles = async () => {
@@ -52,7 +48,7 @@ useEffect(() => {
     return () => {
       document.title = "INSOEL";
     };
-  }, [carruselActivo]);
+  }, []);
 
 
   return ( 

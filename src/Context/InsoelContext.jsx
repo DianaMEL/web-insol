@@ -95,6 +95,7 @@ export function InsoelProvider({ children }) {
   //----------------Proyectos--------------
   const [proyectos, setProyectos] = useState([]);
   const [proyecto, setProyecto] = useState([]);
+  const [solicitudes, setSolicitudes] = useState([]);
 
   // Funciones para la seccion de contactarnos
 
@@ -102,6 +103,15 @@ export function InsoelProvider({ children }) {
     const res = await createSolicitudRequest(solicitud);
     console.log(res);
   };
+  
+  const obtenerSolicitudes = async () => {
+    const solicitud = await getSolicitudesRequest();
+    setSolicitudes(solicitud.data);
+  };
+/*
+  useEffect(() => {
+    obtenerSolicitudes();
+  }, []); */
 
   /** ------------------Proyectos----------------------- */
   const crearProyecto = async (proyecto) => {
@@ -267,11 +277,14 @@ export function InsoelProvider({ children }) {
 
   const updateUbicacion = async (id, ubicacion) => {
     try {
-      await updateUbicacionRequest(id, ubicacion);
+        if (!id) {
+            throw new Error("ID no está definido");
+        }
+        await updateUbicacionRequest(id, ubicacion);
     } catch (error) {
-      console.error(error);
+        console.error(error);
     }
-  };
+};
 
   /** ------------------Areas----------------------- */
   const [areas, setAreas] = useState([]);
@@ -355,8 +368,10 @@ export function InsoelProvider({ children }) {
         carruseles,
         carrusel,
         fechaFormateada,
-        createSolicitud, // Proyectos
-        crearProyecto,
+        createSolicitud, 
+        obtenerSolicitudes,
+        solicitudes,
+        crearProyecto, // proyectos
         updateProyecto,
         deleteProyecto,
         getProyectos,

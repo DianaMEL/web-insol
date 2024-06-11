@@ -110,6 +110,6 @@ function ProyectosPage() {
       <ToastContainer/>
     </div>
   );
-}
+} 
 
 export default ProyectosPage;

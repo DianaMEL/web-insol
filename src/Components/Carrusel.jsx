@@ -10,13 +10,13 @@ import image3 from "../img/Carrusel/3.png";
 import image4 from "../img/Carrusel/5.png";
 
 // Crea un array de rutas de imágenes
-const imagePaths = [image1, image2, image3, image4];
+const defaultImagePaths = [image1, image2, image3, image4];
 
 function Carrusel({ carruseles, tituloCarrusel }) { 
   
-  if (carruseles.length === 0) {
-    return <div>No hay carruseles disponibles</div>;  
-  }
+  //if (carruseles.length === 0) {
+    //return <div>No hay carruseles disponibles</div>;  
+  //}
 
   console.log("Valor de tituloCarrusel en Carrusel:", tituloCarrusel);
 
@@ -28,19 +28,18 @@ function Carrusel({ carruseles, tituloCarrusel }) {
   const { setTxtColor, setLogoColor } = useInsoel();
   const [imagenActiva, setImagenActiva] = useState(0);
 
- 
-  
-  useEffect(() => {
-    if (carruselSeleccionado) {
-      const intervalId = setInterval(() => {
-        setImagenActiva(prevImagen => (prevImagen + 1) % carruselSeleccionado.imagenes.length);
-      }, 3000);
 
-      return () => clearInterval(intervalId);
-    }
-  }, [carruselSeleccionado]);
+// Selecciona las imágenes correctas basadas en la selección del carrusel
+const imagePaths = carruselSeleccionado ? carruselSeleccionado.imagenes : defaultImagePaths;
 
+useEffect(() => {
+  const intervalId = setInterval(() => {
+    setImagenActiva(prevImagen => (prevImagen + 1) % imagePaths.length);
+  }, 3000);
 
+  // Limpieza del intervalo cuando el componente se desmonta o `imagePaths` cambia
+  return () => clearInterval(intervalId);
+}, [imagePaths]);
 
   // Utiliza imagenActiva para establecer el color
   useEffect(() => {
@@ -56,7 +55,7 @@ function Carrusel({ carruseles, tituloCarrusel }) {
   // Verificar si se encontró el carrusel
   if (!carruselSeleccionado) {
     return (
-      <div className="relative w-full overflow-hidden after:clear-both after:block after:content-[''] ">
+      <div className="relative w-full overflow-hidden after:clear-both after:block after:content-['']">
         {/* Mostrar imágenes si no se encuentra el carrusel */}
         {imagePaths.map((imagePath, index) => (
           <div
@@ -73,7 +72,7 @@ function Carrusel({ carruseles, tituloCarrusel }) {
               <div className="">
                 <div className="hidden md:block xl:flex xl:justify-center xl:items-center absolute bg-gray-600 top-1/3 bottom-0 right-0 w-1/3 shadow-lg p-10 mr-5 mb-36">
                   <div className="space-y-4">
-                    <h1 className="text-2xl font-bold text-wi transform md:text-2xl lg:text-3xl xl:text-4xl text-white">
+                    <h1 className="text-2xl font-bold transform md:text-2xl lg:text-3xl xl:text-4xl text-white">
                       AUTOMATIZACIÓN Y <br className="lg:hidden xl:block" /> CONTROL
                     </h1>
                     <h3 className="font-bold text-white md:mb-1 transform md:mt-0">
@@ -90,9 +89,7 @@ function Carrusel({ carruseles, tituloCarrusel }) {
         ))}
         {/* Contenido para pantallas pequeñas */}
         <div className="md:hidden bg-white p-4 text-center">
-          <h3 className="font-bold text-black mb-1">
-            Materializamos tus ideas
-          </h3>
+          <h3 className="font-bold text-black mb-1">Materializamos tus ideas</h3>
           <h1 className="text-2xl font-bold text-black">
             AUTOMATIZACION Y <br className="lg:hidden xl:block" /> CONTROL
           </h1>
@@ -104,7 +101,10 @@ function Carrusel({ carruseles, tituloCarrusel }) {
     );
   }
 
+  
+
   const imagenesDelCarrusel = carruselSeleccionado.imagenes;
+  console.log("Valor :", imagenesDelCarrusel);
 
   return (
     <div className="">

@@ -31,7 +31,7 @@ function FormArea({reloadArea, toast}) {
         <div className='flex  m-5'>
           <div className="ml-2 ">
           <div className="text-left mt-14 mb-5">
-                <h1 className="font-bold text-2xl text-secondary">Nuevo SubMenu </h1>
+                <h1 className="font-bold text-2xl text-secondary">Nueva Area </h1>
               </div>
           <div className="my-5 ">
             <form onSubmit={onSubmit} encType="multipart/form-data">
@@ -49,19 +49,7 @@ function FormArea({reloadArea, toast}) {
                   placeholder="area "
                 />
                 </div>
-                <div className="mb-4">
-                <label htmlFor="enlace" className="block text-lg sm:text-base md:text-lg lg:text-xl font-semibold">
-                  enlace
-                </label>
-                <input
-                  type="text"
-                  {...register("enlace")}
-                  id="enlace"
-                  name="enlace"
-                  className="mt-1 p-2 w-full border rounded-md border-gray-800"
-                  placeholder="enlace "
-                />
-              </div>
+               
               <div className="mb-4">
                 <label htmlFor="img" className="block text-lg font-semibold ">
                     Imagen 
