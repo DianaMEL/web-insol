@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useInsoel } from '../Context/InsoelContext';
 
 function FormSeleccionAreas() {
-  const { areas, obtenerAreas, getProyectosByArea } = useInsoel();
+  const { areas, obtenerAreas, getProyectosByArea, updateSubMenu, obtenerSubMenu, idSubMenu } = useInsoel();
 
   useEffect(() => {
     obtenerAreas();
+    obtenerSubMenu();
   }, []);
 
   const [areasSeleccionadas, setAreasSeleccionadas] = useState([]);
@@ -70,11 +71,12 @@ function FormSeleccionAreas() {
       "enlace3" : proyectoIds[2],
       "enlace4" : proyectoIds[3],
     }
-    console.log(subMenu)
+    updateSubMenu(idSubMenu, subMenu)
+    console.log(idSubMenu)
   };
 
   return (
-    <div>
+    <div className='ml-10 mr-10 mt-10'>
       <p>Selecciona hasta cuatro áreas:</p>
       <div className="flex flex-wrap">
         {areas.map((area, index) => (

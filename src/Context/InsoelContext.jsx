@@ -325,10 +325,11 @@ export function InsoelProvider({ children }) {
   };
   /**--------------------------SubMenu------------------------ */
   const [subMenu, setSubMenu] = useState(null)
+  const [idSubMenu, setIdSubMenu] = useState(null)
 
-  const updateSubMenu = async (id, area) => {
+  const updateSubMenu = async (id, subMenu) => {
     try {
-      await editarAreaRequest(id, area);
+      await editarSubMenuRequest(id, subMenu);
     } catch (error) {
       console.error(error);
     }
@@ -346,6 +347,7 @@ export function InsoelProvider({ children }) {
     const id = subMenu.data[0]._id
     const subMenuRef = await obtenerSubMenuRef(id)
     setSubMenu(subMenuRef.data.subMenu)
+    setIdSubMenu(id)
   }
 
   return (
@@ -391,6 +393,8 @@ export function InsoelProvider({ children }) {
         areas,
         obtenerSubMenu,//Submenu
         subMenu,
+        updateSubMenu,
+        idSubMenu,
         carruselActivo,  //carrusel
         setCarruselActivo,
       }}

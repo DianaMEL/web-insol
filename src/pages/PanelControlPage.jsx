@@ -15,8 +15,10 @@ import FormCategoria from "../Components_Panel/FormCategoria";
 import FormUbicacion from "../Components_Panel/FormUbicacion";
 import ProyectosPage from "../Pages_panel/ProyectosPage";
 import CarruselPage from "../Pages_panel/CarruselPage";
-import SubMenuPage from "../Pages_panel/SubMenuPage";
+import AreaPage from "../Pages_panel/AreaPage";
 import MapaUbicacionPage from "../Pages_panel/MapaUbicacionPage";
+import FormSeleccionAreas from "../Components_Panel/FormSeleccionAreas";
+import SubMenuPage from "../Pages_panel/SubMenuPage";
 
 function PanelControlPage() {
   const [activeTab, setActiveTab] = useState(null); // Estado para rastrear la pestaña activa
@@ -95,16 +97,29 @@ function PanelControlPage() {
                 </button>
               </li>
 
+              {/* Areas */}
+              <li>
+                <button
+                  className={`flex items-center w-full text-white hover:text-black hover:bg-primary p-2 mt-2 rounded-lg dark:text-white group ${
+                    activeTab === "areas" ? "" : ""
+                  }`}
+                  onClick={() => handleTabClick("areas")}
+                >
+                  <HiOutlineViewList className="flex-shrink-0 w-5 h-5  transition duration-75 dark:text-gray-400 group-hover:text-secondary text-primary" />
+                  <span className="p-2 font-bold">Areas</span>
+                </button>
+              </li>
+
               {/* SubMenu */}
               <li>
                 <button
                   className={`flex items-center w-full text-white hover:text-black hover:bg-primary p-2 mt-2 rounded-lg dark:text-white group ${
-                    activeTab === "submenu" ? "" : ""
+                    activeTab === "actualizarSubMenu" ? "" : ""
                   }`}
-                  onClick={() => handleTabClick("submenu")}
+                  onClick={() => handleTabClick("actualizarSubMenu")}
                 >
                   <HiOutlineViewList className="flex-shrink-0 w-5 h-5  transition duration-75 dark:text-gray-400 group-hover:text-secondary text-primary" />
-                  <span className="p-2 font-bold">Areas</span>
+                  <span className="p-2 font-bold">SubMenu</span>
                 </button>
               </li>
 
@@ -167,9 +182,9 @@ function PanelControlPage() {
               <PanelPrincipal />
             </div>
           )}
-          {activeTab === "submenu" && (
+          {activeTab === "areas" && (
             <div className="mb-20">
-              <SubMenuPage />
+              <AreaPage />
             </div>
           )}
           {activeTab === "mapa" && (
@@ -200,6 +215,11 @@ function PanelControlPage() {
           {activeTab === "agregarUbicacion" && (
             <div className="">
               <FormUbicacion />
+            </div>
+          )}
+          {activeTab === "actualizarSubMenu" && (
+            <div className="">
+              <SubMenuPage />
             </div>
           )}
         </div>

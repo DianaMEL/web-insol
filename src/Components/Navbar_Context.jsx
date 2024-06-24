@@ -28,6 +28,7 @@ const Navbar_Context = () => {
   const [isContentActive, setIsContentActive] = useState(false);
 
   const { obtenerSubMenu, subMenu } = useInsoel();
+  console.log(subMenu)
 
   const handleInfoToggle = (info) => {
     setActiveInfo(activeInfo === info ? null : info);
