@@ -3,6 +3,7 @@ import { createContext, useState, useContext, useEffect } from "react";
 import {
   createSolicitudRequest,
   getSolicitudesRequest,
+  updateSolicitudRequest,
 } from "../api/contactarnos";
 import {
   crearProyectoRequest,
@@ -107,6 +108,23 @@ export function InsoelProvider({ children }) {
     const solicitud = await getSolicitudesRequest();
     setSolicitudes(solicitud.data);
   };
+
+  const actualizarSolicitud = async (id, terminada) => {
+    try {
+      const res = await updateSolicitudRequest(id, { terminada });
+      setSolicitudes(prevSolicitudes => 
+        prevSolicitudes.map(solicitud => 
+          solicitud._id === id ? { ...solicitud, terminada } : solicitud
+        )
+      );
+    } catch (error) {
+      console.error('Error al actualizar la solicitud:', error);
+    }
+  };
+
+  useEffect(() => {
+    obtenerSolicitudes();
+  }, []);
 /*
   useEffect(() => {
     obtenerSolicitudes();
@@ -357,8 +375,9 @@ export function InsoelProvider({ children }) {
         carruseles,
         carrusel,
         fechaFormateada,
-        createSolicitud, 
+        createSolicitud, // solicitudes
         obtenerSolicitudes,
+        actualizarSolicitud,
         solicitudes,
         crearProyecto, // proyectos
         updateProyecto,

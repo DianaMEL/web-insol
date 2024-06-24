@@ -9,7 +9,7 @@ function FormSeleccionAreas() {
   const [opcionesPorArea, setOpcionesPorArea] = useState({});
 
   // Función para manejar el cambio en la selección de áreas
-  const handleSeleccion = (area) => {
+  const handleSeleccion = (area) => { 
     // Si el área ya está seleccionada, la deseleccionamos
     if (areasSeleccionadas.includes(area)) {
       const nuevasAreas = areasSeleccionadas.filter((a) => a !== area);
