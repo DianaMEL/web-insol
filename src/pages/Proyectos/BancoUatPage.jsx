@@ -46,7 +46,6 @@ function BancoUatPage() {
   }, []);
 
   useEffect(() => {
-    
     const videoElement = videoRef.current;
 
     const handleVideoEnd = () => {
@@ -70,20 +69,22 @@ function BancoUatPage() {
       <div className="bg-bajo min-h-screen  flex flex-col">
         <div className=""></div>
         <div className="relative  w-full h-auto  md:h-screen">
-        {!videoCargado && ( // Mostrar el gif o video de carga mientras el video principal se está cargando
-        <div className="absolute inset-y-0 inset-x-0 flex justify-center max-h-[80%] md:max-h-full items-center bg-black bg-opacity-50 mt-52 sm:mt-0">
-          {/*  gif de carga  */}
-          <img src={Carga} alt="Cargando..."  />
-        </div>
-      )}
+          {!videoCargado && ( // Mostrar el gif o video de carga mientras el video principal se está cargando
+            <div className="absolute inset-y-0 inset-x-0 flex justify-center max-h-[80%] md:max-h-full items-center bg-black bg-opacity-50 mt-52 sm:mt-0">
+              {/*  gif de carga  */}
+              <img src={Carga} alt="Cargando..." />
+            </div>
+          )}
 
           <video
             ref={videoRef}
             autoPlay // Inicia la reproducción automáticamente
             //controls
-            className={`block h-5/6 w-full object-fill max-h-[80%] md:max-h-full shadow-md mt-24 ${videoCargado ? 'block' : 'hidden'}`}
+            className={`block h-5/6 w-full object-fill max-h-[80%] md:max-h-full shadow-md mt-24 ${
+              videoCargado ? "block" : "hidden"
+            }`}
             onLoadedData={handleLoadedData}
-            // block w-full object-fill max-h-[80%] md:max-h-full rounded-lg shadow-md 
+            // block w-full object-fill max-h-[80%] md:max-h-full rounded-lg shadow-md
           >
             <source src={Uat} type="video/mp4" />
             Tu navegador no soporta el elemento de video.
@@ -155,7 +156,7 @@ function BancoUatPage() {
             />
             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
               <p className="text-primary bg-secondary bg-opacity-50 p-2 text-lg font-bold">
-              {image.description}
+                {image.description}
               </p>
             </div>
           </div>

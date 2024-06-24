@@ -28,6 +28,7 @@ const Navbar_Context = () => {
   const [isContentActive, setIsContentActive] = useState(false);
 
   const { obtenerSubMenu, subMenu } = useInsoel();
+  console.log(subMenu)
 
   const handleInfoToggle = (info) => {
     setActiveInfo(activeInfo === info ? null : info);
@@ -320,36 +321,36 @@ const Navbar_Context = () => {
                         <ul className="text-xl pl-2  ">
                           <li className="space-y-2 list-disc pt-2 pb-2">
                             <Link
-                              to="/proyectos/BancoUAT"
+                              to={!subMenu ? "/proyectos/BancoUAT" : `/web-insol/proyecto/${subMenu.enlace1}`}
                               className="block text-black hover:bg-primary rounded p-2"
                             >
                               {!subMenu
-                                ? "Desarrollo Tecnológico 2"
+                                ? "Desarrollo Tecnológico"
                                 : subMenu.area1.area}
                             </Link>
                           </li>
                           <li className="space-y-2 list-disc pt-2 pb-2">
                             <Link
-                              to="/proyectos/Biorreactor"
+                              to={!subMenu ? "/proyectos/Biorreactor" : `/web-insol/proyecto/${subMenu.enlace2}`}
                               className="block text-black hover:bg-primary rounded p-2"
                             >
-                              Soluciones de Integración 3
+                              {!subMenu ? "Soluciones de Integración" : subMenu.area2.area}
                             </Link>
                           </li>
                           <li className="space-y-2 list-disc pt-2 pb-2">
                             <Link
-                              to="/proyectos/Consultas"
+                              to={!subMenu ? "/proyectos/Consultas" : `/web-insol/proyecto/${subMenu.enlace3}`}
                               className="block text-black hover:bg-primary rounded p-2"
                             >
-                              Infraestructura TI
+                              {!subMenu ? "Infraestructura TI" : subMenu.area3.area}
                             </Link>
                           </li>
                           <li className="space-y-2 list-disc pt-2 pb-2">
                             <Link
-                              to="/web-insol/tienda"
+                              to={!subMenu ? "/web-insol/tienda" : `/web-insol/proyecto/${subMenu.enlace4}`}
                               className="block text-black hover:bg-primary rounded p-2"
                             >
-                              Adquisición de Equipos y Herramientas
+                              {!subMenu ? "Adquisición de Equipos y Herramientas" : subMenu.area4.area}
                             </Link>
                           </li>
                         </ul>
@@ -382,7 +383,7 @@ const Navbar_Context = () => {
                     onClick={() => handleClick(0)}
                     //onClick={() => handleInfoToggle("proyectos")}
                   >
-                    {!subMenu ? "Desarrollo Tecnológico 2" : subMenu.area1.area}
+                    {!subMenu ? "Desarrollo Tecnológico" : subMenu.area1.area}
                     <br />
                   </p>
                   <br />

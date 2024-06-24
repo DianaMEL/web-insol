@@ -35,7 +35,7 @@ import FormCategoria from "./Components_Panel/FormCategoria";
 import FormUbicacion from "./Components_Panel/FormUbicacion";
 import ProyectosPage from "./Pages_panel/ProyectosPage";
 import CarruselPage from "./Pages_panel/CarruselPage";
-import SubMenuPage from "./Pages_panel/SubMenuPage";
+import AreaPage from "./Pages_panel/AreaPage";
 import MapaUbicacionPage from "./Pages_panel/MapaUbicacionPage";
 import FormSeleccionAreas from "./Components_Panel/FormSeleccionAreas";
 import MapaenFormulario from "./Components_Panel/MapaenFormulario";
@@ -82,7 +82,7 @@ function App() {
             <Route pant="/web-insol/panel/panelPrincipal" element={<PanelPrincipal />} />
             <Route pant="/web-insol/panel/proyectos" element={<ProyectosPage/>} /> 
             <Route pant="/web-insol/panel/carrusel" element={<CarruselPage />} />
-            <Route pant="/web-insol/panel/subMenu" element={<SubMenuPage />} />
+            <Route pant="/web-insol/panel/areas" element={<AreaPage />} />
             <Route pant="/web-insol/panel/mapa" element={<MapaUbicacionPage />} /> 
             <Route path="/web-insol/panel/solicitudes" element={<Tsolicitudes />} />
             <Route path="/web-insol/panel" element={<PanelControlPage />} />
@@ -122,9 +122,9 @@ function MainRoutes() {
       <Route path="/web-insol/clientes" element={<ClientesPage />} />
       <Route path="/web-insol/nosotros" element={<NosotrosPage />} />
       <Route path="/web-insol/contactanos" element={<ContactanosPage />} />
-      <Route path="/proyectos/Biorreactor" element={<BiorreactorPage />} />
-      <Route path="/proyectos/BancoUAT" element={<BancoUatPage />} />
-      <Route path="/proyectos/Consultas" element={<SistemaDeConsultasPage />} />
+      <Route path="/web-insol/proyectos/Biorreactor" element={<BiorreactorPage />} />
+      <Route path="/web-insol/proyectos/BancoUAT" element={<BancoUatPage />} />
+      <Route path="/web-insol/proyectos/Consultas" element={<SistemaDeConsultasPage />} />
       <Route path="/web-insol/mapa" element={<MapaPage />} />
       <Route path="/web-insol/blog" element={<BlogPage />} />
       <Route path="/web-insol/proyecto/:id" element={<ProyectoPage/>} />

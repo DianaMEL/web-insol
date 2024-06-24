@@ -1,65 +1,93 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useInsoel } from '../Context/InsoelContext';
 
 function FormSeleccionAreas() {
-  // Lista de todas las áreas disponibles
-  const areasDisponibles = ['Área 1', 'Área 2', 'Área 3', 'Área 4', 'Área 5', 'Área 6', 'Área 7', 'Área 8'];
+  const { areas, obtenerAreas, getProyectosByArea, updateSubMenu, obtenerSubMenu, idSubMenu } = useInsoel();
 
-  // Estado para almacenar las áreas seleccionadas y las opciones seleccionadas para cada área
+  useEffect(() => {
+    obtenerAreas();
+    obtenerSubMenu();
+  }, []);
+
   const [areasSeleccionadas, setAreasSeleccionadas] = useState([]);
-  const [opcionesPorArea, setOpcionesPorArea] = useState({});
+  const [proyectosPorArea, setProyectosPorArea] = useState({});
+  const [selecciones, setSelecciones] = useState({});
+  const [areaIds, setAreaIds] = useState([]);
+  const [proyectoIds, setProyectoIds] = useState([]);
 
-  // Función para manejar el cambio en la selección de áreas
-  const handleSeleccion = (area) => { 
-    // Si el área ya está seleccionada, la deseleccionamos
-    if (areasSeleccionadas.includes(area)) {
-      const nuevasAreas = areasSeleccionadas.filter((a) => a !== area);
+  useEffect(() => {
+    setAreaIds(Object.keys(selecciones));
+    setProyectoIds(Object.values(selecciones));
+  }, [selecciones]);
+
+  const handleSeleccion = async (area) => {
+    if (areasSeleccionadas.some(a => a._id === area._id)) {
+      const nuevasAreas = areasSeleccionadas.filter((a) => a._id !== area._id);
       setAreasSeleccionadas(nuevasAreas);
-      // También eliminamos las opciones seleccionadas para esa área
-      const nuevasOpciones = { ...opcionesPorArea };
-      delete nuevasOpciones[area];
-      setOpcionesPorArea(nuevasOpciones);
+      const nuevosProyectos = { ...proyectosPorArea };
+      delete nuevosProyectos[area._id];
+      setProyectosPorArea(nuevosProyectos);
+      const nuevasSelecciones = { ...selecciones };
+      delete nuevasSelecciones[area._id];
+      setSelecciones(nuevasSelecciones);
     } else {
-      // Si el área no está seleccionada y ya hay 4 selecciones, reemplazamos la primera selección con la nueva
       if (areasSeleccionadas.length === 4) {
         const nuevasAreas = [...areasSeleccionadas];
-        nuevasAreas.shift(); // Eliminamos la primera selección
-        nuevasAreas.push(area); // Agregamos la nueva selección al final
-        setAreasSeleccionadas(nuevasAreas);
+        const primeraArea = nuevasAreas.shift();
+        setAreasSeleccionadas([...nuevasAreas, area]);
+        const nuevosProyectos = { ...proyectosPorArea };
+        delete nuevosProyectos[primeraArea._id];
+        setProyectosPorArea(nuevosProyectos);
+        const nuevasSelecciones = { ...selecciones };
+        delete nuevasSelecciones[primeraArea._id];
+        setSelecciones(nuevasSelecciones);
       } else {
-        // Si hay menos de 4 selecciones, simplemente agregamos la nueva selección
         setAreasSeleccionadas([...areasSeleccionadas, area]);
       }
+
+      const proyectos = await getProyectosByArea(area._id);
+      setProyectosPorArea((prevProyectos) => ({
+        ...prevProyectos,
+        [area._id]: proyectos,
+      }));
     }
   };
 
-  // Función para manejar el cambio en la selección de opciones
-  const handleSeleccionOpcion = (area, opcion) => {
-    setOpcionesPorArea({
-      ...opcionesPorArea,
-      [area]: opcion,
+  const handleSeleccionOpcion = (areaId, proyectoId) => {
+    setSelecciones({
+      ...selecciones,
+      [areaId]: proyectoId,
     });
   };
 
-  // Función para manejar el guardado de las selecciones
   const handleGuardarSelecciones = () => {
-    console.log('Áreas seleccionadas:', areasSeleccionadas);
-    console.log('Opciones por área:', opcionesPorArea);
-    // Aquí puedes agregar la lógica para guardar las selecciones en tu aplicación
+    const subMenu = {
+      "area1" : areaIds[0],
+      "area2" : areaIds[1],
+      "area3" : areaIds[2],
+      "area4" : areaIds[3],
+      "enlace1" : proyectoIds[0],
+      "enlace2" : proyectoIds[1],
+      "enlace3" : proyectoIds[2],
+      "enlace4" : proyectoIds[3],
+    }
+    updateSubMenu(idSubMenu, subMenu)
+    console.log(idSubMenu)
   };
 
   return (
-    <div>
+    <div className='ml-10 mr-10 mt-10'>
       <p>Selecciona hasta cuatro áreas:</p>
       <div className="flex flex-wrap">
-        {areasDisponibles.map((area, index) => (
+        {areas.map((area, index) => (
           <button
             key={index}
             className={`py-2 px-4 m-2 rounded-lg ${
-              areasSeleccionadas.includes(area) ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
+              areasSeleccionadas.some(a => a._id === area._id) ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
             }`}
             onClick={() => handleSeleccion(area)}
           >
-            {area}
+            {area.area}
           </button>
         ))}
       </div>
@@ -68,16 +96,19 @@ function FormSeleccionAreas() {
         <ul>
           {areasSeleccionadas.map((area, index) => (
             <li key={index} className="flex items-center m-2">
-              <span className="mr-2">{area}</span>
+              <span className="mr-2">{area.area}</span>
               <select
                 className="ml-2 p-1 border border-gray-400 rounded"
-                value={opcionesPorArea[area] || ''}
-                onChange={(e) => handleSeleccionOpcion(area, e.target.value)}
+                value={selecciones[area._id] || ''}
+                onChange={(e) => handleSeleccionOpcion(area._id, e.target.value)}
               >
                 <option value="">Selecciona una opción</option>
-                <option value="Opción 1">Opción 1</option>
-                <option value="Opción 2">Opción 2</option>
-                <option value="Opción 3">Opción 3</option>
+                {proyectosPorArea[area._id] &&
+                  proyectosPorArea[area._id].map((proyecto, i) => (
+                    <option key={i} value={proyecto._id}>
+                      {proyecto.titulo}
+                    </option>
+                  ))}
               </select>
             </li>
           ))}
@@ -91,4 +122,3 @@ function FormSeleccionAreas() {
 }
 
 export default FormSeleccionAreas;
-

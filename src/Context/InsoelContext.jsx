@@ -11,6 +11,7 @@ import {
   getProyectosRequest,
   deleteProyectoRequest,
   updateProyectoRequest,
+  getProyectosByAreaRequest,
 } from "../api/proyectos";
 import {
   createCarruselRequest,
@@ -169,6 +170,16 @@ export function InsoelProvider({ children }) {
       throw error;
     }
   };
+
+  const getProyectosByArea = async(area) =>{
+    try {
+      const proyectos = await getProyectosByAreaRequest(area)
+      return proyectos.data
+    } catch (error) {
+      console.error(error)
+      throw error
+    }
+  }
 
   const formDataToJson = (formData) => {
     const json = {};
@@ -332,10 +343,11 @@ export function InsoelProvider({ children }) {
   };
   /**--------------------------SubMenu------------------------ */
   const [subMenu, setSubMenu] = useState(null)
+  const [idSubMenu, setIdSubMenu] = useState(null)
 
-  const updateSubMenu = async (id, area) => {
+  const updateSubMenu = async (id, subMenu) => {
     try {
-      await editarAreaRequest(id, area);
+      await editarSubMenuRequest(id, subMenu);
     } catch (error) {
       console.error(error);
     }
@@ -353,6 +365,7 @@ export function InsoelProvider({ children }) {
     const id = subMenu.data[0]._id
     const subMenuRef = await obtenerSubMenuRef(id)
     setSubMenu(subMenuRef.data.subMenu)
+    setIdSubMenu(id)
   }
 
   return (
@@ -384,6 +397,7 @@ export function InsoelProvider({ children }) {
         deleteProyecto,
         getProyectos,
         getProyecto,
+        getProyectosByArea,
         proyectos,
         proyecto,
         crearUbicacion, // ubicaciones
@@ -398,6 +412,8 @@ export function InsoelProvider({ children }) {
         areas,
         obtenerSubMenu,//Submenu
         subMenu,
+        updateSubMenu,
+        idSubMenu,
         carruselActivo,  //carrusel
         setCarruselActivo,
       }}

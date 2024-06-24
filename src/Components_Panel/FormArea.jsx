@@ -2,7 +2,7 @@ import React from 'react'
 import { useForm } from "react-hook-form";
 import { useInsoel } from '../Context/InsoelContext';
 
-function FormArea({reloadArea}) {
+function FormArea({reloadArea, toast}) {
     const { register, handleSubmit } = useForm();
     const {crearArea} = useInsoel();
 
