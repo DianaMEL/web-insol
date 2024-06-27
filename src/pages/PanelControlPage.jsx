@@ -135,7 +135,7 @@ function PanelControlPage() {
                   <span className="p-2 font-bold">Tienda</span>
                 </button>
               </li>
-              {/* Agregar Productos */}
+              {/* Agregar Productos 
               <li>
                 <button
                   className={`flex items-center w-full text-white hover:text-black hover:bg-primary p-2 mt-2 rounded-lg dark:text-white group ${
@@ -144,8 +144,8 @@ function PanelControlPage() {
                   onClick={() => handleTabClick("agregarProducto")}
                 > 
                 </button>
-              </li>
-              {/* Agregar Categorias */}
+              </li>*/}
+              {/* Agregar Categorias 
               <li>
                 <button
                   className={`flex items-center w-full text-white hover:text-black hover:bg-primary p-2 mt-2 rounded-lg dark:text-white group ${
@@ -154,7 +154,7 @@ function PanelControlPage() {
                   onClick={() => handleTabClick("agregarCategoria")}
                 > 
                 </button>
-              </li>
+              </li>*/}
             </ul>
           </div>
         </aside>

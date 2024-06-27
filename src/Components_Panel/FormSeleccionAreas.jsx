@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useInsoel } from '../Context/InsoelContext';
+import { IoCheckmarkOutline } from "react-icons/io5";
 
 function FormSeleccionAreas() {
   const { areas, obtenerAreas, getProyectosByArea, updateSubMenu, obtenerSubMenu, idSubMenu } = useInsoel();
@@ -76,29 +77,35 @@ function FormSeleccionAreas() {
   };
 
   return (
-    <div className='ml-10 mr-10 mt-10'>
-      <p>Selecciona hasta cuatro áreas:</p>
-      <div className="flex flex-wrap">
+    <div className="ml-10 mr-10 mt-10">
+      <p className="text-xl font-semibold mb-6 mt-16">Selecciona hasta cuatro áreas:</p>
+      <div className="flex flex-wrap gap-2">
         {areas.map((area, index) => (
           <button
             key={index}
-            className={`py-2 px-4 m-2 rounded-lg ${
-              areasSeleccionadas.some(a => a._id === area._id) ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
-            }`}
+            className={`flex items-center py-2 px-4 m-2 rounded-lg shadow transition-transform transform hover:scale-105 ${
+              areasSeleccionadas.some(a => a._id === area._id)
+                ? 'bg-secondary text-white border-2 border-secondary-dark'
+                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+            } transition-colors duration-300`}
             onClick={() => handleSeleccion(area)}
+            title={area.descripcion} 
           >
+            {areasSeleccionadas.some(a => a._id === area._id) && (
+              <IoCheckmarkOutline className='text-primary mr-2 text-xl'/>
+            )}
             {area.area}
           </button>
         ))}
       </div>
-      <div>
-        <p>Áreas seleccionadas:</p>
-        <ul>
+      <div className="mt-8">
+        <p className="text-lg font-semibold mb-2">Áreas seleccionadas:</p>
+        <ul className="border border-gray-500 rounded-lg p-4 bg-gray-50">
           {areasSeleccionadas.map((area, index) => (
-            <li key={index} className="flex items-center m-2">
+            <li key={index} className="flex items-center justify-between mb-2 p-2 bg-white rounded shadow">
               <span className="mr-2">{area.area}</span>
               <select
-                className="ml-2 p-1 border border-gray-400 rounded"
+                className="w-1/2 ml-2 p-1 border border-gray-400 rounded focus:outline-none focus:ring-2 focus:ring-secondary"
                 value={selecciones[area._id] || ''}
                 onChange={(e) => handleSeleccionOpcion(area._id, e.target.value)}
               >
@@ -114,7 +121,10 @@ function FormSeleccionAreas() {
           ))}
         </ul>
       </div>
-      <button onClick={handleGuardarSelecciones} className="bg-green-500 text-white px-4 py-2 rounded mt-4">
+      <button
+        onClick={handleGuardarSelecciones}
+        className="bg-tertiary text-white px-4 py-2 rounded mt-4 shadow hover:bg-darkPrimary transition-colors duration-300"
+      >
         Guardar selecciones
       </button>
     </div>
