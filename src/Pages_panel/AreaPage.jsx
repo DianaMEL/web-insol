@@ -9,23 +9,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function AreaPage() {
-  /*  const areas = [
-        {
-          id: 1,
-          area: "Desarrollo Tecnologico",
-          descripcion: "Explora nuestra sección de Desarrollo Tecnológico para conocer los proyectos pioneros que hemos llevado a cabo. Desde la creación de soluciones personalizadas hasta la adopción de tecnologías emergentes, demostramos nuestro compromiso con la innovación y el avance en el mundo digital.",
-          img1: Automa,
-          enlace: "https://ejemplo.com/proyecto1"
-        },
-        {
-          id: 1,
-          area: "Desarrollo Tecnologico",
-          descripcion: "Explora nuestra sección de Desarrollo Tecnológico para conocer los proyectos pioneros que hemos llevado a cabo. Desde la creación de soluciones personalizadas hasta la adopción de tecnologías emergentes, demostramos nuestro compromiso con la innovación y el avance en el mundo digital.",
-          img1: Automa,
-          enlace: "https://ejemplo.com/proyecto1"
-        },
-      ]; */
-
+  
   const [areas, setAreas] = useState([]);
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
   const [recargar, setRecargar] = useState(false);

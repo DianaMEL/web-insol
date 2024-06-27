@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useInsoel } from '../Context/InsoelContext';
-import { IoCheckmarkOutline } from "react-icons/io5";
 
-function FormSeleccionAreas() {
-  const { areas, obtenerAreas, getProyectosByArea, updateSubMenu, obtenerSubMenu, idSubMenu } = useInsoel();
+function FormSeleccionAreas({ reloadSubMenu, toast }) {
+  const {
+    areas,
+    obtenerAreas,
+    getProyectosByArea,
+    updateSubMenu,
+    obtenerSubMenu,
+    idSubMenu,
+  } = useInsoel();
 
   useEffect(() => {
     obtenerAreas();
@@ -22,7 +28,7 @@ function FormSeleccionAreas() {
   }, [selecciones]);
 
   const handleSeleccion = async (area) => {
-    if (areasSeleccionadas.some(a => a._id === area._id)) {
+    if (areasSeleccionadas.some((a) => a._id === area._id)) {
       const nuevasAreas = areasSeleccionadas.filter((a) => a._id !== area._id);
       setAreasSeleccionadas(nuevasAreas);
       const nuevosProyectos = { ...proyectosPorArea };
@@ -61,33 +67,35 @@ function FormSeleccionAreas() {
     });
   };
 
-  const handleGuardarSelecciones = () => {
+  const handleGuardarSelecciones = async () => {
     const subMenu = {
-      "area1" : areaIds[0],
-      "area2" : areaIds[1],
-      "area3" : areaIds[2],
-      "area4" : areaIds[3],
-      "enlace1" : proyectoIds[0],
-      "enlace2" : proyectoIds[1],
-      "enlace3" : proyectoIds[2],
-      "enlace4" : proyectoIds[3],
-    }
-    updateSubMenu(idSubMenu, subMenu)
-    console.log(idSubMenu)
+      area1: areaIds[0],
+      area2: areaIds[1],
+      area3: areaIds[2],
+      area4: areaIds[3],
+      enlace1: proyectoIds[0],
+      enlace2: proyectoIds[1],
+      enlace3: proyectoIds[2],
+      enlace4: proyectoIds[3],
+    };
+    await toast.promise(updateSubMenu(idSubMenu, subMenu), {
+      pending: "Actualizando Sub Menu",
+      success: "Sub Menu actualizado con Éxito",
+      error: "Error al actualizar el sub menu",
+    });
+    reloadSubMenu()
   };
 
   return (
-    <div className="ml-10 mr-10 mt-10">
-      <p className="text-xl font-semibold mb-6 mt-16">Selecciona hasta cuatro áreas:</p>
-      <div className="flex flex-wrap gap-2">
+    <div className='ml-10 mr-10 mt-10'>
+      <p>Selecciona hasta cuatro áreas:</p>
+      <div className="flex flex-wrap">
         {areas.map((area, index) => (
           <button
             key={index}
-            className={`flex items-center py-2 px-4 m-2 rounded-lg shadow transition-transform transform hover:scale-105 ${
-              areasSeleccionadas.some(a => a._id === area._id)
-                ? 'bg-secondary text-white border-2 border-secondary-dark'
-                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-            } transition-colors duration-300`}
+            className={`py-2 px-4 m-2 rounded-lg ${
+              areasSeleccionadas.some(a => a._id === area._id) ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
+            }`}
             onClick={() => handleSeleccion(area)}
             title={area.descripcion} 
           >
@@ -105,7 +113,7 @@ function FormSeleccionAreas() {
             <li key={index} className="flex items-center justify-between mb-2 p-2 bg-white rounded shadow">
               <span className="mr-2">{area.area}</span>
               <select
-                className="w-1/2 ml-2 p-1 border border-gray-400 rounded focus:outline-none focus:ring-2 focus:ring-secondary"
+                className="ml-2 p-1 border border-gray-400 rounded"
                 value={selecciones[area._id] || ''}
                 onChange={(e) => handleSeleccionOpcion(area._id, e.target.value)}
               >
@@ -121,10 +129,7 @@ function FormSeleccionAreas() {
           ))}
         </ul>
       </div>
-      <button
-        onClick={handleGuardarSelecciones}
-        className="bg-tertiary text-white px-4 py-2 rounded mt-4 shadow hover:bg-darkPrimary transition-colors duration-300"
-      >
+      <button onClick={handleGuardarSelecciones} className="bg-green-500 text-white px-4 py-2 rounded mt-4">
         Guardar selecciones
       </button>
     </div>

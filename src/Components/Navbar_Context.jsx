@@ -58,10 +58,10 @@ const Navbar_Context = () => {
   const imagePaths = [image1, image2, image3, image4];
 
   const enlaces = [
-    !subMenu ? "/proyectos/BancoUAT" : `/web-insol/proyecto/${subMenu.enlace1}`,
-    !subMenu ? "/proyectos/Biorreactor" : `/web-insol/proyecto/${subMenu.enlace2}`,
-    !subMenu ? "/proyectos/Consultas" :  `/web-insol/proyecto/${subMenu.enlace3}`,
-    !subMenu ? "/web-insol/Tienda" : `/web-insol/proyecto/${subMenu.enlace4}`,
+    !subMenu ? "/proyectos/BancoUAT" : `/web-insol/proyecto/${subMenu.enlace1._id}`,
+    !subMenu ? "/proyectos/Biorreactor" : `/web-insol/proyecto/${subMenu.enlace2._id}`,
+    !subMenu ? "/proyectos/Consultas" :  `/web-insol/proyecto/${subMenu.enlace3._id}`,
+    !subMenu ? "/web-insol/Tienda" : `/web-insol/proyecto/${subMenu.enlace4._id}`,
   ];
 
   const descripciones = [
@@ -321,7 +321,7 @@ const Navbar_Context = () => {
                         <ul className="text-xl pl-2  ">
                           <li className="space-y-2 list-disc pt-2 pb-2">
                             <Link
-                              to={!subMenu ? "/proyectos/BancoUAT" : `/web-insol/proyecto/${subMenu.enlace1}`}
+                              to={!subMenu ? "/proyectos/BancoUAT" : `/web-insol/proyecto/${subMenu.enlace1._id}`}
                               className="block text-black hover:bg-primary rounded p-2"
                             >
                               {!subMenu
@@ -331,7 +331,7 @@ const Navbar_Context = () => {
                           </li>
                           <li className="space-y-2 list-disc pt-2 pb-2">
                             <Link
-                              to={!subMenu ? "/proyectos/Biorreactor" : `/web-insol/proyecto/${subMenu.enlace2}`}
+                              to={!subMenu ? "/proyectos/Biorreactor" : `/web-insol/proyecto/${subMenu.enlace2._id}`}
                               className="block text-black hover:bg-primary rounded p-2"
                             >
                               {!subMenu ? "Soluciones de Integración" : subMenu.area2.area}
@@ -339,7 +339,7 @@ const Navbar_Context = () => {
                           </li>
                           <li className="space-y-2 list-disc pt-2 pb-2">
                             <Link
-                              to={!subMenu ? "/proyectos/Consultas" : `/web-insol/proyecto/${subMenu.enlace3}`}
+                              to={!subMenu ? "/proyectos/Consultas" : `/web-insol/proyecto/${subMenu.enlace3._id}`}
                               className="block text-black hover:bg-primary rounded p-2"
                             >
                               {!subMenu ? "Infraestructura TI" : subMenu.area3.area}
@@ -347,7 +347,7 @@ const Navbar_Context = () => {
                           </li>
                           <li className="space-y-2 list-disc pt-2 pb-2">
                             <Link
-                              to={!subMenu ? "/web-insol/tienda" : `/web-insol/proyecto/${subMenu.enlace4}`}
+                              to={!subMenu ? "/web-insol/tienda" : `/web-insol/proyecto/${subMenu.enlace4._id}`}
                               className="block text-black hover:bg-primary rounded p-2"
                             >
                               {!subMenu ? "Adquisición de Equipos y Herramientas" : subMenu.area4.area}
