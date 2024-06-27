@@ -34,7 +34,7 @@ function SubMenuPage() {
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-8 ">
         {!mostrarFormulario && (
-          <h1 className="mt-16 text-3xl font-bold ml-5">Sub Menu </h1>
+          <h1 className="mt-16 text-3xl font-bold ml-5">SubMenú </h1>
         )}
         {mostrarFormulario ? (
           <div>
