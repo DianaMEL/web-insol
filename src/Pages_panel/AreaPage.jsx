@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 function AreaPage() {
   
   const [areas, setAreas] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
   const [recargar, setRecargar] = useState(false);
 
@@ -22,10 +23,19 @@ function AreaPage() {
       console.error("Error al obtener las Areas", error);
     }
   };
-
+/*
   useEffect(() => {
     obtenerAreas();
     setRecargar(false);
+  }, [recargar]); */
+  useEffect(() => {
+    const fetchData = async () => {
+      await obtenerAreas();
+      setIsLoading(false);
+    };
+
+    fetchData();
+    setRecargar(false)
   }, [recargar]);
 
   const handleReloadArea = () => {
@@ -65,9 +75,18 @@ function AreaPage() {
       <ToastContainer />
 
       {!mostrarFormulario && (
+        isLoading ? (
+          <div className="flex flex-col items-center justify-center mt-48">
+      <div className="custom-progress-bar">
+        <div className="custom-progress"></div>
+      </div>
+      <p className="custom-loading-text mt-4 text-xl font-semibold text-black">Cargando...</p>
+    </div>
+        ) : (
         <div>
           <ListArea areas={areas} reloadarea={handleReloadArea} toast={toast} />
         </div>
+        )
       )}
     </div>
   );

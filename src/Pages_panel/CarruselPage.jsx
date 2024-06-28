@@ -14,6 +14,7 @@ function CarruselPage() {
  
   const { carruselActivo, setCarruselActivo } = useInsoel(); // Obtén el valor de carruselActivo del contexto
   console.log("carruselActivo", carruselActivo);
+  const [isLoading, setIsLoading] = useState(true);
       const [mostrarFormulario, setMostrarFormulario] = useState(false);
       const [recargar, setRecargar] = useState(false)
      
@@ -25,11 +26,20 @@ function CarruselPage() {
           console.error('Error al obtener carruseles', error);
         }
       };
-
+/*
       useEffect(() => {
         obtenerCarruseles();
         setRecargar(false);
-      }, [recargar]); 
+      }, [recargar]); */
+      useEffect(() => {
+        const fetchData = async () => {
+          await obtenerCarruseles();
+          setIsLoading(false);
+        };
+    
+        fetchData();
+        setRecargar(false)
+      }, [recargar]);
     
       const handleReloadCarrusel = () => {
         console.log("cargando Carrusel nuevamente");
@@ -102,9 +112,18 @@ function CarruselPage() {
       <ToastContainer/>
 
       {!mostrarFormulario && (
+        isLoading ? (
+          <div className="flex flex-col items-center justify-center mt-48">
+      <div className="custom-progress-bar">
+        <div className="custom-progress"></div>
+      </div>
+      <p className="custom-loading-text mt-4 text-xl font-semibold text-black">Cargando...</p>
+    </div>
+        ) : (
             <div>
               <ListCarrusel carruseles={carruseles} reloadCarrusel={handleReloadCarrusel} toast={toast}/>
             </div>
+             )
           )}
     </div>
       )

@@ -55,11 +55,14 @@ function SubMenuPage() {
 
       {!mostrarFormulario && (
         isLoading ? (
-          <div className="text-center">
-            <p className="text-xl">Cargando...</p>
-          </div>
+          <div className="flex flex-col items-center justify-center mt-48">
+      <div className="custom-progress-bar">
+        <div className="custom-progress"></div>
+      </div>
+      <p className="custom-loading-text mt-4 text-xl font-semibold text-black">Cargando...</p>
+    </div>
         ) : (
-          <SubMenuTable subMenu={subMenu} />
+          <SubMenuTable subMenu={subMenu} /> 
         )
       )}
     </div>

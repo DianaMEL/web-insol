@@ -6,17 +6,29 @@ import FormProyectos from "../Components_Panel/FormProyectos";
 import { useInsoel } from "../Context/InsoelContext";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "../carga.css";
 
 function ProyectosPage() {
   const { getProyectos, proyectos } = useInsoel(); 
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isUpdateMode, setIsUpdateMode] = useState(false);
   const [proyectoToUpdate, setProyectoToUpdate] = useState(null); 
   //const [addProyecto, setAddProyecto] = useState(false)
   const [recargar, setRecargar] = useState(false)
 
+  /*
   useEffect(() => {
     getProyectos(); 
+    setRecargar(false)
+  }, [recargar]);*/
+  useEffect(() => {
+    const fetchData = async () => {
+      await getProyectos(); 
+      setIsLoading(false);
+    };
+
+    fetchData();
     setRecargar(false)
   }, [recargar]);
 
@@ -99,6 +111,18 @@ function ProyectosPage() {
         )}
       </div>
       {!mostrarFormulario && (
+        isLoading ? (
+          <div className="flex flex-col items-center justify-center mt-48">
+      <div className="custom-progress-bar">
+        <div className="custom-progress"></div>
+      </div>
+      <p className="custom-loading-text mt-4 text-xl font-semibold text-black">Cargando...</p>
+    </div>
+
+
+
+
+        ) : (
         <div>
           <ListProyectos
             proyectos={proyectos}
@@ -106,10 +130,15 @@ function ProyectosPage() {
             onUpdateClick={handleClickActualizarProyecto}
           />
         </div>
+         )
       )}
       <ToastContainer/>
     </div>
+    
+  
+  
   );
+  
 } 
 
 export default ProyectosPage;
