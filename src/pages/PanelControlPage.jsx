@@ -19,6 +19,8 @@ import AreaPage from "../Pages_panel/AreaPage";
 import MapaUbicacionPage from "../Pages_panel/MapaUbicacionPage";
 import FormSeleccionAreas from "../Components_Panel/FormSeleccionAreas";
 import SubMenuPage from "../Pages_panel/SubMenuPage";
+import { TfiClipboard } from "react-icons/tfi";
+import Tsolicitudes from "../Components_Panel/Tsolicitudes";
 
 function PanelControlPage() {
   const [activeTab, setActiveTab] = useState(null); // Estado para rastrear la pestaña activa
@@ -123,6 +125,19 @@ function PanelControlPage() {
                 </button>
               </li>
 
+                {/* Solicitudes */}
+              <li>
+                <button
+                  className={`flex items-center w-full text-white hover:text-black hover:bg-primary p-2 mt-2 rounded-lg dark:text-white group ${
+                    activeTab === "solicitudes" ? "" : ""
+                  }`}
+                  onClick={() => handleTabClick("solicitudes")}
+                >
+                  <TfiClipboard  className="flex-shrink-0 w-5 h-5  transition duration-75 dark:text-gray-400 group-hover:text-secondary text-primary" />
+                  <span className="p-2 font-bold">Solicitudes</span>
+                </button>
+              </li>
+
               {/* Tienda */}
               <li>
                 <button
@@ -190,6 +205,11 @@ function PanelControlPage() {
           {activeTab === "mapa" && (
             <div>
               <MapaUbicacionPage />
+            </div>
+          )}
+          {activeTab === "solicitudes" && (
+            <div className="mb-20">
+              <Tsolicitudes />
             </div>
           )}
           {activeTab === "nuevoProyecto" && (

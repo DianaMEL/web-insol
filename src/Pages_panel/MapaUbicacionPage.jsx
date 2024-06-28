@@ -12,6 +12,7 @@ function MapaUbicacionPage() {
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
   const [isUpdateMode, setIsUpdateMode] = useState(false);
   const [filtroNombre, setFiltroNombre] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
   const [recargar, setRecargar] = useState(false)
   const [ubicacionToUpdate, setUbicacionToUpdate] = useState(null); 
 
@@ -23,10 +24,19 @@ function MapaUbicacionPage() {
       console.error("Error al obtener las Ubicaciones", error);
     }
   };
-
+/*
   useEffect(() => {
     obtenerUbicaciones();
     setRecargar(false);
+  }, [recargar]);*/
+  useEffect(() => {
+    const fetchData = async () => {
+      await obtenerUbicaciones();
+      setIsLoading(false);
+    };
+
+    fetchData();
+    setRecargar(false)
   }, [recargar]);
 
   const handleReloadMapa = () => {
@@ -97,6 +107,14 @@ function MapaUbicacionPage() {
         <ToastContainer/>
       </div>
       {!mostrarFormulario && (
+        isLoading ? (
+          <div className="flex flex-col items-center justify-center mt-48">
+      <div className="custom-progress-bar">
+        <div className="custom-progress"></div>
+      </div>
+      <p className="custom-loading-text mt-4 text-xl font-semibold text-black">Cargando...</p>
+    </div>
+        ) : (
         <div>
           {/* Pasar el filtro a la lista de ubicaciones */}
           <ListMapaUbicacion
@@ -109,6 +127,7 @@ function MapaUbicacionPage() {
             onUpdateClick={handleClickActualizarUbicacion}
           />
         </div>
+         )
       )}
     </div>
   );

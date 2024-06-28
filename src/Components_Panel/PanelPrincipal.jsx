@@ -110,7 +110,7 @@ function PanelPrincipal() {
     <div className='container mx-auto px-4 py-8 mt-14'>
       {filteredSolicitudes.length > 0 ? (
         <>
-        <h1 className='text-3xl font-semibold mb-6 text-center text-gray-800'>Solicitudes</h1>
+        <h1 className='text-3xl font-semibold mb-6 text-center text-gray-800'>Solicitudes Semanales</h1>
         <ul className='grid grid-cols-3 gap-4'>
           {filteredSolicitudes.map((solicitud, index) => (
             <li
@@ -143,6 +143,7 @@ function PanelPrincipal() {
                 <div className='flex items-center mt-4'>
                   <input
                     type='checkbox'
+                    className='accent-secondary'
                     checked={terminadas.includes(solicitud._id)}
                     onChange={() => handleCheckboxChange(solicitud._id)}
                   />

@@ -1,0 +1,27 @@
+/* diseño de la letra o texto */
+.custom-loading-text {
+    font-size: 1.25rem; /* tamaño de la funete */
+    font-weight: 600;
+    margin-top: 1rem;
+  }
+  
+/* diseño de la barra de progreso */
+  .custom-progress-bar {
+    width: 16rem; /* 256px */
+    height: 0.75rem; /* 12px */
+    background-color: #E2E8F0; /* gray-200 */
+    border-radius: 9999px; /* rounded-full */
+    overflow: hidden; /* Oculta cualquier contenido que sobresalga del contenedor */
+  }
+  
+  .custom-progress {
+    height: 100%; /*  Establece la altura del elemento de progreso al 100% de la altura del contenedor padre (.custom-progress-bar) */
+    background-color: #fcd424 ; /* Establece el color de fondo del elemento de progreso primary  */
+    animation: progress 2s infinite; /* aplica la animacion definida por @keyframes */
+  }
+  
+/* Define una animación llamada progress. */
+  @keyframes progress {
+    0% { width: 0%; } /* Al inicio de la animación, la anchura del elemento es 0%. */
+    100% { width: 100%; } /* Al final de la animación, la anchura del elemento es 100% */
+  }

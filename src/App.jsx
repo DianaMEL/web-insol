@@ -106,7 +106,8 @@ function TiendaRoutes() {
   return (
     <Routes>
       <Route path="/" element={<TiendaPage />} />
-      <Route path="/DetalleProducto" element={<DetalleProducto />} />
+      
+      <Route path="/web-insol/tienda/DetalleProducto" element={<DetalleProducto />} />
       <Route path="/:productId" element={<ProductDetail />} />
     </Routes>
   );
