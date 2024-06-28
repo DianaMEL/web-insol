@@ -38,13 +38,13 @@ function PanelControlPage() {
 
   const { logout, isAuthenticated } = useAuth();
   const navigate = useNavigate();
-  /* useEffect(() => {
+  useEffect(() => {
     if (isAuthenticated) {
       navigate("/web-insol/panel");
     } else {
       navigate("/web-insol/login");
     }
-  }, [isAuthenticated]);*/
+  }, [isAuthenticated]);
 
   return (
     <div className="h-screen">
