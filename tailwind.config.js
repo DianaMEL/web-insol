@@ -3,6 +3,15 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      keyframes: {
+        drop: {
+          '0%': { transform: 'translateY(-100%)' },
+          '100%': { transform: 'translateY(0)' },
+        },
+      },
+      animation: {
+        drop: 'drop 0.5s ease-out forwards',
+      },
       colors: {
         primary: "#fcd424", // Color primario dorado amarillo
         secondary: "#04547c", // Color secundario azul rey

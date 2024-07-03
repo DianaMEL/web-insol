@@ -13,7 +13,7 @@ function NavbarPanel() {
           </div>
           <ul className="flex space-x-4">
             <li>
-              <button className="bg-red-500 rounded p-1 text-white hover:text-gray-400" onClick={()=>{
+              <button className=" rounded p-1 text-white hover:text-gray-400" onClick={()=>{
                 logout()
               }} >
                 Cerra Sesión

@@ -123,7 +123,7 @@ export function InsoelProvider({ children }) {
     }
   };
 
-  useEffect(() => {
+  useEffect(() => { 
     obtenerSolicitudes();
   }, []);
 /*

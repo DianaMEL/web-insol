@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useInsoel } from "../Context/InsoelContext";
+import { FaStoreAlt } from "react-icons/fa";
+import { IoStorefront } from "react-icons/io5";
 
 import LogoAmarilloNegro from "../img/Logos/AmarilloNegro.png";
 import LogoAmarilloBlanco from "../img/Logos/AmarilloBlanco.png";
@@ -236,7 +238,7 @@ const Navbar_Context = () => {
               onClick={() => handleInfoToggle("clientes")}
             >
               <Link
-                to="/web-insol/tienda"
+                //to="/web-insol/tienda"
                 style={{
                   color: activeInfo === "clientes" ? "black" : txtColor,
                   // Ajusta según sea necesario
@@ -264,6 +266,31 @@ const Navbar_Context = () => {
                 }
               >
                 Contactarnos
+              </Link>
+            </div>
+          
+        
+
+        <div
+              className={`text-${
+                activeInfo === "tienda" ? "black" : "white"
+              } cursor-pointer  ${
+                activeInfo === "tienda"
+                  ? "p-1 pr-2 pl-2 bg-darkPrimary transform border-2 border-black/50 rounded-lg"
+                  : "hover:text-black hover:bg-primary pt-2 pr-2 pl-2 rounded-lg mt-1"
+              }`}
+              onClick={() => handleInfoToggle("tienda")}
+            >
+              <Link
+                to="/web-insol/tienda"
+                style={
+                  {
+                    //color: activeInfo === "contactanos" ? "black" : txtColor,
+                    // Ajusta según sea necesario
+                  }
+                }
+              >
+                <FaStoreAlt/>
               </Link>
             </div>
           </div>

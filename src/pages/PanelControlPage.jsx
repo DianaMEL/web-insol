@@ -15,12 +15,14 @@ import FormCategoria from "../Components_Panel/FormCategoria";
 import FormUbicacion from "../Components_Panel/FormUbicacion";
 import ProyectosPage from "../Pages_panel/ProyectosPage";
 import CarruselPage from "../Pages_panel/CarruselPage";
+import TiendaPanel from "../Components_Panel/TiendaPanel";
 import AreaPage from "../Pages_panel/AreaPage";
 import MapaUbicacionPage from "../Pages_panel/MapaUbicacionPage";
 import FormSeleccionAreas from "../Components_Panel/FormSeleccionAreas";
 import SubMenuPage from "../Pages_panel/SubMenuPage";
 import { TfiClipboard } from "react-icons/tfi";
 import Tsolicitudes from "../Components_Panel/Tsolicitudes";
+import TiendaPanelPage from "../Pages_panel/TiendaPanelPage";
 
 function PanelControlPage() {
   const [activeTab, setActiveTab] = useState(null); // Estado para rastrear la pestaña activa
@@ -194,7 +196,7 @@ function PanelControlPage() {
           )}
           {activeTab === "tienda" && (
             <div>
-              <PanelPrincipal />
+              <TiendaPanelPage />
             </div>
           )}
           {activeTab === "areas" && (

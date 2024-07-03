@@ -17,11 +17,6 @@ function PanelPrincipal() {
     return savedTerminadas ? JSON.parse(savedTerminadas) : [];
   });
 
-  const [marcadasComoTerminadas, setMarcadasComoTerminadas] = useState(() => {
-    const savedMarcadas = localStorage.getItem('marcadasComoTerminadas');
-    return savedMarcadas ? JSON.parse(savedMarcadas) : [];
-  });
-
   useEffect(() => {
     obtenerSolicitudes();
   }, [obtenerSolicitudes]);
@@ -29,10 +24,6 @@ function PanelPrincipal() {
   useEffect(() => {
     localStorage.setItem('terminadas', JSON.stringify(terminadas));
   }, [terminadas]);
-
-  useEffect(() => {
-    localStorage.setItem('marcadasComoTerminadas', JSON.stringify(marcadasComoTerminadas));
-  }, [marcadasComoTerminadas]);
 
   const isSameWeek = (date1, date2) => {
     const startOfWeek = (date) => {
@@ -61,19 +52,19 @@ function PanelPrincipal() {
 
   const handleCheckboxChange = async (solicitudId) => {
     try {
-      await actualizarSolicitud(solicitudId, !marcadasComoTerminadas.includes(solicitudId));
-      setMarcadasComoTerminadas((prevMarcadas) => {
-        const newMarcadas = prevMarcadas.includes(solicitudId)
-          ? prevMarcadas.filter(id => id !== solicitudId)
-          : [...prevMarcadas, solicitudId];
+      await actualizarSolicitud(solicitudId, !terminadas.includes(solicitudId));
+      setTerminadas((prevTerminadas) => {
+        const newTerminadas = prevTerminadas.includes(solicitudId)
+          ? prevTerminadas.filter(id => id !== solicitudId)
+          : [...prevTerminadas, solicitudId];
 
         const solicitudStatus = solicitudes.map(solicitud => ({
           id: solicitud._id,
-          terminada: newMarcadas.includes(solicitud._id)
+          terminada: newTerminadas.includes(solicitud._id)
         }));
         console.log(solicitudStatus);
 
-        return newMarcadas;
+        return newTerminadas;
       });
     } catch (error) {
       console.error('Error al actualizar la solicitud:', error);
@@ -83,22 +74,22 @@ function PanelPrincipal() {
   const eliminarTerminadas = () => {
     console.log('Eliminando solicitudes terminadas...');
     setTerminadas((prevTerminadas) => {
-      const nuevasTerminadas = prevTerminadas.concat(marcadasComoTerminadas);
+      // Mantener solo las terminadas que no están en la lista filtrada (es decir, las terminadas)
+      const nuevasTerminadas = prevTerminadas.filter(id =>
+        !filteredSolicitudes.some(solicitud => solicitud._id === id)
+      );
       console.log('Nuevas terminadas después de filtrar:', nuevasTerminadas);
       return nuevasTerminadas;
     });
-    setMarcadasComoTerminadas([]);
-    obtenerSolicitudes();
+    obtenerSolicitudes(); // Refrescar la lista de solicitudes después de eliminar las terminadas
   };
 
   useEffect(() => {
-    //const timeUntilNextRun = 2 * 60 * 1000; // 2 minutes in milliseconds
-    const timeUntilNextRun = 30 * 60 * 1000; // 30 min in milliseconds
-    //const timeUntilNextRun = 12 * 60 * 60 * 1000; // 12 hours in milliseconds
+    const timeUntilNextRun = 2 * 60 * 1000; // 2 minutes in milliseconds
     const timer = setTimeout(eliminarTerminadas, timeUntilNextRun);
 
     return () => clearTimeout(timer); // Limpiar el timeout al desmontar el componente o al cambiar
-  }, [terminadas, marcadasComoTerminadas]);
+  }, [terminadas]);
 
   return (
     <div className='container mx-auto px-4 py-8 mt-14'>
@@ -138,7 +129,7 @@ function PanelPrincipal() {
                     <input
                       type='checkbox'
                       className='accent-secondary'
-                      checked={marcadasComoTerminadas.includes(solicitud._id)}
+                      checked={terminadas.includes(solicitud._id)}
                       onChange={() => handleCheckboxChange(solicitud._id)}
                     />
                     <label className='ml-2'>Terminado</label>
@@ -158,6 +149,7 @@ function PanelPrincipal() {
   );
 }
 
+//funciona pero al marcar la casilla de terminado se elimina la solicitud 
 
 
 

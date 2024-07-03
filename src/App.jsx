@@ -14,10 +14,6 @@ import BiorreactorPage from "./pages/Proyectos/BiorreactorPage";
 import BancoUatPage from "./pages/Proyectos/BancoUatPage";
 import SistemaDeConsultasPage from "./pages/Proyectos/SistemaDeConsultasPage";
 import HomePage from "./pages/HomePage";
-import Footer from "./Components/Footer";
-import TiendaPage from "./pages/TiendaPage";
-import ProductDetail from "./Components/ProductoDetail";
-import DetalleProducto from "./Components/DetalleProducto";
 import MapaPage from "./pages/MapaPage";
 import Login from "./Components_Panel/Login";
 import Registrarse from "./Components_Panel/Registrarse";
@@ -33,6 +29,7 @@ import FormProductos from "./Components_Panel/FormProductos";
 import PanelPrincipal from "./Components_Panel/PanelPrincipal";
 import FormCategoria from "./Components_Panel/FormCategoria";
 import FormUbicacion from "./Components_Panel/FormUbicacion";
+import TiendaPanel from "./Components_Panel/TiendaPanel";
 import ProyectosPage from "./Pages_panel/ProyectosPage";
 import CarruselPage from "./Pages_panel/CarruselPage";
 import AreaPage from "./Pages_panel/AreaPage";
@@ -40,6 +37,9 @@ import MapaUbicacionPage from "./Pages_panel/MapaUbicacionPage";
 import FormSeleccionAreas from "./Components_Panel/FormSeleccionAreas";
 import MapaenFormulario from "./Components_Panel/MapaenFormulario";
 import Tsolicitudes from "./Components_Panel/Tsolicitudes";
+import TiendaPage from "./pages/TiendaPage";
+import Productos from "./Components/Productos";
+import TiendaPanelPage from "./Pages_panel/TiendaPanelPage";
 
 function App() {
   return (
@@ -47,17 +47,7 @@ function App() {
       <InsoelProvider>
         <BrowserRouter>
           <main>
-            {/* Ruta para la tienda */}
             <Routes>
-              <Route
-                path="/web-insol/tienda/*"
-                element={
-                  <>
-                    <Navbar_Tienda />
-                    <TiendaRoutes />
-                  </>
-                }
-              />
               {/* Otras rutas */}
               <Route
                 path="/*"
@@ -68,6 +58,7 @@ function App() {
                   </>
                 }
               />
+              
               <Route path="/web-insol/login" element={<Login />} />
 
               {/**Rutas protegidas   */}
@@ -130,6 +121,10 @@ function App() {
                   path="/web-insol/panel/solicitudes"
                   element={<Tsolicitudes />}
                 />
+                <Route
+                  path="/web-insol/panel/tienda"
+                  element={<TiendaPanelPage />}
+                />
                 <Route path="/web-insol/panel" element={<PanelControlPage />} />
 
                 <Route
@@ -137,23 +132,14 @@ function App() {
                   element={<Registrarse />}
                 />
               </Route>
+              
+              <Route path="/web-insol/tienda/productos" element={<Productos />} />
+              <Route path="/web-insol/tienda" element={<TiendaPage />} />
             </Routes>
           </main>
         </BrowserRouter>
       </InsoelProvider>
     </AuthProvider>
-  );
-}
-
-// Componente para las rutas dentro de la tienda
-function TiendaRoutes() {
-  return (
-    <Routes>
-      <Route path="/" element={<TiendaPage />} />
-      
-      <Route path="/web-insol/tienda/DetalleProducto" element={<DetalleProducto />} />
-      <Route path="/:productId" element={<ProductDetail />} />
-    </Routes>
   );
 }
 
