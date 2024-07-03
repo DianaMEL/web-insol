@@ -39,6 +39,12 @@ import {
   editarAreaRequest,
   getAreasRequest,
 } from "../api/area";
+import {
+  crearProductoRequest,
+  getProductosrequest,
+  deleteProductoRequest,
+  editarProductoRequest,
+} from "../api/producto";
 
 const InsoelContext = createContext();
 
@@ -48,7 +54,6 @@ export const useInsoel = () => {
     throw new Error("useInsoel must be used with, a Insoelprovider");
   }
   return context;
- 
 };
 
 export function InsoelProvider({ children }) {
@@ -59,39 +64,44 @@ export function InsoelProvider({ children }) {
     "bg-opacity-75 bg-gradient-to-b from-secondary bottom-96"
   );
 
-  
-
   //-----------Funcion para formatear la fecha de ISO -------
   const fechaFormateada = (fechaISO) => {
     // Convertir la cadena de fecha a objeto Date
     const fecha = new Date(fechaISO);
-  
+
     // Verificar si la fecha es válida
     if (isNaN(fecha)) {
       return "Fecha no válida";
     }
-  
+
     // Obtener el día en UTC y asegurarse de que tenga dos dígitos
-    const dia = String(fecha.getUTCDate()).padStart(2, '0');
-  
+    const dia = String(fecha.getUTCDate()).padStart(2, "0");
+
     // Obtener el mes en UTC
     const meses = [
-      "enero", "febrero", "marzo", "abril", "mayo", "junio",
-      "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
+      "enero",
+      "febrero",
+      "marzo",
+      "abril",
+      "mayo",
+      "junio",
+      "julio",
+      "agosto",
+      "septiembre",
+      "octubre",
+      "noviembre",
+      "diciembre",
     ];
     const mes = meses[fecha.getUTCMonth()];
-  
+
     // Obtener el año en UTC
     const año = fecha.getUTCFullYear();
-  
+
     // Formatear la fecha en el formato deseado
     const fechaFormateada = `${dia} de ${mes} del ${año}`;
-  
+
     return fechaFormateada;
   };
-  
-  
-  
 
   //----------------Proyectos--------------
   const [proyectos, setProyectos] = useState([]);
@@ -104,7 +114,7 @@ export function InsoelProvider({ children }) {
     const res = await createSolicitudRequest(solicitud);
     console.log(res);
   };
-  
+
   const obtenerSolicitudes = async () => {
     const solicitud = await getSolicitudesRequest();
     setSolicitudes(solicitud.data);
@@ -113,20 +123,20 @@ export function InsoelProvider({ children }) {
   const actualizarSolicitud = async (id, terminada) => {
     try {
       const res = await updateSolicitudRequest(id, { terminada });
-      setSolicitudes(prevSolicitudes => 
-        prevSolicitudes.map(solicitud => 
+      setSolicitudes((prevSolicitudes) =>
+        prevSolicitudes.map((solicitud) =>
           solicitud._id === id ? { ...solicitud, terminada } : solicitud
         )
       );
     } catch (error) {
-      console.error('Error al actualizar la solicitud:', error);
+      console.error("Error al actualizar la solicitud:", error);
     }
   };
 
   useEffect(() => {
     obtenerSolicitudes();
   }, []);
-/*
+  /*
   useEffect(() => {
     obtenerSolicitudes();
   }, []); */
@@ -171,15 +181,15 @@ export function InsoelProvider({ children }) {
     }
   };
 
-  const getProyectosByArea = async(area) =>{
+  const getProyectosByArea = async (area) => {
     try {
-      const proyectos = await getProyectosByAreaRequest(area)
-      return proyectos.data
+      const proyectos = await getProyectosByAreaRequest(area);
+      return proyectos.data;
     } catch (error) {
-      console.error(error)
-      throw error
+      console.error(error);
+      throw error;
     }
-  }
+  };
 
   const formDataToJson = (formData) => {
     const json = {};
@@ -209,11 +219,10 @@ export function InsoelProvider({ children }) {
   const createCarrusel = async (carrusel) => {
     try {
       const res = await createCarruselRequest(carrusel);
-    return res;
+      return res;
     } catch (error) {
       throw error;
     }
-    
   };
   const obtenerCarruseles = async () => {
     const carruseles = await getCarruselesRequest();
@@ -262,8 +271,6 @@ export function InsoelProvider({ children }) {
     }
   };
 
- 
-
   /** ------------------ubicaciones----------------------- */
   const [ubicaciones, setUbicaciones] = useState([]);
   const [ubicacion, setUbicacion] = useState([]);
@@ -295,23 +302,23 @@ export function InsoelProvider({ children }) {
 
   const updateUbicacion = async (id, ubicacion) => {
     try {
-        if (!id) {
-            throw new Error("ID no está definido");
-        }
-        await updateUbicacionRequest(id, ubicacion);
+      if (!id) {
+        throw new Error("ID no está definido");
+      }
+      await updateUbicacionRequest(id, ubicacion);
     } catch (error) {
-        console.error(error);
+      console.error(error);
     }
-};
+  };
 
   /** ------------------Areas----------------------- */
   const [areas, setAreas] = useState([]);
   const [area, setArea] = useState([]);
 
   const crearArea = async (area) => {
-    try{
-    const res = await crearAreaRequest(area);
-    console.log(res);
+    try {
+      const res = await crearAreaRequest(area);
+      console.log(res);
     } catch (error) {
       throw error;
     }
@@ -326,8 +333,7 @@ export function InsoelProvider({ children }) {
     try {
       const res = await deleteAreaRequest(id);
       console.log(res);
-      if (res.status === 204)
-        setArea(area.filter((area) => area._id !== id));
+      if (res.status === 204) setArea(area.filter((area) => area._id !== id));
     } catch (error) {
       console.log(error);
     }
@@ -335,15 +341,15 @@ export function InsoelProvider({ children }) {
 
   const editarArea = async (id, area) => {
     try {
-      const areaActualizada= await editarAreaRequest(id, area);
+      const areaActualizada = await editarAreaRequest(id, area);
       console.log(areaActualizada);
     } catch (error) {
       console.error(error);
     }
   };
   /**--------------------------SubMenu------------------------ */
-  const [subMenu, setSubMenu] = useState(null)
-  const [idSubMenu, setIdSubMenu] = useState(null)
+  const [subMenu, setSubMenu] = useState(null);
+  const [idSubMenu, setIdSubMenu] = useState(null);
 
   const updateSubMenu = async (id, subMenu) => {
     try {
@@ -352,20 +358,57 @@ export function InsoelProvider({ children }) {
       console.error(error);
     }
   };
-  
-  const [carruselActivo, setCarruselActivo] = useState(''); 
+
+  const [carruselActivo, setCarruselActivo] = useState("");
 
   useEffect(() => {
     console.log("Valor de carruselActivo en el contexto:", carruselActivo);
   }, [carruselActivo]);
 
-  const obtenerSubMenu = async() => {
+  const obtenerSubMenu = async () => {
     const subMenu = await getSubMenusRequest();
     //console.log(subMenu.data[0]._id)
-    const id = subMenu.data[0]._id
-    const subMenuRef = await obtenerSubMenuRef(id)
-    setSubMenu(subMenuRef.data.subMenu)
-    setIdSubMenu(id)
+    const id = subMenu.data[0]._id;
+    const subMenuRef = await obtenerSubMenuRef(id);
+    setSubMenu(subMenuRef.data.subMenu);
+    setIdSubMenu(id);
+  };
+
+  /**------------------------------Producto-------------------- */
+  const [productos, setProductos] = useState([]);
+  const [producto, setProducto] = useState([]);
+  const crearProducto = async (producto) => {
+    try {
+      const res = await crearProductoRequest(producto);
+      console.log(res);
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const obtenerProductos = async () => {
+    const productos = await getProductosrequest();
+    setProductos(productos.data);
+  };
+
+  const deleteProducto = async (id) => {
+    try {
+      const res = await deleteProductoRequest(id);
+      console.log(res);
+      if (res.status === 204)
+        setProducto(producto.filter((area) => producto.id !== id));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const editarProducto = async (id, producto) => {
+    try {
+      const productoActualizado = await editarProductoRequest(id, producto)
+      console.log(productoActualizado)
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
@@ -410,12 +453,17 @@ export function InsoelProvider({ children }) {
         deleteArea,
         editarArea,
         areas,
-        obtenerSubMenu,//Submenu
+        obtenerSubMenu, //Submenu
         subMenu,
         updateSubMenu,
         idSubMenu,
-        carruselActivo,  //carrusel
+        carruselActivo, //carrusel
         setCarruselActivo,
+        crearProducto,//Productos
+        editarProducto,
+        deleteProducto,
+        obtenerProductos,
+        productos
       }}
     >
       {children}
